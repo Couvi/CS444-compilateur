@@ -232,6 +232,7 @@ LETTRE         = [a-zA-Z]
 // ------------
 // A COMPLETER
 // ------------
+IDF = {LETTRE} ( {LETTRE} | {CHIFFRE} | "_" )*
 
 %%
 
@@ -244,6 +245,8 @@ LETTRE         = [a-zA-Z]
 \n                     { }
 
 "+"                    { return symbol(sym.PLUS); }
+
+{IDF}                  { return symbol(sym.IDF, yytext()); }
 
 .                      { System.out.println("Erreur Lexicale : '" +
                             yytext() + "' non reconnu ... ligne " + 

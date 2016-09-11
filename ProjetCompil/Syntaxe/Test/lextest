@@ -1,0 +1,23 @@
+#!/bin/sh
+# Teste l'analyse lexicale
+
+# Pour tous les fichiers tests de syntaxe
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+for fich in $* 
+do
+	
+	cd ../../../ 
+	java ProjetCompil.Syntaxe.Src.TestLex ProjetCompil/Syntaxe/Test/$fich 
+	if [ $? -ne 0 ]
+	then
+		echo "${RED}test $fich FAILED${NC}"
+	else
+		echo "${GREEN}test $fich OK${NC}"
+	fi
+	
+	cd ProjetCompil/Syntaxe/Test
+done
+
