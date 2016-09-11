@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for fich in $*
+do
+#    echo "recode utf8..latin1 $fich"
+   recode utf8..latin1 $fich
+done
+

@@ -1,0 +1,23 @@
+#!/bin/sh
+# Teste l'analyse lexicale
+# Usage : lexico fich1.cas fich2.cas ... fich_n.cas
+
+
+# Pour tous les fichiers tests de syntaxe
+for fich in $* 
+do
+   echo "--------------------------------------------------------------------"
+   echo "Fichier : $fich"
+   echo "--------------------------------------------------------------------"
+   cat -n $fich
+   echo "Appuyer sur <Return>"
+   read pause
+   echo "--------------------------------------------------------------------" 
+   cd ../../../ 
+   java ProjetCompil.Syntaxe.Src.TestLex ProjetCompil/Syntaxe/Test/$fich 
+   cd ProjetCompil/Syntaxe/Test
+   echo "Appuyer sur <Return>"
+   read pause
+   pwd
+done
+

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------------------
+# Ce script permet l'évaluation de la couverture du paquetage 
+# ProjetCompil.Verif.Src par un jeu de tests.
+#
+# Script à mettre dans le répertoire ProjetCompil/Cobertura
+#
+# Usage : 
+#   ./testCouverture chemin_parent_ProjetCompil fichiers_tests 
+#
+# Le chemin_parent_ProjetCompil est la plupart du temps $HOME 
+#
+# Exemple d'utilisation : 
+#   ./testCouvertureVerif $HOME $HOME/ProjetCompil/Verif/Test/*.cas
+#
+# Les résultats de couverture sont dans 
+#    ProjetCompil/Cobertura/CouvertureVerif/index.html
+# -----------------------------------------------------------------------------
+
+/bin/rm -f couverture.ser
+
+PROJET=$1
+BASEDIR=cobertura-2.1.1
+
+$BASEDIR/cobertura-instrument.sh --destination Instru --datafile couverture.ser --auxClasspath $PROJET $PROJET/ProjetCompil/Verif/Src 
+
+shift
+
+for fich in $* 
+do
+
+    java -cp $BASEDIR/cobertura-2.1.1.jar:$BASEDIR/lib/asm-5.0.1.jar:$BASEDIR/lib/asm-analysis-5.0.1.jar:$BASEDIR/lib/asm-tree-5.0.1.jar:$BASEDIR/lib/asm-commons-5.0.1.jar:$BASEDIR/lib/asm-util-5.0.1.jar:$BASEDIR/lib/slf4j-api-1.7.5.jar:$BASEDIR/lib/logback-core-1.0.13.jar:$BASEDIR/lib/logback-classic-1.0.13.jar:$BASEDIR/lib/oro-2.0.8.jar:Instru:$PROJET:$CLASSPATH -Dnet.sourceforge.cobertura.datafile=couverture.ser ProjetCompil.Verif.Src.TestVerif $fich
+done
+
+cobertura-2.1.1/cobertura-report.sh --format html --datafile couverture.ser --destination CouvertureVerif $PROJET
+
+

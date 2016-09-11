@@ -1,0 +1,22 @@
+#!/bin/sh
+# Teste la passe de vérifications contextuelles
+# Usage : verifier fich1.cas fich2.cas ... fich_n.cas
+
+
+for fich in $* 
+do
+   echo "--------------------------------------------------------------------"
+   echo "Fichier : $fich"
+   echo "--------------------------------------------------------------------"
+   cat -n $fich
+   echo "Appuyer sur <Return>"
+   read pause
+   echo "--------------------------------------------------------------------" 
+   cd ../../../ 
+   java ProjetCompil.Verif.Src.TestVerif ProjetCompil/Verif/Test/$fich 
+   cd ProjetCompil/Verif/Test
+   echo "Appuyer sur <Return>"
+   read pause
+   pwd
+done
+

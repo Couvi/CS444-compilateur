@@ -1,0 +1,33 @@
+#!/bin/sh
+# Teste le compilateur JCasc
+# Usage : jcasc fich1.cas fich2.cas ... fich_n.cas
+
+for fich in $* 
+do
+   # Le fichier assembleur à générer
+   fichAss=$(basename $fich .cas).ass
+   echo "--------------------------------------------------------------------"
+   echo "Fichier : $fich"
+   echo "--------------------------------------------------------------------"
+   cat -n $fich
+   echo "Appuyer sur <Return>"
+   read pause
+   echo "--------------------------------------------------------------------" 
+   cd ../../.. 
+   pwd
+   java ProjetCompil.Gencode.Src.JCasc ProjetCompil/Gencode/Test/$fich
+   if test -f $fichAss
+   then
+      echo "Execution de $fichAss"
+      mv $fichAss ProjetCompil/Gencode/Test
+      cd ProjetCompil/Gencode/Test
+      ima $fichAss
+   else
+      echo "Pas de fichier $fichAss"
+      cd ProjetCompil/Gencode/Test
+   fi
+   echo "--------------------------------------------------------------------" 
+   echo "Appuyer sur <Return>"
+   read pause
+done
+

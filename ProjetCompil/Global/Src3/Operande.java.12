@@ -1,0 +1,9 @@
+package ProjetCompil.Global.Src3;
+
+/**
+ * Classe des opérandes des instructions de la machine abstraite.
+ * Cette classe sera modifiée pour la passe 3 du projet.
+ */
+
+public class Operande {}
+
