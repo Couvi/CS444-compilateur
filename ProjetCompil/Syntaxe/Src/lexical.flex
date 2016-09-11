@@ -244,7 +244,52 @@ IDF = {LETTRE} ( {LETTRE} | {CHIFFRE} | "_" )*
 
 \n                     { }
 
-"+"                    { return symbol(sym.PLUS); }
+// operators
+"<"			{return symbol(sym.INF);}
+">"			{return symbol(sym.SUP);}
+"="			{return symbol(sym.EGAL);}
+"+"			{return symbol(sym.PLUS);}
+"−"			{return symbol(sym.MOINS);}
+"*"			{return symbol(sym.MULT);}
+"/"			{return symbol(sym.DIV);}
+"."			{return symbol(sym.POINT);}
+"["			{return symbol(sym.CROCH_OUVR);}
+"]"			{return symbol(sym.CROCH_FERM);}
+","			{return symbol(sym.VIRGULE);}
+":"			{return symbol(sym.DEUX_POINTS);}
+"("			{return symbol(sym.PAR_OUVR);}
+")"			{return symbol(sym.PAR_FERM);}
+";"			{return symbol(sym.POINT_VIRGULE);}
+".."		{return symbol(sym.DOUBLE_POINT);}
+":="		{return symbol(sym.AFFECT);}
+"/="		{return symbol(sym.DIFF);}
+">="		{return symbol(sym.SUP_EGAL);}
+"<="  		{return symbol(sym.INF_EGAL);}
+
+// keywords
+"and"		{return symbol(dictionnaire.get("and"));}
+"array"		{return symbol(dictionnaire.get("array"));}
+"begin"		{return symbol(dictionnaire.get("begin"));}
+"div"		{return symbol(dictionnaire.get("div"));}
+"do"		{return symbol(dictionnaire.get("do"));}
+"downto"	{return symbol(dictionnaire.get("downto"));}
+"else"		{return symbol(dictionnaire.get("else"));}
+"end"		{return symbol(dictionnaire.get("end"));}
+"for"		{return symbol(dictionnaire.get("for"));}
+"if"		{return symbol(dictionnaire.get("if"));}
+"mod"		{return symbol(dictionnaire.get("mod"));}
+"new_line"	{return symbol(dictionnaire.get("new_line"));}
+"not"		{return symbol(dictionnaire.get("not"));}
+"null"		{return symbol(dictionnaire.get("null"));}
+"of"		{return symbol(dictionnaire.get("of"));}
+"or"		{return symbol(dictionnaire.get("or"));}
+"program"	{return symbol(dictionnaire.get("program"));}
+"read"		{return symbol(dictionnaire.get("read"));}
+"then"		{return symbol(dictionnaire.get("then"));}
+"to"		{return symbol(dictionnaire.get("to"));}
+"while"		{return symbol(dictionnaire.get("while"));}
+"write"		{return symbol(dictionnaire.get("write"));}
+
 
 {IDF}                  { return symbol(sym.IDF, yytext()); }
 
