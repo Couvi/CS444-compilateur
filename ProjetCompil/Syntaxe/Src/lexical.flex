@@ -234,6 +234,16 @@ LETTRE         = [a-zA-Z]
 // ------------
 IDF = {LETTRE} ( {LETTRE} | {CHIFFRE} | "_" )*
 
+//nombres
+NUM = {CHIFFRE}+
+SIGNE = "+" | "-" | ""
+EXP = "E" {SIGNE} {NUM} | "e" {SIGNE} {NUM}
+DEC = {NUM} "." {NUM}
+
+CONST_ENT = {NUM}
+//le dernier cas est une correction de la spécification
+CONST_REEL = {DEC} | {DEC} {EXP} | {NUM} {EXP}
+
 %%
 
 // ---------------------------
@@ -291,12 +301,37 @@ IDF = {LETTRE} ( {LETTRE} | {CHIFFRE} | "_" )*
 "write"		{return symbol(dictionnaire.get("write"));}
 
 
-{IDF}                  { return symbol(sym.IDF, yytext()); }
+{IDF}      	{ return symbol(sym.IDF, yytext()); }
 
-.                      { System.out.println("Erreur Lexicale : '" +
-                            yytext() + "' non reconnu ... ligne " + 
-                            numLigne()) ;
-                         throw new ErreurLexicale() ; }
+{CONST_ENT}	{try {
+				return symbol(sym.CONST_ENT,Integer.parseInt(yytext()));
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Erreur Lexicale : '" +
+					yytext() + 
+                    "' ne peux pas être lu comme entier ... ligne " + 
+                    numLigne()) ;
+				throw new ErreurLexicale();
+			}}
+
+{CONST_REEL}	{try {
+				return symbol(sym.CONST_REEL,Float.parseFloat(yytext()));
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Erreur Lexicale : '" +
+					yytext() + 
+                    "' ne peux pas être lu comme reel ... ligne " + 
+                    numLigne()) ;
+				throw new ErreurLexicale();
+			}}
+			
+
+
+.           { 
+			System.out.println("Erreur Lexicale : '" +
+				yytext() + "' non reconnu ... ligne " + 
+				numLigne()) ;
+			throw new ErreurLexicale() ; }
 
 // ------------
 // A COMPLETER
