@@ -250,6 +250,9 @@ LETTRE         = [a-zA-Z]
 	//plus général
 	CONST_CHAINE = \"(\\.|[^\"])*\"
 
+//commentaires
+	COMMENTAIRE = "--" (.|[^\n])* \n
+
 %%
 
 // ---------------------------
@@ -332,6 +335,8 @@ LETTRE         = [a-zA-Z]
 			}}
 			
 {CONST_CHAINE}	{return symbol(sym.CONST_CHAINE,yytext());}
+
+{COMMENTAIRE}	{}
 
 .           { 
 			System.out.println("Erreur Lexicale : '" +
