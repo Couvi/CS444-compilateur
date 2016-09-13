@@ -253,15 +253,18 @@ LETTRE         = [a-zA-Z]
 //commentaires
 	COMMENTAIRE = "--" (.|[^\n])* \n
 
+//séparateurs
+	// ajout du \\r, pas dans la spec
+	SPACER = (\n | \t | " " | {COMMENTAIRE} | \r)+
+
 %%
 
 // ---------------------------
 // Debut de la partie "regles"
 // ---------------------------
 
-[ \t]+                 { }
+{SPACER} 	{ }
 
-\n                     { }
 
 // operators
 "<"			{return symbol(sym.INF);}
