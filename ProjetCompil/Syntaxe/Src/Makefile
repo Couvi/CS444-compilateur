@@ -23,8 +23,13 @@ Lexical.java : lexical.flex
 TestSynt.class : TestSynt.java parser.java ErreurSyntaxe.java
 	cd ../../..; javac -Xlint:unchecked ProjetCompil/Syntaxe/Src/*.java
 
-lex-%: ../Test/%/*.cas
+lextest-%: TestLex.class ../Test/%/*.cas 
 	../Test/lextest $^
+
+syntest-%: TestSynt.class ../Test/%/*.cas
+	../Test/syntest $^
+
+
 
 clean :
 	/bin/rm -f sym.java Lexical.java parser.java *.class

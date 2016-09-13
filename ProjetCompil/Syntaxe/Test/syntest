@@ -10,14 +10,13 @@ for fich in $*
 do
 	
 	cd ../../../ 
-	java ProjetCompil.Syntaxe.Src.TestLex ProjetCompil/Syntaxe/Test/$fich 
+	java ProjetCompil.Syntaxe.Src.TestSynt ProjetCompil/Syntaxe/Test/$fich 
 	if [ $? -ne 0 ]
 	then
-		echo "${RED}lextest $fich FAILED${NC}"
+		echo "${RED}syntest $fich FAILED${NC}"
 	else
-		echo "${GREEN}lextest $fich OK${NC}"
+		echo "${GREEN}syntest $fich OK${NC}"
 	fi
 	
 	cd ProjetCompil/Syntaxe/Test
 done
-

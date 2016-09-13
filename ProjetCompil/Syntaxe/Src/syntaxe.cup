@@ -150,30 +150,30 @@ liste_decl ::= liste_decl:a1 decl:a2 POINT_VIRGULE
 
 
 
-decl ::= liste_idf DEUX_POINTS type
+decl ::= liste_idf:a DEUX_POINTS type:b
    {:
-      
+      RESULT = Arbre.creation2(Noeud.Decl, a, b, parser.numLigne());
    :}
    ;
-liste_idf ::= liste_idf VIRGULE idf
+liste_idf ::= liste_idf:a VIRGULE idf:b
    {: 
-      
+      RESULT = Arbre.creation2(Noeud.ListeIdent, a, b, b.getNumLigne());
    :}
-   |  idf
+   |  idf:a
    {:
-      
+      RESULT = Arbre.creation1(Noeud.Ident, a, a.getNumLigne());
    :}
    ;
 
-type ::= idf
+type ::= idf:a
    {:
-      
+      RESULT = Arbre.creation1(Noeud.Ident, a, a.getNumLigne());
    :}
-   |  type_intervalle
+   |  type_intervalle:a
    {:
-      
+      RESULT = Arbre.creation1(Noeud.Intervalle, a, a.getNumLigne());
    :}
-   |  ARRAY CROCH_OUVR type_intervalle CROCH_FERM OF type
+   |  ARRAY CROCH_OUVR type_intervalle:a CROCH_FERM OF type:b
    {:
       
    :}
@@ -181,7 +181,7 @@ type ::= idf
 
 type_intervalle ::= constante DOUBLE_POINT constante
    {:
-      
+     
    :}
    ;
 
@@ -189,13 +189,13 @@ constante ::= PLUS const
    {:
       
    :}
-   |  MOINS const
+   |  MOINS const:c
    {: 
       
    :}
    |  const
    {:
-      
+	
    :}
    ;
 
@@ -205,7 +205,7 @@ const ::= CONST_ENT
    :}
    |  idf
    {:
-      
+   
    :}
    ;
 idf ::= IDF
