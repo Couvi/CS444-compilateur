@@ -232,17 +232,23 @@ LETTRE         = [a-zA-Z]
 // ------------
 // A COMPLETER
 // ------------
-IDF = {LETTRE} ( {LETTRE} | {CHIFFRE} | "_" )*
+//identificateurs
+	IDF = {LETTRE} ( {LETTRE} | {CHIFFRE} | "_" )*
 
 //nombres
-NUM = {CHIFFRE}+
-SIGNE = "+" | "-" | ""
-EXP = "E" {SIGNE} {NUM} | "e" {SIGNE} {NUM}
-DEC = {NUM} "." {NUM}
+	NUM = {CHIFFRE}+
+	SIGNE = "+" | "-" | ""
+	EXP = "E" {SIGNE} {NUM} | "e" {SIGNE} {NUM}
+	DEC = {NUM} "." {NUM}
 
-CONST_ENT = {NUM}
-//le dernier cas est une correction de la spécification
-CONST_REEL = {DEC} | {DEC} {EXP} | {NUM} {EXP}
+	CONST_ENT = {NUM}
+	//le dernier cas est une correction de la spécification
+	CONST_REEL = {DEC} | {DEC} {EXP} | {NUM} {EXP}
+
+//strings
+	//la recette de la spécification n'est pas respectée, celle-ci est
+	//plus général
+	CONST_CHAINE = \"(\\.|[^\"])*\"
 
 %%
 
@@ -325,7 +331,7 @@ CONST_REEL = {DEC} | {DEC} {EXP} | {NUM} {EXP}
 				throw new ErreurLexicale();
 			}}
 			
-
+{CONST_CHAINE}	{return symbol(sym.CONST_CHAINE,yytext());}
 
 .           { 
 			System.out.println("Erreur Lexicale : '" +
