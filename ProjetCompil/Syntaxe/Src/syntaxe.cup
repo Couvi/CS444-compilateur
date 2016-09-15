@@ -246,12 +246,12 @@ inst ::= NULL
    :}
    |  IF exp:a THEN liste_inst:b END
    {:
-      RESULT = Arbre.creation3(Noeud.Increment, a, b, 
+      RESULT = Arbre.creation3(Noeud.Si, a, b, 
 		Arbre.creation0(Noeud.Nop, aleft), aleft);
    :}
    |  IF exp:a THEN liste_inst:b ELSE liste_inst:c END
    {:
-      RESULT = Arbre.creation3(Noeud.Increment, a, b, c, aleft);
+      RESULT = Arbre.creation3(Noeud.Si, a, b, c, aleft);
    :}
    |  WRITE PAR_OUVR liste_exp:a PAR_FERM
    {:
@@ -283,7 +283,9 @@ liste_exp ::= liste_exp:a VIRGULE exp:b
    :}
    |  exp:a
    {:
-      RESULT = a;
+      RESULT = Arbre.creation2(Noeud.ListeExp, 
+		Arbre.creation0(Noeud.Vide, parser.numLigne()),
+		a, aleft);
    :}
    ;
    
