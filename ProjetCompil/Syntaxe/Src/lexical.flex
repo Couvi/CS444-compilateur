@@ -271,7 +271,7 @@ LETTRE         = [a-zA-Z]
 ">"			{return symbol(sym.SUP);}
 "="			{return symbol(sym.EGAL);}
 "+"			{return symbol(sym.PLUS);}
-"−"			{return symbol(sym.MOINS);}
+"-"			{return symbol(sym.MOINS);}
 "*"			{return symbol(sym.MULT);}
 "/"			{return symbol(sym.DIV);}
 "."			{return symbol(sym.POINT);}

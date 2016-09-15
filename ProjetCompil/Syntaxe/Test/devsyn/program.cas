@@ -1,6 +1,8 @@
-−− Fonction factorielle
+-- prog simple
 program 
-   
+	MonEntier1, MonEntier2 : Entier;
+	UneChaine : String;
 begin
-	null;
+	MonEntier1 := 3;
+	MonEntier2 := -(MonEntier1 + 2)mod 7;
 end.
