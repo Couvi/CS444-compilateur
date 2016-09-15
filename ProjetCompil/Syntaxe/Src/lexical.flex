@@ -242,16 +242,16 @@ LETTRE         = [a-zA-Z]
 	DEC = {NUM} "." {NUM}
 
 	CONST_ENT = {NUM}
-	//le dernier cas est une correction de la spécification
-	CONST_REEL = {DEC} | {DEC} {EXP} | {NUM} {EXP}
+	CONST_REEL = {DEC} | {DEC} {EXP} 
+	//Pour accepter 18E5 : | {NUM} {EXP}
 
 //strings
 	//la recette de la spécification n'est pas respectée, celle-ci est
 	//plus général
 	CONST_CHAINE = \"(\\.|[^\"])*\"
 
-//commentaires
-	COMMENTAIRE = "--" (.|[^\n])* \n
+//commentaires (.|)
+	COMMENTAIRE = "--" ([^\n])* \n
 
 //séparateurs
 	// ajout du \\r, pas dans la spec
