@@ -1,7 +1,7 @@
 package ProjetCompil.Syntaxe.Src;
 
 /**
- * Exception levÃ©e en cas d'erreur interne dans l'analyseur lexical.
+ * Exception levée en cas d'erreur interne dans l'analyseur lexical.
  */
 
 public class ErreurInterneLexical extends RuntimeException {
