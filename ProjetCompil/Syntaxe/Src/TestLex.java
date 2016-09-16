@@ -9,18 +9,18 @@ import java.io.InputStream;
 import ProjetCompil.Global.Src.*;
 
 /**
- * La classe TestLex permet de tester l'analyseur lexical défini
+ * La classe TestLex permet de tester l'analyseur lexical defini
  * dans la classe Lexical. 
  */
 public class TestLex {
 
    /** 
     * Fonction principale de la classe TestLex, qui permet de lire 
-    * des unités lexicales sur l'entrée standard. 
-    * L'exception java.io.IOException est levée en cas d'erreur 
-    * d'entrées/sorties.
-    * L'exception ErreurLexicale est levée en cas d'erreur lexicale.
-    * Ces deux exception sont levées par la fonction next_token 
+    * des unites lexicales sur l'entree standard. 
+    * L'exception java.io.IOException est levee en cas d'erreur 
+    * d'entrees/sorties.
+    * L'exception ErreurLexicale est levee en cas d'erreur lexicale.
+    * Ces deux exception sont levees par la fonction next_token 
     * de la classe Lexical (fonction principale permettant de lire des
     * unites lexicales).
     */

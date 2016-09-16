@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // syntaxe.cup
-// Fichier cup qui définit l'analyseur syntaxique
+// Fichier cup qui definit l'analyseur syntaxique
 // ---------------------------------------------------------------------------
 
 package ProjetCompil.Syntaxe.Src;
@@ -13,8 +13,8 @@ import java.io.InputStream;
 parser code {:
 
    /**
-    * Réalise l'analyse syntaxique du fichier passé en argument (ou de 
-    * l'entrée standard si args est un tableau vide) et retourne 
+    * Realise l'analyse syntaxique du fichier passe en argument (ou de 
+    * l'entree standard si args est un tableau vide) et retourne 
     * l'abstrait correspondant.
     * Lève l'exception ErreurLexicale en cas d'erreur lexicale, et 
     * ErreurSyntaxe en cas d'erreur de syntaxe.
@@ -22,16 +22,16 @@ parser code {:
    public static Arbre analyseSyntaxique(String[] args) 
          throws Exception, ErreurLexicale, ErreurSyntaxe {
 
-      // On récupère le fichier à analyser
+      // On recupere le fichier à analyser
       InputStream fichierCas = ArgsFichier.ouvrir(args);
 
-      // Création de l'analyseur lexical
+      // Creation de l'analyseur lexical
       Lexical analyseurLex = new Lexical(fichierCas);
 
-      // Création de l'analyseur syntaxique
+      // Creation de l'analyseur syntaxique
       parser analyseurSynt = new parser(analyseurLex);
 
-      // Appel de l'analyseur syntaxique et récupération de l'arbre résultat
+      // Appel de l'analyseur syntaxique et recuperation de l'arbre resultat
       Object result = analyseurSynt.parse().value;
       Arbre arbre = (Arbre) result;
       
