@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Fichier d'entrée JFLex pour l'analyseur lexical
+// Fichier d'entree JFLex pour l'analyseur lexical
 // ---------------------------------------------------------------------------
 
 package ProjetCompil.Syntaxe.Src;
@@ -14,7 +14,7 @@ import java.util.Hashtable;
 %%
 
 // -------------------------------------
-// Début de la partie "directives JFLex"
+// Debut de la partie "directives JFLex"
 // -------------------------------------
 
 // Nom de la classe qui contient l'analyseur lexical.
@@ -24,7 +24,7 @@ import java.util.Hashtable;
 // Cette classe doit être publique.
 %public
 
-// On crée un analyseur lexical compatible avec Cup.
+// On cree un analyseur lexical compatible avec Cup.
 %cup
 
 // Active le comptage des lignes 
@@ -37,7 +37,7 @@ import java.util.Hashtable;
 
 %{
    /**
-    * Le dictionnaire associe à chaque mot réservé le code du lexème 
+    * Le dictionnaire associe a chaque mot reserve le code du lexeme 
     * correspondant.
     */
    private final Hashtable<String,Integer> 
@@ -74,7 +74,7 @@ import java.util.Hashtable;
    }
 
    /**
-    * Le numéro de la ligne courante.
+    * Le numero de la ligne courante.
     */
    int numLigne() {
       return yyline + 1;
@@ -89,7 +89,7 @@ import java.util.Hashtable;
    }
 
    /**
-    * Convertit un code de lexème en String correspondante.
+    * Convertit un code de lexeme en String correspondante.
     */
    static String toString(int code_lexeme) {
       switch (code_lexeme) {
@@ -193,7 +193,7 @@ import java.util.Hashtable;
 
 
    /**
-    * Convertit un lexème ("Symbole") en String correspondante.
+    * Convertit un lex�me ("Symbole") en String correspondante.
     */
    static String toString(Symbol s) {
       String ts;
@@ -223,15 +223,12 @@ import java.util.Hashtable;
 %}
 
 // -------------------------------------
-// Définition des macros
+// D�finition des macros
 // -------------------------------------
 
 CHIFFRE        = [0-9]
 LETTRE         = [a-zA-Z]
 
-// ------------
-// A COMPLETER
-// ------------
 //identificateurs
 	IDF = {LETTRE} ( {LETTRE} | {CHIFFRE} | "_" )*
 
@@ -243,17 +240,14 @@ LETTRE         = [a-zA-Z]
 
 	CONST_ENT = {NUM}
 	CONST_REEL = {DEC} | {DEC} {EXP} 
-	//Pour accepter 18E5 : | {NUM} {EXP}
 
 //strings
-	//la recette de la spécification n'est pas respectée, celle-ci est
-	//plus général
-	CONST_CHAINE = \"(\\.|[^\"])*\"
+	CONST_CHAINE = \" ([\040-\176] + "\"\"")* \"
 
-//commentaires (.|)
+//commentaires 
 	COMMENTAIRE = "--" ([^\n])* \n
 
-//séparateurs
+//s�parateurs
 	// ajout du \\r, pas dans la spec
 	SPACER = (\n | \t | " " | {COMMENTAIRE} | \r)+
 
@@ -282,9 +276,9 @@ LETTRE         = [a-zA-Z]
 "("			{return symbol(sym.PAR_OUVR);}
 ")"			{return symbol(sym.PAR_FERM);}
 ";"			{return symbol(sym.POINT_VIRGULE);}
-".."		{return symbol(sym.DOUBLE_POINT);}
-":="		{return symbol(sym.AFFECT);}
-"/="		{return symbol(sym.DIFF);}
+".."			{return symbol(sym.DOUBLE_POINT);}
+":="			{return symbol(sym.AFFECT);}
+"/="			{return symbol(sym.DIFF);}
 ">="		{return symbol(sym.SUP_EGAL);}
 "<="  		{return symbol(sym.INF_EGAL);}
 
@@ -293,60 +287,59 @@ LETTRE         = [a-zA-Z]
 "array"		{return symbol(dictionnaire.get("array"));}
 "begin"		{return symbol(dictionnaire.get("begin"));}
 "div"		{return symbol(dictionnaire.get("div"));}
-"do"		{return symbol(dictionnaire.get("do"));}
-"downto"	{return symbol(dictionnaire.get("downto"));}
+"do"			{return symbol(dictionnaire.get("do"));}
+"downto"		{return symbol(dictionnaire.get("downto"));}
 "else"		{return symbol(dictionnaire.get("else"));}
 "end"		{return symbol(dictionnaire.get("end"));}
-"for"		{return symbol(dictionnaire.get("for"));}
-"if"		{return symbol(dictionnaire.get("if"));}
+"for"			{return symbol(dictionnaire.get("for"));}
+"if"			{return symbol(dictionnaire.get("if"));}
 "mod"		{return symbol(dictionnaire.get("mod"));}
 "new_line"	{return symbol(dictionnaire.get("new_line"));}
 "not"		{return symbol(dictionnaire.get("not"));}
 "null"		{return symbol(dictionnaire.get("null"));}
-"of"		{return symbol(dictionnaire.get("of"));}
-"or"		{return symbol(dictionnaire.get("or"));}
+"of"			{return symbol(dictionnaire.get("of"));}
+"or"			{return symbol(dictionnaire.get("or"));}
 "program"	{return symbol(dictionnaire.get("program"));}
 "read"		{return symbol(dictionnaire.get("read"));}
 "then"		{return symbol(dictionnaire.get("then"));}
-"to"		{return symbol(dictionnaire.get("to"));}
+"to"			{return symbol(dictionnaire.get("to"));}
 "while"		{return symbol(dictionnaire.get("while"));}
 "write"		{return symbol(dictionnaire.get("write"));}
 
 
 {IDF}      	{ return symbol(sym.IDF, yytext()); }
 
-{CONST_ENT}	{try {
+{CONST_ENT}	{
+			try {
 				return symbol(sym.CONST_ENT,Integer.parseInt(yytext()));
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Erreur Lexicale : '" +
-					yytext() + 
-                    "' ne peux pas être lu comme entier ... ligne " + 
-                    numLigne()) ;
+					yytext() + "' ne peux pas etre lu comme entier ... ligne " + numLigne()) ;
 				throw new ErreurLexicale();
-			}}
+			}
+		}
 
-{CONST_REEL}	{try {
+{CONST_REEL}	{
+			try {
 				return symbol(sym.CONST_REEL,Float.parseFloat(yytext()));
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Erreur Lexicale : '" +
-					yytext() + 
-                    "' ne peux pas être lu comme reel ... ligne " + 
-                    numLigne()) ;
+					yytext() + "' ne peux pas etre lu comme reel ... ligne " + numLigne()) ;
 				throw new ErreurLexicale();
-			}}
+			}
+		}
 			
-{CONST_CHAINE}	{return symbol(sym.CONST_CHAINE,yytext());}
+{CONST_CHAINE}	{
+			private String texte = yytext();
+			texte.replace("\"\"", "\"");
+			return symbol(sym.CONST_CHAINE,texte);
+		}
 
 {COMMENTAIRE}	{}
 
-.           { 
-			System.out.println("Erreur Lexicale : '" +
-				yytext() + "' non reconnu ... ligne " + 
-				numLigne()) ;
-			throw new ErreurLexicale() ; }
+. 	{ 
+		System.out.println("Erreur Lexicale : '" +
+			yytext() + "' non reconnu ... ligne " + numLigne()) ;
+		throw new ErreurLexicale() ; 
+	}
 
-// ------------
-// A COMPLETER
-// ------------
