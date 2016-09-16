@@ -4,7 +4,7 @@
 # Compilation de la passe 1 : 
 #    make
 #
-# Faire du ménage (efface les fichiers générés) : 
+# Faire du menage (efface les fichiers generes) : 
 #    make clean
 #    
 # ----------------------------------------------------------------------------
