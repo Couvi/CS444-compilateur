@@ -6,7 +6,7 @@ package ProjetCompil.Syntaxe.Src;
 
 import java_cup.runtime.*;
 import java.util.Hashtable;
-import java.lang.String*;
+import java.lang.String.*;
 
 /**
  * La classe Lexical permet de realiser l'analyse lexicale.
@@ -243,7 +243,9 @@ LETTRE         = [a-zA-Z]
 	CONST_REEL = {DEC} | {DEC} {EXP} 
 
 //strings
-	CONST_CHAINE = \" ([\040-\176] + "\"\"")* \"
+	DOUBLE_QUOTE = \022\022
+	AFFICHABLES = [.\n]
+	CONST_CHAINE = \" ({DOUBLE_QUOTE} | {AFFICHABLES} )* \"
 
 //commentaires 
 	COMMENTAIRE = "--" ([^\n])* \n
