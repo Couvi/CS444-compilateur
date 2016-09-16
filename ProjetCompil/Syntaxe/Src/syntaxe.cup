@@ -144,12 +144,6 @@ liste_decl ::= liste_decl:a1 decl:a2 POINT_VIRGULE
    :}
    ;
 
-// ---------------------------------------------
-// ECRIRE LES ACTIONS POUR LES REGLES SUIVANTES
-// ---------------------------------------------
-
-
-
 decl ::= liste_idf:a DEUX_POINTS type:b
    {:
       RESULT = Arbre.creation2(Noeud.Decl, a, b, parser.numLigne());

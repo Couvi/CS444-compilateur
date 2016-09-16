@@ -6,6 +6,7 @@ package ProjetCompil.Syntaxe.Src;
 
 import java_cup.runtime.*;
 import java.util.Hashtable;
+import java.lang.String*;
 
 /**
  * La classe Lexical permet de realiser l'analyse lexicale.
@@ -330,7 +331,7 @@ LETTRE         = [a-zA-Z]
 		}
 			
 {CONST_CHAINE}	{
-			private String texte = yytext();
+			String texte = yytext();
 			texte.replace("\"\"", "\"");
 			return symbol(sym.CONST_CHAINE,texte);
 		}
