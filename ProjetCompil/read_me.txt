@@ -4,3 +4,6 @@
  Horus DAGNON		dagnonh		horus.dagnon@etu.esisar.grenoble-inp.fr
  Guillaume BRUCHON	bruchong		guillaume.bruchon@etu.esisar.grenoble-inp.fr
  
+ Pour lancer les tests depuis ce dossier
+	- Taper la commande "make" pour compiler 
+	- Taper "make test" pour lancer les tests
