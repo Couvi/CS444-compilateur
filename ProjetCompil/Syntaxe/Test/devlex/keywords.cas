@@ -1,6 +1,6 @@
         and             array           begin           div
         do              downto          else            end
         for             if              mod             new_line 
-        not             null            of              or              
+        not             null            of              Or              
         program         read            then            to              
         while           write

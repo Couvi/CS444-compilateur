@@ -1,0 +1,1 @@
+ write("Trouve : T[", milieu, "] = ", T[milieu]) ; 

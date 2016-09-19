@@ -1,6 +1,6 @@
 -- Recherche dichotomique dans un tableau trie 
 program
-   T : array [1 .. 20] of integer ;      -- Tableau d’entiers
+   T : array [1 .. 20] of integer ;      -- Tableau d'entiers
    i : 1 .. 20 ;                         -- Indice de tableau
    min, max, milieu : 1 .. 20 ;          -- Indices de tableau
    val : integer ;                       -- Valeur cherchee 
