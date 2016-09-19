@@ -244,7 +244,7 @@ LETTRE         = [a-zA-Z]
 
 //strings
 	DOUBLE_QUOTE = \022\022
-	AFFICHABLES = [.\n]
+	AFFICHABLES = [\020\021\023-\176]
 	CONST_CHAINE = \" ({DOUBLE_QUOTE} | {AFFICHABLES} )* \"
 
 //commentaires 
@@ -333,9 +333,7 @@ LETTRE         = [a-zA-Z]
 		}
 			
 {CONST_CHAINE}	{
-			String texte = yytext();
-			texte.replace("\"\"", "\"");
-			return symbol(sym.CONST_CHAINE,texte);
+			return symbol(sym.CONST_CHAINE,yytext().replace("\"\"", "\""));
 		}
 
 {COMMENTAIRE}	{}
