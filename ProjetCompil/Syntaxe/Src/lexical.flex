@@ -18,6 +18,11 @@ import java.lang.String.*;
 // Debut de la partie "directives JFLex"
 // -------------------------------------
 
+// insensibilité a la casse
+//%caseless 
+%ignorecase
+
+
 // Nom de la classe qui contient l'analyseur lexical.
 // En l'absence de cette directive, cette classe s'appelle Yylex.
 %class Lexical
