@@ -267,7 +267,7 @@ pas ::= idf:a AFFECT exp:b TO exp:c
    :}
    |  idf:a AFFECT exp:b DOWNTO exp:c
    {: 
-      RESULT = Arbre.creation3(Noeud.ListeExp, a, b, c, aleft);
+      RESULT = Arbre.creation3(Noeud.Decrement, a, b, c, aleft);
    :}
    ;
 
