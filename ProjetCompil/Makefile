@@ -16,6 +16,10 @@ all :
 	cd Verif/Src; make
 	cd Gencode/Src; make
 
+test : 
+	cd Syntaxe/Src; make lextest-devlex
+	cd Syntaxe/Src; make syntest-devsyn
+
 html :
 	cd Html; javadoc ../Global/Src/*.java ../Global/Src3/*.java ../Syntaxe/Src/*.java ../Verif/Src/*.java ../Gencode/Src/*.java
 
