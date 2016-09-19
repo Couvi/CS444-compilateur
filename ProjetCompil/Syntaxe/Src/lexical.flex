@@ -243,8 +243,8 @@ LETTRE         = [a-zA-Z]
 	CONST_REEL = {DEC} | {DEC} {EXP} 
 
 //strings
-	DOUBLE_QUOTE = \022\022
-	AFFICHABLES = [\020\021\023-\176]
+	DOUBLE_QUOTE = \042\042
+	AFFICHABLES = [\020-\041\043-\176]
 	CONST_CHAINE = \" ({DOUBLE_QUOTE} | {AFFICHABLES} )* \"
 
 //commentaires 
@@ -294,7 +294,7 @@ LETTRE         = [a-zA-Z]
 "downto"		{return symbol(dictionnaire.get("downto"));}
 "else"		{return symbol(dictionnaire.get("else"));}
 "end"		{return symbol(dictionnaire.get("end"));}
-"for"			{return symbol(dictionnaire.get("for"));}
+"for"		{return symbol(dictionnaire.get("for"));}
 "if"			{return symbol(dictionnaire.get("if"));}
 "mod"		{return symbol(dictionnaire.get("mod"));}
 "new_line"	{return symbol(dictionnaire.get("new_line"));}
@@ -333,7 +333,10 @@ LETTRE         = [a-zA-Z]
 		}
 			
 {CONST_CHAINE}	{
-			return symbol(sym.CONST_CHAINE,yytext().replace("\"\"", "\""));
+			String chaine = yytext();
+			chaine = chaine.subSequence(1, chaine.length()-1).toString();
+			chaine = chaine.replace("\"\"", "\"");
+			return symbol(sym.CONST_CHAINE,chaine);
 		}
 
 {COMMENTAIRE}	{}
