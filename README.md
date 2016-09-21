@@ -11,6 +11,16 @@ La commande 'make test' permet de lancer les tests de :
 - l'analyse lexicale : Fichiers dans dossier devlex
 - l'analyse syntaxique : Fichiers dans dossier devsyn
 
+# Passe 2 : Travail a effectuer
+** A rendre pour le vendredi 14 octobre, avant 18h. ** 
+- Programmes (dans Verif/Src)
+- Jeux de tests (dans Verif/Test) - test avec Cobertura
+- Documentation (dans Verif/Doc) décrivant : 
+	- les messages d'erreurs,
+	- l'architecture de la passe 2,
+	- la méthodologie de test.
+
+
 # Passe 1 : Travail effectué
 
 ## Analyse lexicale
