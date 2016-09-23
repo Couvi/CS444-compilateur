@@ -13,13 +13,14 @@ package ProjetCompil.Verif.Src;
 
 public enum ErreurContext {
    
-   ErreurNonRepertoriee;
+   ErreurNonRepertoriee, Erreurdemerde, Erreurchiante;
 
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
          default:
             System.err.print("non repertoriee");
+	 
       }
       System.err.println(" ... ligne " + numLigne);
       throw new ErreurVerif();
@@ -28,3 +29,6 @@ public enum ErreurContext {
 }
 
 
+//*** Pour utiliser tout ce merdier !!! ****/
+// ErreurContext err = ErreurContext.Erreurdemerde;
+// err.leverErreurContext(String s, int numLigne)
