@@ -112,10 +112,51 @@ public class Verif {
   }
 
   private void verifier_LISTE_IDF(Arbre a, Type t) throws ErreurVerif {
+    switch(a.getNoeud()) {
+      case Vide: {
+        return;
+      }
+      case ListeIdent: {
+        verifier_LISTE_IDF(a.getFils1(),t);
+        verifier_IDF(a.getFils2());
+        env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
+      }
+      default: {
+        throw new ErreurVerif();
+      }
+    }
+  }
+
+  private void verifier_IDF(Arbre a) {
 
   }
+
   private Type verifier_TYPE(Arbre a) throws ErreurVerif {
-    return null;
+    switch(a.getNoeud()) {
+      case Ident: {
+        verifier_IDF(a);
+        return null; //TODO
+      }
+      case Intervalle: {
+        Type t = verifier_INTERVALLE(a);
+        return t;
+      }
+      case Tableau: {
+        Type t = verifier_TABLEAU(a);
+        return t;
+      }
+      default: {
+        throw new ErreurVerif();
+      }
+    }
+  }
+
+  private Type verifier_INTERVALLE(Arbre a) {
+    return null; //TODO
+  }
+
+  private Type verifier_TABLEAU(Arbre a) {
+    return null; //TODO
   }
    // ------------------------------------------------------------------------
    // COMPLETER les operations de vérifications et de décoration pour toutes 
