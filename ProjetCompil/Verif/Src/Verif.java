@@ -132,4 +132,8 @@ public class Verif {
         }
       }
 */
+  @SuppressWarnings("unused")
+  private void verifier_JENESAISPAS(Arbre a) throws ErreurVerif {
+	  
+  }
 }
