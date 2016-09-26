@@ -174,16 +174,91 @@ public class Verif {
    
    private void verifier_INST(Arbre a) throws ErreurVerif {
  	  switch (a.getNoeud()) {
- 	case Vide :
- 		
- 		break;
-
- 	default:
- 		throw new ErreurVerif();
+	 	case Nop :
+	 		return;
+	 	case Affect:
+	 		verifier_PLACE(a.getFils1());
+	 		verifier_EXP(a.getFils2());
+	 		return;
+	 	case Vide:
+	 		//suite TODO
+	 	default:
+	 		throw new ErreurVerif();
  	}
    }
 
+   private void verifier_PLACE(Arbre a) throws ErreurVerif {
+		  switch (a.getNoeud()) {
+			case Ident:
+				verifier_IDF(a);
+				return; //TODO à vérifier
+			case Index :
+				verifier_PLACE(a.getFils1());
+				verifier_EXP(a.getFils2());
+			default:
+				throw new ErreurVerif();
+		}
+	}
 
+	private void verifier_EXP(Arbre a) throws ErreurVerif {
+		switch (a.getNoeud()) {
+			case Ident:
+				verifier_IDF(a);
+				//TODO à vérifier	
+			case Et:
+				doubleExp(a);
+			case Ou:
+				doubleExp(a);
+			case Egal:
+				doubleExp(a);
+			case InfEgal:
+				doubleExp(a);
+			case SupEgal:
+				doubleExp(a);
+			case NonEgal:
+				doubleExp(a);
+			case Inf:
+				doubleExp(a);
+			case Sup:
+				doubleExp(a);
+			case Plus:
+				doubleExp(a);
+			case Moins:
+				doubleExp(a);
+			case Mult:
+				doubleExp(a);
+			case DivReel:
+				doubleExp(a);
+			case Reste:
+				doubleExp(a);
+			case Quotient:
+				doubleExp(a);
+			case PlusUnaire:
+				verifier_FACTEUR(a.getFils1());
+			case MoinsUnaire:
+				verifier_FACTEUR(a.getFils1());
+			case Non:
+				verifier_FACTEUR(a.getFils1());
+			return;
+			default:
+				throw new ErreurVerif();
+		}
+	}
+	
+	private void doubleExp(Arbre a) throws ErreurVerif {
+		  verifier_EXP(a.getFils1());
+		  verifier_EXP(a.getFils2());
+	}
+	
+	private void verifier_FACTEUR(Arbre a) throws ErreurVerif {
+		switch (a.getNoeud()) {
+	  		case Entier :
+
+	  	default:
+			throw new ErreurVerif();
+		}
+	}
+	
    // ------------------------------------------------------------------------
    // COMPLETER les operations de vérifications et de décoration pour toutes 
    // les constructions d'arbres
@@ -199,15 +274,13 @@ public class Verif {
         }
       }
 */
-  @SuppressWarnings("unused")
-  private void verifier_JENESAISPAS(Arbre a) throws ErreurVerif {
-	  switch (a.getNoeud()) {
-	case Vide :
-		
-		break;
+	@SuppressWarnings("unused")
+	private void verifier_SAMPLE(Arbre a) throws ErreurVerif {
+		switch (a.getNoeud()) {
+	  		case Vide :
 
-	default:
-		throw new ErreurVerif();
+	  	default:
+			throw new ErreurVerif();
+		}
 	}
-  }
 }
