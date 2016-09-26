@@ -90,74 +90,100 @@ public class Verif {
         }
       }
    }
+   
+   private void verifier_DECL(Arbre a) throws ErreurVerif {
+	    switch(a.getNoeud()) {
+	      case Decl: {
+	        Type type = verifier_TYPE(a.getFils2());
+	        verifier_LISTE_IDF(a.getFils1(), type);
+	        return;
+	      }
+	      default: {
+	        throw new ErreurVerif();
+	      }
+	    }
+	  }
+
+	  private void verifier_LISTE_IDF(Arbre a, Type t) throws ErreurVerif {
+	    switch(a.getNoeud()) {
+	      case Vide: {
+	        return;
+	      }
+	      case ListeIdent: {
+	        verifier_LISTE_IDF(a.getFils1(),t);
+	        verifier_IDF(a.getFils2());
+	        env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
+	      }
+	      default: {
+	        throw new ErreurVerif();
+	      }
+	    }
+	  }
+
+	  private void verifier_IDF(Arbre a) {
+
+	  }
+
+	  private Type verifier_TYPE(Arbre a) throws ErreurVerif {
+	    switch(a.getNoeud()) {
+	      case Ident: {
+	        verifier_IDF(a);
+	        return null; //TODO
+	      }
+	      case Intervalle: {
+	        Type t = verifier_INTERVALLE(a);
+	        return t;
+	      }
+	      case Tableau: {
+	        Type t = verifier_TABLEAU(a);
+	        return t;
+	      }
+	      default: {
+	        throw new ErreurVerif();
+	      }
+	    }
+	  }
+
+	  private Type verifier_INTERVALLE(Arbre a) {
+	    return null; //TODO
+	  }
+
+	  private Type verifier_TABLEAU(Arbre a) {
+	    return null; //TODO
+	  }
 
    /**************************************************************************
     * LISTE_INST
     **************************************************************************/
    private void verifier_LISTE_INST(Arbre a) throws ErreurVerif {
       // A COMPLETER
+	      switch(a.getNoeud()) {
+	        case Vide: {
+	          return;
+	        }
+	        case ListeInst: {
+	          verifier_LISTE_INST(a.getFils1());
+	          verifier_INST(a.getFils2());
+	          return;
+	        }
+	        default: {
+	          throw new ErreurVerif();
+	        }
+	    }
    }  
+   
+   private void verifier_INST(Arbre a) throws ErreurVerif {
+ 	  switch (a.getNoeud()) {
+ 	case Vide :
+ 		
+ 		break;
 
-  private void verifier_DECL(Arbre a) throws ErreurVerif {
-    switch(a.getNoeud()) {
-      case Decl: {
-        Type type = verifier_TYPE(a.getFils2());
-        verifier_LISTE_IDF(a.getFils1(), type);
-        return;
-      }
-      default: {
-        throw new ErreurVerif();
-      }
-    }
-  }
+ 	default:
+ 		throw new ErreurVerif();
+ 	}
+   }
 
-  private void verifier_LISTE_IDF(Arbre a, Type t) throws ErreurVerif {
-    switch(a.getNoeud()) {
-      case Vide: {
-        return;
-      }
-      case ListeIdent: {
-        verifier_LISTE_IDF(a.getFils1(),t);
-        verifier_IDF(a.getFils2());
-        env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
-      }
-      default: {
-        throw new ErreurVerif();
-      }
-    }
-  }
 
-  private void verifier_IDF(Arbre a) {
-
-  }
-
-  private Type verifier_TYPE(Arbre a) throws ErreurVerif {
-    switch(a.getNoeud()) {
-      case Ident: {
-        verifier_IDF(a);
-        return null; //TODO
-      }
-      case Intervalle: {
-        Type t = verifier_INTERVALLE(a);
-        return t;
-      }
-      case Tableau: {
-        Type t = verifier_TABLEAU(a);
-        return t;
-      }
-      default: {
-        throw new ErreurVerif();
-      }
-    }
-  }
-
-  private Type verifier_INTERVALLE(Arbre a) {
-    return null; //TODO
-  }
-
-  private Type verifier_TABLEAU(Arbre a) {
-    return null; //TODO
-  }
    // ------------------------------------------------------------------------
    // COMPLETER les operations de vérifications et de décoration pour toutes 
    // les constructions d'arbres
@@ -175,6 +201,13 @@ public class Verif {
 */
   @SuppressWarnings("unused")
   private void verifier_JENESAISPAS(Arbre a) throws ErreurVerif {
-	  
+	  switch (a.getNoeud()) {
+	case Vide :
+		
+		break;
+
+	default:
+		throw new ErreurVerif();
+	}
   }
 }
