@@ -194,8 +194,15 @@ public class Verif {
 			verifier_EXP(a.getFils1());
 			verifier_LISTE_INST(a.getFils2());
 			verifier_LISTE_INST(a.getFils3());
-		case Vide:
-			return;//TODO
+			return;
+		case Ecriture :
+			verifier_LISTE_EXP(a.getFils1());
+			return;
+		case Lecture :
+			verifier_PLACE(a.getFils1());
+			return;
+		case Ligne :
+			return;
 		default:
 			throw new ErreurVerif();
 		}
@@ -218,7 +225,7 @@ public class Verif {
 		switch (a.getNoeud()) {
 		case Ident:
 			verifier_IDF(a);
-			return; // TODO à vérifier
+			return;
 		case Index:
 			verifier_PLACE(a.getFils1());
 			verifier_EXP(a.getFils2());
@@ -226,7 +233,22 @@ public class Verif {
 			throw new ErreurVerif();
 		}
 	}
-	
+		
+	private void verifier_LISTE_EXP(Arbre a) throws ErreurVerif {
+		switch (a.getNoeud()) {
+		case Vide: {
+			return;
+		}
+		case ListeInst: {
+			verifier_LISTE_EXP(a.getFils1());
+			verifier_EXP(a.getFils2());
+			return;
+		}
+		default: {
+			throw new ErreurVerif();
+		}
+		}
+	}
 
 	private void verifier_EXP(Arbre a) throws ErreurVerif{
 		switch (a.getNoeud()) {
