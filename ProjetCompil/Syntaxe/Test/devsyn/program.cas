@@ -3,6 +3,8 @@ program
 	MonEntier1, MonEntier2 : Entier;
 	UneChaine : String;
 begin
-	MonEntier1 := 3;
+	if MonEntier1 = MonEntier2 then
+		MonEntier1 := 3;
+	end;
 	MonEntier2 := -(MonEntier1 + 2)mod 7;
 end.
