@@ -214,7 +214,7 @@ public class Verif {
 	 */
 	
 
-	private void verifier_EXP(Arbre a) {
+	private void verifier_EXP(Arbre a) throws ErreurVerif{
 		switch (a.getNoeud()) {
 		case Et: {
 			verifier_EXP(a.getFils1());
@@ -291,11 +291,13 @@ public class Verif {
 		
 		case PlusUnaire:
 			verifier_FACTEUR(a.getFils1());
+			break;
 		case MoinsUnaire:
 			verifier_FACTEUR(a.getFils1());
+			break;
 		case Non:
 			verifier_FACTEUR(a.getFils1());
-			return;
+			break;
 		default:
 			throw new ErreurVerif();
 		}
@@ -306,6 +308,9 @@ public class Verif {
 	private void verifier_FACTEUR(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
 		case Entier:
+			return;
+		case Reel:
+			return 
 
 		default:
 			throw new ErreurVerif();
