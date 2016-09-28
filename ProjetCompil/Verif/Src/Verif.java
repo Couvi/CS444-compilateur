@@ -317,6 +317,16 @@ public class Verif {
 		}
 	}
 
+	
+	private Type trouverType(String s) throws ErreurVerif{
+		
+	
+		Defn t= env.chercher(s);
+		if(t!= null)
+			return t.getType();
+		else
+			throw new ErreurVerif();
+	}
 	@SuppressWarnings("unused")
 	private void verifier_SAMPLE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
