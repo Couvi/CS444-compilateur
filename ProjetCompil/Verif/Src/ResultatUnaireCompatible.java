@@ -17,6 +17,13 @@ public class ResultatUnaireCompatible {
 
    private boolean ok;
    private Type typeRes;
+	
+	public ResultatUnaireCompatible () {}
+		
+	public ResultatUnaireCompatible (boolean ok, Type typeRes) {
+		this.ok = ok;
+		this.typeRes = typeRes;
+	}
 
    /**
     * Retourne la valeur de l'attribut <code>ok</code>.

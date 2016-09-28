@@ -15,6 +15,13 @@ public class ResultatAffectCompatible {
 
    private boolean ok;
    private boolean conv2;
+	
+	public ResultatAffectCompatible() {}
+	
+	public ResultatAffectCompatible(boolean ok, boolean conv2) {
+		this.ok = ok;
+		this.conv2 = conv2;
+	}
 
    /**
     * Retourne la valeur de l'attribut <code>ok</code>.

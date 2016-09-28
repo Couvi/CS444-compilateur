@@ -4,7 +4,7 @@ package ProjetCompil.Global.Src;
  * Classe des types intervalles.
  */
 
-class TypeInterval extends Type {
+public class TypeInterval extends Type {
 
    private int borneInf; // La borne inférieure de ce type intervalle
    private int borneSup; // La borne supérieure de ce type intervalle
@@ -12,7 +12,7 @@ class TypeInterval extends Type {
    /**
     * Constructeur de type intervalle.
     */
-   TypeInterval(int borneInf, int borneSup) {
+   public TypeInterval(int borneInf, int borneSup) {
       super(NatureType.Interval);
       this.borneInf = borneInf;
       this.borneSup = borneSup;
