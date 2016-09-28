@@ -23,15 +23,15 @@ public class TestSynt {
          // Appel de l'analyseur syntaxique et construction de l'arbre abstrait
          Arbre arbre = parser.analyseSyntaxique(args); 
          // Affichage de l'arbre
-         arbre.afficher(0);
+         //arbre.afficher(0);
          // Décompilation de l'arbre
-         arbre.decompiler(0);
+         //arbre.decompiler(0);
       } catch (ErreurLexicale e) {
          // Recuperation de l'exception ErreurLexicale
-         // On ne fait rien
+         System.exit(-1);
       } catch (ErreurSyntaxe e) {
          // Recuperation de l'exception ErreurSyntaxe
-         // On ne fait rien
+         System.exit(-2);
       }
    }
 

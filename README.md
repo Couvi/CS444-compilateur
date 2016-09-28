@@ -1,33 +1,35 @@
 # CS444-compilateur
 ## Modifier le CLASSPATH
-- Permanent via .bashrc
-Dans le fichier .bash_profile , (ou .bashrc , ou .tcshrc...), modifier le CLASSPATH :
-```export CLASSPATH=$CLASSPATH:$HOME:$HOME/ProjetCompil/Global/Bin/java-cup-11a-runtime.jar:$HOME/ProjetCompil/Global/Bin/JFlex.jar:.```
-Dans le dossier $HOME, relire le fichier .bash_profile : source .bash_profile, (ou source .bashrc , ou .tcshrc...) 
-- Temporaire via setenv.sh
 Executer la commande `source` avec le fichier setenv.sh a la racine
- 
 
 ## Compiler
 - cd ProjetCompil
 - make
 
-## Tester l'analyse lexicale
-- cd Syntaxe/Test
-- ./lexico simple.cas
+## Tester 
+La commande 'make test' permet de lancer les tests de :
+- l'analyse lexicale : Fichiers dans dossier devlex
+- l'analyse syntaxique : Fichiers dans dossier devsyn
 
-## Tester l'analyse syntaxique
-- ./syntaxe simple.cas
+# Passe 2 : Travail a effectuer
+** A rendre pour le vendredi 14 octobre, avant 18h. ** 
+- Programmes (dans Verif/Src)
+- Jeux de tests (dans Verif/Test) - test avec Cobertura
+- Documentation (dans Verif/Doc) d√©crivant : 
+	- les messages d'erreurs,
+	- l'architecture de la passe 2,
+	- la m√©thodologie de test.
 
-# Travail ‡ effectuer
+
+# Passe 1 : Travail effectu√©
 
 ## Analyse lexicale
-- Dans le rÈpertoire ProjetCompil/Syntaxe/Src, complÈter le fichier lexical.flex (voir Lexicographie.txt)
-- Pour tester, utiliser le script lexico dans le rÈpertoire ProjetCompil/Syntaxe/Test.
+- Dans le r√©pertoire ProjetCompil/Syntaxe/Src, compl√©ter le fichier lexical.flex (voir Lexicographie.txt)
+- Pour tester, utiliser le script lexico dans le r√©pertoire ProjetCompil/Syntaxe/Test.
 	
 ## Analyse syntaxique
-- ComplÈter le fichier syntaxe.cup (voir Syntaxe.txt et ArbreAbstrait.txt)
+- Compl√©ter le fichier syntaxe.cup (voir Syntaxe.txt et ArbreAbstrait.txt)
 - Ecrire des programmes JCas de test dans ProjetCompil/Syntaxe/Test.
-- Effectuer des tests avec le script syntaxe dans le rÈpertoire ProjetCompil/Syntaxe/Test
-- Ce script utilise le programme principal prÈsent dans la classe TestSynt.
+- Effectuer des tests avec le script syntaxe dans le r√©pertoire ProjetCompil/Syntaxe/Test
+- Ce script utilise le programme principal pr√©sent dans la classe TestSynt.
 

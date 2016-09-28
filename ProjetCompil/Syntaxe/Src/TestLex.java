@@ -44,12 +44,10 @@ public class TestLex {
       // En fin de fichier, la fonction next_token() renvoie un Symbol
       // dont la "valeur" est sym.EOF
       while (t.sym != sym.EOF) {
-         System.out.println(
-            Lexical.toString(t));
+         //System.out.println(Lexical.toString(t));
          t = analyseur.next_token() ; 
       }
-
-      System.out.println() ; 
+	//System.out.println() ; 
    }
 
 }

@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 # Teste l'analyse lexicale
 
 # Pour tous les fichiers tests de syntaxe
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
+RED="$(tput bold ; tput setaf 1)"
+GREEN="$(tput bold ; tput setaf 2)"
+NC="$(tput sgr0)" # No Color
 
 for fich in $* 
 do
@@ -13,9 +13,9 @@ do
 	java ProjetCompil.Syntaxe.Src.TestLex ProjetCompil/Syntaxe/Test/$fich 
 	if [ $? -ne 0 ]
 	then
-		echo "${RED}lextest $fich FAILED${NC}"
+		echo -e "${RED}lextest $fich FAILED${NC}"
 	else
-		echo "${GREEN}lextest $fich OK${NC}"
+		echo -e "${GREEN}lextest $fich OK${NC}"
 	fi
 	
 	cd ProjetCompil/Syntaxe/Test
