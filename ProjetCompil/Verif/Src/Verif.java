@@ -127,7 +127,13 @@ public class Verif {
 		switch (a.getNoeud()) {
 		case Ident: {
 			verifier_IDF(a);
-			return null; // TODO
+			String s = a.getChaine();
+			Defn def = env.chercher(s);
+			if (def == null) {
+				ErreurContext err = ErreurContext.TypeInconnu;
+				err.leverErreurContext(s, a.getNumLigne());
+			}
+			return def.getType();
 		}
 		case Intervalle: {
 			Type t = verifier_INTERVALLE(a);

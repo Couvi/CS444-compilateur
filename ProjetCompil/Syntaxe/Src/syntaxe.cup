@@ -241,7 +241,9 @@ inst ::= NULL
    |  IF exp:a THEN liste_inst:b END
    {:
       RESULT = Arbre.creation3(Noeud.Si, a, b, 
-		Arbre.creation0(Noeud.Nop, aleft), aleft);
+      Arbre.creation2(Noeud.ListeInst, 
+      Arbre.creation0(Noeud.Vide, parser.numLigne()),
+      Arbre.creation0(Noeud.Nop, aleft), aleft), aleft);
    :}
    |  IF exp:a THEN liste_inst:b ELSE liste_inst:c END
    {:
