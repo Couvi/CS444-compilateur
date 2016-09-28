@@ -310,7 +310,7 @@ public class Verif {
 		case Entier:
 			return;
 		case Reel:
-			return 
+			return;
 
 		default:
 			throw new ErreurVerif();
