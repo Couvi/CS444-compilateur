@@ -13,13 +13,16 @@ package ProjetCompil.Verif.Src;
 
 public enum ErreurContext {
    
-   ErreurNonRepertoriee, TypeInconnu, Erreurchiante;
+   ErreurNonRepertoriee, TypeInconnu, TypesNonCompatible;
 
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
 	      case TypeInconnu :
 			System.err.println("Type inconnu ("+s+") ");
+			break;
+		case TypesNonCompatible :
+			System.out.println("Types non compatible ( "+s+") ");
 			break;
          default:
             System.err.print("non repertoriee");

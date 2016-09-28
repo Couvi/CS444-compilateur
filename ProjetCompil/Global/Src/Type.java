@@ -5,7 +5,7 @@ package ProjetCompil.Global.Src;
  *
  * Un objet de la classe Type représente un type du langage JCas. 
  * L'ensemble des types est défini par la grammaire d'arbres suivante : 
- * <ul>
+
  * TYPE            -&gt; Type.Real <br>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Type.Boolean <br>
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Type.String <br>
@@ -13,7 +13,7 @@ package ProjetCompil.Global.Src;
  * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Type.Array(INTERVALLE, TYPE) <br>
  * <br>
  * INTERVALLE -&gt; Type.Interval(int, int)
- * </ul>
+
  *
  * La nature d'un type est définie par un attribut de type {@link ProjetCompil.Global.Src.NatureType NatureType}.
  * Les différentes natures d'un type sont les suivantes : 

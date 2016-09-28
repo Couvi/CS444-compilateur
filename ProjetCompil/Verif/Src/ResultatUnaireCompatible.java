@@ -6,6 +6,7 @@ import ProjetCompil.Global.Src.*;
  * Résultat de l'opération unaireCompatible(noeud, t), où noeud représente 
  * une opération unaire et t est le type de l'expression.
  * Un objet de la classe ResultatUnaireCompatible a deux attributs : 
+ * <ul>
  * <li> ok, qui vaut vrai ssi on peut appliquer l'opération représentée par 
  *      noeud au type t ; </li> 
  * <li> typeRes, qui donne le type du résultat de l'opération représentée 
