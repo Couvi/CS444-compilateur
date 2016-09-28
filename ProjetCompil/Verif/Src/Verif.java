@@ -179,13 +179,35 @@ public class Verif {
 			verifier_PLACE(a.getFils1());
 			verifier_EXP(a.getFils2());
 			return;
+		case Pour:
+		case TantQue :
+			verifier_PAS(a.getFils1());
+			verifier_LISTE_INST(a.getFils2());
+			return;
+		case Si :
+			verifier_EXP(a.getFils1());
+			verifier_LISTE_INST(a.getFils2());
+			verifier_LISTE_INST(a.getFils3());
 		case Vide:
-			// suite TODO
+			return;//TODO
 		default:
 			throw new ErreurVerif();
 		}
 	}
 
+	private void verifier_PAS(Arbre a) throws ErreurVerif {
+		switch (a.getNoeud()) {
+	  		case Increment :
+	  		case Decrement :
+	  			verifier_IDF(a.getFils1());
+	  			verifier_EXP(a.getFils2());
+	  			verifier_EXP(a.getFils3());
+	  			return;
+	  	default:
+			throw new ErreurVerif();
+		}
+	}
+	
 	private void verifier_PLACE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
 		case Ident:
@@ -198,20 +220,6 @@ public class Verif {
 			throw new ErreurVerif();
 		}
 	}
-
-	
-		
-
-	
-	// ------------------------------------------------------------------------
-	// COMPLETER les operations de vérifications et de décoration pour toutes
-	// les constructions d'arbres
-	// ------------------------------------------------------------------------
-	/*
-	 * //patron: switch(a.getNoeud()) { case : {
-	 * 
-	 * } default: { throw new ErreurVerif(); } }
-	 */
 	
 
 	private void verifier_EXP(Arbre a) throws ErreurVerif{
