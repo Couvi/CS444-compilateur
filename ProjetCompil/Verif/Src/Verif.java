@@ -127,7 +127,7 @@ public class Verif {
 		switch (a.getNoeud()) {
 		case Ident: {
 			verifier_IDF(a);
-			return null; // TODO
+			return trouverType(a.getChaine(), a.getNumLigne());
 		}
 		case Intervalle: {
 			Type t = verifier_INTERVALLE(a);
@@ -317,6 +317,20 @@ public class Verif {
 		}
 	}
 
+	
+	private Type trouverType(String s, int numLigne) throws ErreurVerif{
+		
+	
+		Defn t= env.chercher(s);
+		if(t!= null){
+			return t.getType();
+	}
+		else {
+			ErreurContext err = ErreurContext.TypeInconnu;
+			err.leverErreurContext(s, numLigne);
+		}
+		return null;
+	}
 	@SuppressWarnings("unused")
 	private void verifier_SAMPLE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
