@@ -312,8 +312,6 @@ public class Verif {
 		}
 	}
 
-}
-
 	@SuppressWarnings("unused")
 	private void verifier_SAMPLE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
