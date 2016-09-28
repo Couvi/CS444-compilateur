@@ -4,7 +4,7 @@ package ProjetCompil.Global.Src;
  * Classe des types tableau.
  */
 
-class TypeArray extends Type {
+public class TypeArray extends Type {
 
    private Type typeIndice;  // Le type des indices de ce type tableau
    private Type typeElement; // Le type des éléments de ce type tableau
@@ -12,7 +12,7 @@ class TypeArray extends Type {
    /**
     * Constructeur de type tableau.
     */
-   TypeArray(Type typeIndice, Type typeElement) {
+   public TypeArray(Type typeIndice, Type typeElement) {
       super(NatureType.Array);
       this.typeIndice = typeIndice;
       this.typeElement = typeElement;

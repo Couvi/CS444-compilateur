@@ -30,8 +30,8 @@ public class ReglesTypage {
 		t1.getIndice().getBorneInf() == t2.getIndice().getBorneInf() &&  t1.getIndice().getBorneSup() == t2.getIndice().getBorneSup())
 			result = affectCompatible(t1.getElement(), t2.getElement());
 	
-	if (t1.getNature() == NatureType.Real && t2.getNature() == NatureType.Interval)
-		result.setConv2(true);
+	if ( (t1.getNature() == NatureType.Real && t2.getNature() == NatureType.Interval) )
+			result.setConv2(true);
 	
 	return result;
    }
@@ -124,7 +124,7 @@ public class ReglesTypage {
 			}
 			break;
 
-		case Index :
+		case Tableau :
 			if (t1.getNature() == NatureType.Array && t1.getIndice().getNature() == NatureType.Interval && t2.getNature() == NatureType.Interval) {
 				result.setOk(true);
 				result.setTypeRes(t1.getElement());

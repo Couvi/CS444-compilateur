@@ -22,6 +22,13 @@ import ProjetCompil.Global.Src.*;
 public class ResultatBinaireCompatible extends ResultatArithCompatible {
 
    private Type typeRes;
+		
+	public ResultatBinaireCompatible () {}
+		
+	public ResultatBinaireCompatible (boolean ok, boolean conv1, boolean conv2, Type typeRes) {
+		super(ok, conv1, conv2);
+		this.typeRes = typeRes;
+	}
 
    /**
     * Retourne la valeur de l'attribut <code>typeRes</code>.
