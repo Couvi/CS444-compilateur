@@ -84,14 +84,3 @@ public enum ErreurContext {
    }
 
 }
-
-//*** Pour utiliser tout ce merdier !!! ****/
-// ErreurContext err = ErreurContext.Erreurdemerde;
-// err.leverErreurContext(String s, int numLigne)
-
-
-
-//à faire:
-//RedeclarationIdent "l' identificateur \""+s+"\" a déja été redéclaré ou est réservé"
-//IdentificateurInconnu ""
-//BorneNonEntier
