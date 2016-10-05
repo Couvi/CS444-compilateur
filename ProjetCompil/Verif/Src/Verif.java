@@ -219,73 +219,295 @@ public class Verif {
 		case Et: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				a.setDecor(new Decor(t1));
+			}
+			else{
+			//	ErreurContext err = ErreurContext.TypeNonCompatible;
+			//	err.leverErreurContext(s, a.getNumLigne());
+			}
+			
+				
+			}
 			break;
-		}
 		case Ou: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				a.setDecor(new Decor(t1));
+			}
+			else{
+				//	ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case Egal: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+				}
+				a.setDecor(new Decor(Type.Boolean));
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case InfEgal: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+				}
+				a.setDecor(new Decor(Type.Boolean));
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case SupEgal: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+				}
+				a.setDecor(new Decor(Type.Boolean));
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		
 		case NonEgal: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+				}
+				a.setDecor(new Decor(Type.Boolean));
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case Inf: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+				}
+				a.setDecor(new Decor(Type.Boolean));
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+
+			}
 			break;
 		}
 		case Sup: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+				}
+				a.setDecor(new Decor(Type.Boolean));
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case Plus: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+					a.setDecor(new Decor(t2));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.setDecor(new Decor(t1));
+				}
+				
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case Moins: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+					a.setDecor(new Decor(t2));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.setDecor(new Decor(t2));
+				}
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case Mult: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+					a.setDecor(new Decor(t2));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.setDecor(new Decor(t1));
+				}
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case DivReel: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+					a.setDecor(new Decor(t2));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.setDecor(new Decor(t1));
+				}
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		case Reste: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+					a.setDecor(new Decor(t2));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.setDecor(new Decor(t1));
+				}
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 			
 		}
 		case Quotient: {
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
+					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+					a.setDecor(new Decor(t2));
+				}
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.setDecor(new Decor(t1));
+				}
+			}
+			else{
+//				ErreurContext err = ErreurContext.TypeNonCompatible;
+				//	err.leverErreurContext(s, a.getNumLigne());
+			}
 			break;
 		}
 		
@@ -308,9 +530,15 @@ public class Verif {
 	private void verifier_FACTEUR(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
 		case Entier:
-			return;
+			a.setDecor(new Decor(Defn.creationConstInteger(a.getEntier())));
+			
 		case Reel:
-			return;
+			//a.setDecor(new Decor(Defn.creationConstReel(a.getEntier())));
+
+			
+		case Chaine:
+			//a.setDecor(new Decor(Defn.creationConstChaine(a.getEntier())));
+
 
 		default:
 			throw new ErreurVerif();
@@ -331,6 +559,8 @@ public class Verif {
 		}
 		return null;
 	}
+	
+	
 	@SuppressWarnings("unused")
 	private void verifier_SAMPLE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
