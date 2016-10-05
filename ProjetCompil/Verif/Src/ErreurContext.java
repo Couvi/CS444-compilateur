@@ -67,7 +67,7 @@ public enum ErreurContext {
 			System.out.println("Types non compatible ( "+s+") ");
 			break;
          default:
-            System.err.print("non repertoriee");
+        	 System.err.print("non repertoriee");
 	 
       }
       System.err.println(" ... ligne " + numLigne);
