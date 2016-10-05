@@ -6,3 +6,5 @@ all :
 clean : 
 	/bin/rm -f *.class
 
+test :
+	java ProjetCompil.Verif.Src.TestVerif ../Test/factorial.cas
