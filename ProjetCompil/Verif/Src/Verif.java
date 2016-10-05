@@ -112,6 +112,7 @@ public class Verif {
 				ErreurContext err = ErreurContext.RedeclarationIdent;
 				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
 			}
+			a.getFils2().setDecor(new Decor(Defn.creationVar(t)));
 			verifier_IDF(a.getFils2());
 		}
 		default: {
