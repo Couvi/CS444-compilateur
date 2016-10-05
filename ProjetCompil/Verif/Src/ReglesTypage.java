@@ -149,8 +149,8 @@ public class ReglesTypage {
 				}
 				break;
 		
-			case Plus :
-			case Moins :
+			case PlusUnaire :
+			case MoinsUnaire :
 				if (t.getNature() == NatureType.Interval) {
 					result.setTypeRes(Type.Integer);
 					result.setOk(true);
