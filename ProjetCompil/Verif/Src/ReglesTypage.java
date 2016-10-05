@@ -13,7 +13,6 @@ public class ReglesTypage {
     * Teste si le type t1 et le type t2 sont compatibles pour l'affectation, 
     * c'est à dire si on peut affecter un objet de t2 à un objet de type t1.
     */
-
    static ResultatAffectCompatible affectCompatible(Type t1, Type t2) {
 	ResultatAffectCompatible result = new ResultatAffectCompatible();
 	result.setOk(false);
@@ -30,8 +29,8 @@ public class ReglesTypage {
 		t1.getIndice().getBorneInf() == t2.getIndice().getBorneInf() &&  t1.getIndice().getBorneSup() == t2.getIndice().getBorneSup())
 			result = affectCompatible(t1.getElement(), t2.getElement());
 	
-	if (t1.getNature() == NatureType.Real && t2.getNature() == NatureType.Interval)
-		result.setConv2(true);
+	if ( (t1.getNature() == NatureType.Real && t2.getNature() == NatureType.Interval) )
+			result.setConv2(true);
 	
 	return result;
    }
@@ -40,7 +39,6 @@ public class ReglesTypage {
     * Teste si le type t1 et le type t2 sont compatible pour l'opération 
     * binaire représentée dans noeud.
     */
-
    static ResultatBinaireCompatible binaireCompatible (Noeud noeud, Type t1, Type t2) {
 	ResultatBinaireCompatible result = new ResultatBinaireCompatible();
 	result.setOk(false);
@@ -124,7 +122,7 @@ public class ReglesTypage {
 			}
 			break;
 
-		case Index :
+		case Tableau :
 			if (t1.getNature() == NatureType.Array && t1.getIndice().getNature() == NatureType.Interval && t2.getNature() == NatureType.Interval) {
 				result.setOk(true);
 				result.setTypeRes(t1.getElement());
@@ -151,8 +149,8 @@ public class ReglesTypage {
 				}
 				break;
 		
-			case Plus :
-			case Moins :
+			case PlusUnaire :
+			case MoinsUnaire :
 				if (t.getNature() == NatureType.Interval) {
 					result.setTypeRes(Type.Integer);
 					result.setOk(true);
