@@ -52,6 +52,19 @@ public class Verif {
 		def = Defn.creationType(Type.Boolean);
 		def.setGenre(Genre.PredefBoolean);
 		env.enrichir("boolean", def);
+		//true
+		def = Defn.creationConstBoolean(true);
+		def.setGenre(Genre.PredefBoolean);
+		env.enrichir("true", def);
+		//false
+		def = Defn.creationConstBoolean(false);
+		def.setGenre(Genre.PredefBoolean);
+		env.enrichir("false", def);
+		//max_int
+		def = Defn.creationConstInteger(java.lang.Integer.MAX_VALUE);
+		def.setGenre(Genre.PredefInteger);
+		env.enrichir("max_int", def);
+
 	}
 
 	/**************************************************************************
@@ -59,16 +72,8 @@ public class Verif {
 	 **************************************************************************/
 	private void verifier_PROGRAMME(Arbre a) throws ErreurVerif {
 		initialiserEnv();
-		switch (a.getNoeud()) {
-		case Programme: {
-			verifier_LISTE_DECL(a.getFils1());
-			verifier_LISTE_INST(a.getFils2());
-			return;
-		}
-		default: {
-			throw new ErreurVerif();
-		}
-		}
+		verifier_LISTE_DECL(a.getFils1());
+		verifier_LISTE_INST(a.getFils2());
 	}
 
 	/**************************************************************************
@@ -91,16 +96,8 @@ public class Verif {
 	}
 
 	private void verifier_DECL(Arbre a) throws ErreurVerif {
-		switch (a.getNoeud()) {
-		case Decl: {
-			Type type = verifier_TYPE(a.getFils2());
-			verifier_LISTE_IDF(a.getFils1(), type);
-			return;
-		}
-		default: {
-			throw new ErreurVerif();
-		}
-		}
+		Type type = verifier_TYPE(a.getFils2());
+		verifier_LISTE_IDF(a.getFils1(), type);
 	}
 
 	private void verifier_LISTE_IDF(Arbre a, Type t) throws ErreurVerif {
@@ -110,8 +107,12 @@ public class Verif {
 		}
 		case ListeIdent: {
 			verifier_LISTE_IDF(a.getFils1(), t);
+			boolean isPresent = env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
+			if(isPresent) {
+				ErreurContext err = ErreurContext.RedeclarationIdent;
+				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
+			}
 			verifier_IDF(a.getFils2());
-			env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
 		}
 		default: {
 			throw new ErreurVerif();
@@ -119,7 +120,12 @@ public class Verif {
 		}
 	}
 
-	private void verifier_IDF(Arbre a) {
+	private void verifier_IDF(Arbre a) throws ErreurVerif{
+		Defn def = env.chercher(a.getChaine());
+			if(def == null) {
+				ErreurContext err = ErreurContext.IdentificateurInconnu;
+				err.leverErreurContext(a.getChaine(), a.getNumLigne());
+			}
 
 	}
 
@@ -143,12 +149,30 @@ public class Verif {
 		}
 	}
 
-	private Type verifier_INTERVALLE(Arbre a) {
-		return null; // TODO
+	private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif{
+		verifier_EXP(a.getFils1());
+		verifier_EXP(a.getFils2());
+		Type t1 = a.getFils1().getDecor().getType();
+		Type t2 = a.getFils2().getDecor().getType();
+		if(!(t1 instanceof TypeInterval)) {
+			ErreurContext err = ErreurContext.BorneNonEntier;
+			err.leverErreurContext("", a.getFils1().getNumLigne());
+		}
+		if(!(t2 instanceof TypeInterval)) {
+			ErreurContext err = ErreurContext.BorneNonEntier;
+			err.leverErreurContext("", a.getFils2().getNumLigne());
+		}
+		Type temp = Type.creationInterval(a.getFils1().getEntier(), a.getFils1().getEntier());
+		a.setDecor(new Decor(temp));
+		return temp;
 	}
 
-	private Type verifier_TABLEAU(Arbre a) {
-		return null; // TODO
+	private Type verifier_TABLEAU(Arbre a) throws ErreurVerif {
+		Type t1 = verifier_INTERVALLE(a.getFils1());
+		Type t2 = verifier_TYPE(a.getFils2());
+		Type arr = Type.creationArray(t1,t2);
+		a.setDecor(new Decor(arr));
+		return arr;
 	}
 
 	/**************************************************************************
@@ -354,7 +378,7 @@ public class Verif {
 		Defn t= env.chercher(s);
 		if(t!= null){
 			return t.getType();
-	}
+		}
 		else {
 			ErreurContext err = ErreurContext.TypeInconnu;
 			err.leverErreurContext(s, numLigne);
