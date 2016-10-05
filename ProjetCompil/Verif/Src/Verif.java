@@ -120,8 +120,8 @@ public class Verif {
 		}
 	}
 
-	private void verifier_IDF(Arbre a) {
-		Defn def = env.chercher(a.getChaine();
+	private void verifier_IDF(Arbre a) throws ErreurVerif{
+		Defn def = env.chercher(a.getChaine());
 			if(def == null) {
 				ErreurContext err = ErreurContext.IdentificateurInconnu;
 				err.leverErreurContext(a.getChaine(), a.getNumLigne());
@@ -148,27 +148,31 @@ public class Verif {
 		}
 		}
 	}
-	private void verifier_
-	private Type verifier_INTERVALLE(Arbre a) {
+
+	private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif{
 		verifier_EXP(a.getFils1());
 		verifier_EXP(a.getFils2());
 		Type t1 = a.getFils1().getDecor().getType();
 		Type t2 = a.getFils2().getDecor().getType();
-		if(t1 != Type.Intervalle) {
+		if(!(t1 instanceof TypeInterval)) {
 			ErreurContext err = ErreurContext.BorneNonEntier;
 			err.leverErreurContext("", a.getFils1().getNumLigne());
 		}
-		if(t2 != Type.Intervalle) {
+		if(!(t2 instanceof TypeInterval)) {
 			ErreurContext err = ErreurContext.BorneNonEntier;
 			err.leverErreurContext("", a.getFils2().getNumLigne());
 		}
-		Type temp = creationInterval(a.getFils1().getEntier(), a.getFils1().getEntier());
+		Type temp = Type.creationInterval(a.getFils1().getEntier(), a.getFils1().getEntier());
 		a.setDecor(new Decor(temp));
 		return temp;
 	}
 
-	private Type verifier_TABLEAU(Arbre a) {
-		return null; // TODO
+	private Type verifier_TABLEAU(Arbre a) throws ErreurVerif {
+		Type t1 = verifier_INTERVALLE(a.getFils1());
+		Type t2 = verifier_TYPE(a.getFils2());
+		Type arr = Type.creationArray(t1,t2);
+		a.setDecor(new Decor(arr));
+		return arr;
 	}
 
 	/**************************************************************************
