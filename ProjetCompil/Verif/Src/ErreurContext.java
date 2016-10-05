@@ -36,10 +36,10 @@ public enum ErreurContext {
    BorneNonEntier,
 
    /**
-   * Problemecompilateur est généré lorsque le compilateur est en défault
+   * ProblemeCompilateur est généré lorsque le compilateur est en défault
    * (cela ne devrait jamais ce produire ...)
    **/
-   Problemecompilateur,
+   ProblemeCompilateur,
    
    /**
    * TypesNonCompatible signifie que l'opération n'est pas possible car les types des variables 
@@ -69,7 +69,7 @@ public enum ErreurContext {
 		case BorneNonEntier :
 			System.out.println("Les bornes de l'Interval ne sont pas des entier ");
 			break;	
-		case Problemecompilateur : 
+		case ProblemeCompilateur : 
 			System.out.println("Erreur du compilateur (il n'y a rien à faire...)");
 			break;
 		case TypesNonCompatible :
