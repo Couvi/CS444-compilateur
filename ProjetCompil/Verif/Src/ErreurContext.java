@@ -34,6 +34,12 @@ public enum ErreurContext {
    * BorneNonEntier est généré lorsque l'on veut créer un type Interval mais les bornes ne sont pas des entiers
    **/
    BorneNonEntier,
+
+   /**
+   * ProblemeCompilateur est généré lorsque le compilateur est en défault
+   * (cela ne devrait jamais ce produire ...)
+   **/
+   ProblemeCompilateur,
    
    /**
    * TypesNonCompatible signifie que l'opération n'est pas possible car les types des variables 
@@ -63,11 +69,14 @@ public enum ErreurContext {
 		case BorneNonEntier :
 			System.out.println("Les bornes de l'Interval ne sont pas des entier ");
 			break;	
+		case ProblemeCompilateur : 
+			System.out.println("Erreur du compilateur (il n'y a rien à faire...)");
+			break;
 		case TypesNonCompatible :
 			System.out.println("Types non compatible ( "+s+") ");
 			break;
          default:
-            System.err.print("non repertoriee");
+        	 System.err.print("non repertoriee");
 	 
       }
       System.err.println(" ... ligne " + numLigne);
@@ -75,14 +84,3 @@ public enum ErreurContext {
    }
 
 }
-
-//*** Pour utiliser tout ce merdier !!! ****/
-// ErreurContext err = ErreurContext.Erreurdemerde;
-// err.leverErreurContext(String s, int numLigne)
-
-
-
-//à faire:
-//RedeclarationIdent "l' identificateur \""+s+"\" a déja été redéclaré ou est réservé"
-//IdentificateurInconnu ""
-//BorneNonEntier

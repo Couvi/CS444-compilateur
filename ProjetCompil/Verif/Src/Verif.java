@@ -191,7 +191,8 @@ public class Verif {
 			return;
 		}
 		default: {
-			throw new ErreurVerif();
+			ErreurContext err = ErreurContext.ProblemeCompilateur;
+			err.leverErreurContext("", a.getFils1().getNumLigne());
 		}
 		}
 	}
@@ -223,7 +224,8 @@ public class Verif {
 		case Ligne :
 			return;
 		default:
-			throw new ErreurVerif();
+			ErreurContext err = ErreurContext.ProblemeCompilateur;
+			err.leverErreurContext("", a.getFils1().getNumLigne());
 		}
 	}
 

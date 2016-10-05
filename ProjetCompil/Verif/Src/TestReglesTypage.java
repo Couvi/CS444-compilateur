@@ -32,7 +32,17 @@ public class TestReglesTypage {
 		System.out.println("Erreur Test Affect : Array");
 	if(!TestAffectCompatible(new TypeArray(new TypeInterval(1, 15), Type.Real),new TypeArray(new TypeInterval(0, 15), new TypeInterval(45, 77)), new ResultatAffectCompatible(false, false)))
 		System.out.println("Erreur Test Affect : Array");
+		
+	if(!TestUnaireCompatible(Noeud.Non,Type.Boolean, new ResultatUnaireCompatible(true, Type.Boolean)))
+		System.out.println("Erreur Test Unaire : Non - Boolean");	
+	if(!TestUnaireCompatible(Noeud.Moins,Type.Real, new ResultatUnaireCompatible(false, Type.Real)))
+		System.out.println("Erreur Test Unaire : Moins - Real");
+	if(!TestUnaireCompatible(Noeud.MoinsUnaire,Type.Real, new ResultatUnaireCompatible(true, Type.Real)))
+		System.out.println("Erreur Test Unaire : MoinsUnaire - Real");
+	if(!TestUnaireCompatible(Noeud.MoinsUnaire,Type.Boolean, new ResultatUnaireCompatible(false, Type.Boolean)))
+		System.out.println("Erreur Test Unaire : MoinsUnaire - Boolean");
 	
+
 	
    }
 
@@ -46,7 +56,7 @@ public class TestReglesTypage {
     
     public static Boolean TestBinaireCompatible (Noeud noeud, Type t1, Type t2, ResultatBinaireCompatible result) {
 	    ResultatBinaireCompatible retour = ReglesTypage.binaireCompatible(noeud, t1, t2);
-	    if (retour.getOk() == result.getOk() && retour.getConv1() == result.getConv1() && retour.getConv2() == result.getConv2() && retour.getTypeRes().getNature() == result.getTypeRes().getNature())
+	    if (retour.getOk() == result.getOk() && retour.getConv1() == result.getConv1() && retour.getConv2() == result.getConv2())
 		return true;
 	    else 
 		return false;
@@ -54,7 +64,7 @@ public class TestReglesTypage {
     
     public static Boolean TestUnaireCompatible (Noeud noeud, Type t, ResultatUnaireCompatible result) {
 	    ResultatUnaireCompatible retour = ReglesTypage.unaireCompatible(noeud, t);
-	    if (retour.getOk() == result.getOk() && retour.getTypeRes().getNature() == result.getTypeRes().getNature())
+	    if (retour.getOk() == result.getOk())
 		return true;
 	    else 
 		return false;
