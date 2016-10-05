@@ -13,7 +13,6 @@ public class ReglesTypage {
     * Teste si le type t1 et le type t2 sont compatibles pour l'affectation, 
     * c'est à dire si on peut affecter un objet de t2 à un objet de type t1.
     */
-
    static ResultatAffectCompatible affectCompatible(Type t1, Type t2) {
 	ResultatAffectCompatible result = new ResultatAffectCompatible();
 	result.setOk(false);
@@ -40,7 +39,6 @@ public class ReglesTypage {
     * Teste si le type t1 et le type t2 sont compatible pour l'opération 
     * binaire représentée dans noeud.
     */
-
    static ResultatBinaireCompatible binaireCompatible (Noeud noeud, Type t1, Type t2) {
 	ResultatBinaireCompatible result = new ResultatBinaireCompatible();
 	result.setOk(false);
