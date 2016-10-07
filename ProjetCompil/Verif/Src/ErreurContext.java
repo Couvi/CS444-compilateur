@@ -58,22 +58,22 @@ public enum ErreurContext {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
 	        case TypeInconnu :
-			System.err.println("Type inconnu ("+s+") ");
+			System.err.print("Type inconnu ("+s+") ");
 			break;
 		case RedeclarationIdent :
-			System.out.println("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
+			System.out.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
 			break;
 		case IdentificateurInconnu :
-			System.out.println("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
+			System.out.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
 			break;		
 		case BorneNonEntier :
-			System.out.println("Les bornes de l'Interval ne sont pas des entier ");
+			System.out.print("Les bornes de l'Interval ne sont pas des entier ");
 			break;	
 		case ProblemeCompilateur : 
-			System.out.println("Erreur du compilateur (il n'y a rien à faire...)");
+			System.out.print("Erreur du compilateur ("+s")");
 			break;
 		case TypesNonCompatible :
-			System.out.println("Types non compatible ( "+s+") ");
+			System.out.print("Types non compatible ( "+s+") ");
 			break;
          default:
         	 System.err.print("non repertoriee");
