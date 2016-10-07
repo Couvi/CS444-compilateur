@@ -283,8 +283,8 @@ public class Verif {
 				a.setDecor(new Decor(t1));
 			}
 			else{
-			//	ErreurContext err = ErreurContext.TypeNonCompatible;
-			//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			
 				
@@ -300,8 +300,8 @@ public class Verif {
 				a.setDecor(new Decor(t1));
 			}
 			else{
-				//	ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+					ErreurContext err = ErreurContext.TypesNonCompatible;
+					err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -321,8 +321,8 @@ public class Verif {
 				a.setDecor(new Decor(Type.Boolean));
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -342,8 +342,8 @@ public class Verif {
 				a.setDecor(new Decor(Type.Boolean));
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -363,8 +363,8 @@ public class Verif {
 				a.setDecor(new Decor(Type.Boolean));
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -385,8 +385,8 @@ public class Verif {
 				a.setDecor(new Decor(Type.Boolean));
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -406,8 +406,8 @@ public class Verif {
 				a.setDecor(new Decor(Type.Boolean));
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 
 			}
 			break;
@@ -428,8 +428,8 @@ public class Verif {
 				a.setDecor(new Decor(Type.Boolean));
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -451,8 +451,8 @@ public class Verif {
 				
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -473,8 +473,8 @@ public class Verif {
 				}
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -495,8 +495,8 @@ public class Verif {
 				}
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -517,8 +517,8 @@ public class Verif {
 				}
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
@@ -539,8 +539,8 @@ public class Verif {
 				}
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 			
@@ -562,8 +562,8 @@ public class Verif {
 				}
 			}
 			else{
-//				ErreurContext err = ErreurContext.TypeNonCompatible;
-				//	err.leverErreurContext(s, a.getNumLigne());
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+					err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
 			break;
 		}
