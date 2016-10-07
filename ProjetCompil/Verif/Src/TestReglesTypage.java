@@ -41,6 +41,13 @@ public class TestReglesTypage {
 		System.out.println("Erreur Test Unaire : MoinsUnaire - Real");
 	if(!TestUnaireCompatible(Noeud.MoinsUnaire,Type.Boolean, new ResultatUnaireCompatible(false, Type.Boolean)))
 		System.out.println("Erreur Test Unaire : MoinsUnaire - Boolean");
+		
+	if(!TestBinaireCompatible(Noeud.Egal, Type.Real, new TypeInterval(0, 15), new ResultatBinaireCompatible (true, false, true, Type.Boolean)))
+		System.out.println("Erreur Test Binaire : Egal - Real - Interval");
+	if(!TestBinaireCompatible(Noeud.Moins, new TypeInterval(0, 15), Type.Real, new ResultatBinaireCompatible (true, true, false, Type.Real)))
+		System.out.println("Erreur Test Binaire : Moins - Interval - Real");
+	if(!TestBinaireCompatible(Noeud.DivReel, Type.Boolean, Type.Real, new ResultatBinaireCompatible (false, false, false, null)))
+		System.out.println("Erreur Test Binaire : DivReel - Boolean - Real");
 	
 
 	
