@@ -80,6 +80,9 @@ public enum ErreurContext {
 	 
       }
       System.err.println(" ... ligne " + numLigne);
+      StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+      for (int i=0; i< stack.length; i++)
+         System.out.println(stack[i]);
       throw new ErreurVerif();
    }
 

@@ -8,5 +8,8 @@ html :
 clean : 
 	/bin/rm -f *.class
 
+veriftest-%: ../Test/%/*.cas
+	../Test/veriftest $^
+
 test : all
 	java ProjetCompil.Verif.Src.TestVerif ../Test/factorial.cas

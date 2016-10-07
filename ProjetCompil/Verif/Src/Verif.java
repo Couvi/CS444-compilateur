@@ -115,7 +115,7 @@ public class Verif {
 				ErreurContext err = ErreurContext.RedeclarationIdent;
 				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
 			}
-			a.getFils2().setDecor(new Decor(Defn.creationVar(t)));
+			a.getFils2().setDecor(new Decor(Defn.creationVar(t),t));
 			verifier_IDF(a.getFils2());
 			return;
 		}
@@ -129,11 +129,12 @@ public class Verif {
 
 	private void verifier_IDF(Arbre a) throws ErreurVerif{
 		Defn def = env.chercher(a.getChaine());
-			if(def == null) {
-				ErreurContext err = ErreurContext.IdentificateurInconnu;
-				err.leverErreurContext(a.getChaine(), a.getNumLigne());
-				return;
-			}
+		if(def == null) {
+			ErreurContext err = ErreurContext.IdentificateurInconnu;
+			err.leverErreurContext(a.getChaine(), a.getNumLigne());
+			return;
+		}
+		a.setDecor(new Decor(def,def.getType()));	
 
 	}
 
@@ -171,9 +172,11 @@ public class Verif {
 		}
 		case Ident: {
 			verifier_IDF(a);
+			a.setDecor(new Decor(Type.Integer));
 			return;
 		}
 		case Entier: {
+			a.setDecor(new Decor(Type.Integer));
 			return;
 		}
 		default: {
@@ -612,20 +615,35 @@ public class Verif {
 			}
 			break;
 		}
-		
-		case PlusUnaire:
+		case Ident: {
+			verifier_FACTEUR(a);
+			break;
+		}
+		case Index: {
+			verifier_FACTEUR(a);
+			break;
+		}
+		case Entier: {
+			verifier_FACTEUR(a);
+			break;
+		}
+		case PlusUnaire: {
 			verifier_FACTEUR(a.getFils1());
 			break;
-		case MoinsUnaire:
+		}
+		case MoinsUnaire: {
 			verifier_FACTEUR(a.getFils1());
 			break;
-		case Non:
+		}
+		case Non: {
 			verifier_FACTEUR(a.getFils1());
 			break;
-		default:
+		}
+		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Exp", a.getNumLigne());
 			return;
+		}
 		}
 	}
 
@@ -633,21 +651,33 @@ public class Verif {
 
 	private void verifier_FACTEUR(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Entier:
-			a.setDecor(new Decor(Defn.creationConstInteger(a.getEntier())));
-			
-		case Reel:
-			//a.setDecor(new Decor(Defn.creationConstReel(a.getEntier())));
+		case Entier: {
+			a.setDecor(new Decor(Type.Integer));
+			return;
+		}	
+		case Reel: {
+			a.setDecor(new Decor(Type.Real));
+			return;
+		}
+		case Chaine: {
+			a.setDecor(new Decor(Type.String));
+			return;
+		}
+		case Index: {
+			verifier_PLACE(a);
+			return;
+		}
+		case Ident: {
+			verifier_IDF(a);
+			return;
+		}
 
-			
-		case Chaine:
-			//a.setDecor(new Decor(Defn.creationConstChaine(a.getEntier())));
 
-
-		default:
+		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Facteur", a.getNumLigne());
 			return;
+		}
 		}
 	}
 

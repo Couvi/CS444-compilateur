@@ -1,0 +1,10 @@
+-- prog simple
+program 
+	MonEntier1, MonEntier2 : integer;
+	UneChaine : String;
+begin
+	if MonEntier1 = MonEntier2 then
+		MonEntier1 := 3;
+	end;
+	MonEntier2 := -(MonEntier1 + 2)mod 7;
+end.
