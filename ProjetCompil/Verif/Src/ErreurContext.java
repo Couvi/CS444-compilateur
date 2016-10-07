@@ -70,7 +70,7 @@ public enum ErreurContext {
 			System.out.print("Les bornes de l'Interval ne sont pas des entier ");
 			break;	
 		case ProblemeCompilateur : 
-			System.out.print("Erreur du compilateur ("+s")");
+			System.out.print("Erreur du compilateur ("+s+")");
 			break;
 		case TypesNonCompatible :
 			System.out.print("Types non compatible ( "+s+") ");

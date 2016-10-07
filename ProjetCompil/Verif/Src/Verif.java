@@ -91,7 +91,8 @@ public class Verif {
 		}
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Liste Decl", a.getFils2
+				().getNumLigne());
 			return;
 		}
 		}
@@ -116,10 +117,11 @@ public class Verif {
 			}
 			a.getFils2().setDecor(new Decor(Defn.creationVar(t)));
 			verifier_IDF(a.getFils2());
+			return;
 		}
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Liste Idf", a.getFils2().getNumLigne());
 			return;
 		}
 		}
@@ -151,15 +153,41 @@ public class Verif {
 		}
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Type", a.getNumLigne());
 			return null;
 		}
 		}
 	}
 
+	private void verifier_CONSTANTE(Arbre a) throws ErreurVerif{
+		switch (a.getNoeud()) {
+		case PlusUnaire: {
+			verifier_CONSTANTE(a.getFils1());
+			return;
+		}
+		case MoinsUnaire: {
+			verifier_CONSTANTE(a.getFils1());
+			return;
+		}
+		case Ident: {
+			verifier_IDF(a);
+			return;
+		}
+		case Entier: {
+			return;
+		}
+		default: {
+			ErreurContext err = ErreurContext.ProblemeCompilateur;
+			err.leverErreurContext("Constante", a.getNumLigne());
+			return;
+		}
+		}
+	}
+
+
 	private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif{
-		verifier_EXP(a.getFils1());
-		verifier_EXP(a.getFils2());
+		verifier_CONSTANTE(a.getFils1());
+		verifier_CONSTANTE(a.getFils2());
 		Type t1 = a.getFils1().getDecor().getType();
 		Type t2 = a.getFils2().getDecor().getType();
 		if(!(t1 instanceof TypeInterval)) {
@@ -199,7 +227,7 @@ public class Verif {
 		}
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Liste Inst", a.getFils2().getNumLigne());
 			return;
 		}
 		}
@@ -233,7 +261,7 @@ public class Verif {
 			return;
 		default:
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Inst", a.getFils1().getNumLigne());
 			return;
 		}
 	}
@@ -248,7 +276,7 @@ public class Verif {
 	  			return;
 	  	default:
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Pas", a.getFils1().getNumLigne());
 			return;
 		}
 	}
@@ -264,7 +292,7 @@ public class Verif {
 			return;
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Place", a.getFils1().getNumLigne());
 			return;
 		}
 		}
@@ -282,7 +310,7 @@ public class Verif {
 		}
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Liste Exp", a.getFils2().getNumLigne());
 			return;
 		}
 		}
@@ -596,7 +624,7 @@ public class Verif {
 			break;
 		default:
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Exp", a.getNumLigne());
 			return;
 		}
 	}
@@ -618,7 +646,7 @@ public class Verif {
 
 		default:
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Facteur", a.getNumLigne());
 			return;
 		}
 	}
@@ -646,7 +674,7 @@ public class Verif {
 
 	  	default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+			err.leverErreurContext("Sample", a.getNumLigne());
 			return;
 		}
 		}

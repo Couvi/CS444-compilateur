@@ -8,5 +8,5 @@ html :
 clean : 
 	/bin/rm -f *.class
 
-test :
+test : all
 	java ProjetCompil.Verif.Src.TestVerif ../Test/factorial.cas
