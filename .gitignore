@@ -8,5 +8,9 @@ ProjetCompil/Syntaxe/Src/sym.java~
 .classpath
 .project
 ProjetCompil/sublime.*
+ProjetCompil/Html/*/
+ProjetCompil/Html/*.html
+ProjetCompil/Html/*.css
+ProjetCompil/Html/*.js
 
 /bin/

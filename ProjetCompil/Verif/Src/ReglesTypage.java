@@ -49,7 +49,7 @@ public class ReglesTypage {
 		case Et :
 		case Ou : 
 			if(t1.getNature() == NatureType.Boolean && t2.getNature() == NatureType.Boolean) {
-			 result.setTypeRes(Type.Boolean);
+			result.setTypeRes(Type.Boolean);
 			result.setOk(true);
 			} break;
 

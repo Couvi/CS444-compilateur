@@ -7,6 +7,9 @@ html :
 	cd ../Doc; javadoc ..*/Src/*.java
 clean : 
 	/bin/rm -f *.class
+	
+testTypage : all
+	java ProjetCompil.Verif.Src.TestReglesTypage
 
 veriftest-%: ../Test/%/*.cas
 	../Test/veriftest $^
