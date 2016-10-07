@@ -8,6 +8,8 @@
 #
 # - Faire du ménage dans les répertoires Src :
 #      make clean
+#
+# $HOME/CS444-compilateur
 
 all :
 	cd Global/Src; make
@@ -31,4 +33,6 @@ clean :
 	cd Gencode/Src; make clean
 
 cobertura :
-	/home/henri/Documents/CS444-compilateur/ProjetCompil/Cobertura/testCouvertureVerif /home/henri/Documents/CS444-compilateur/ /home/henri/Documents/CS444-compilateur/ProjetCompil/Syntaxe/Test/*.cas
+	cd Cobertura ; ./testCouvertureVerif ../.. ../Verif/Test/devverif/*.cas
+	firefox Cobertura/CouvertureVerif/index.html
+	
