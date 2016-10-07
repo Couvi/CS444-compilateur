@@ -10,7 +10,7 @@ cd ../../../
 for fich in $* 
 do
 	
-	
+	echo "--------------- $fich ---------------"
 	java ProjetCompil.Verif.Src.TestVerif ProjetCompil/Verif/Test/$fich 
 	if [ $? -ne 0 ]
 	then
@@ -18,7 +18,7 @@ do
 	else
 		echo "${GREEN}veriftest $fich OK${NC}"
 	fi
-	
+	echo ""
 	
 done
 cd ProjetCompil/Syntaxe/Test
