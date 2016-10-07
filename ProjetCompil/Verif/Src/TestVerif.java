@@ -23,8 +23,8 @@ public class TestVerif {
          // Appel de l'analyseur syntaxique et récupération de l'arbre résultat
          Arbre arbre = parser.analyseSyntaxique(args);
          //arbre.afficher(0);
-         // Décompilation de l'arbre
          //arbre.decompiler(0);
+         
          // On construit un verificateur de passe 2
          Verif passe2 = new Verif();
          passe2.verifierDecorer(arbre); 
@@ -34,13 +34,13 @@ public class TestVerif {
          
       } catch (ErreurLexicale e) {
          // Recuperation de l'exception ErreurLexicale
-         // On ne fait rien
+         System.exit(-1);
       } catch (ErreurSyntaxe e) {
          // Recuperation de l'exception ErreurSyntaxe
-         // On ne fait rien
+         System.exit(-1);
       } catch (ErreurVerif e) {
          // Recuperation de l'exception ErreurVerif
-         // On ne fait rien
+         System.exit(-1);
       }
    }
 
