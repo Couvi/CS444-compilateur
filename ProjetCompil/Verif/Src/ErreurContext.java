@@ -40,6 +40,11 @@ public enum ErreurContext {
    * (cela ne devrait jamais ce produire ...)
    **/
    ProblemeCompilateur,
+
+   /**
+   * TypeIndex est généré lorsque l'index donné pour un type Array n'est pas du bon interval
+   **/
+   TypeIndex,
    
    /**
    * TypesNonCompatible signifie que l'opération n'est pas possible car les types des variables 
@@ -57,7 +62,7 @@ public enum ErreurContext {
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
-	        case TypeInconnu :
+	   case TypeInconnu :
 			System.err.print("Type inconnu ("+s+") ");
 			break;
 		case RedeclarationIdent :
@@ -75,7 +80,10 @@ public enum ErreurContext {
 		case TypesNonCompatible :
 			System.out.print("Types non compatible ( "+s+") ");
 			break;
-         default:
+      case TypeIndex :
+         System.out.print("Index de type non valide ( "+s+") ");
+         break;
+      default:
         	 System.err.print("non repertoriee");
 	 
       }

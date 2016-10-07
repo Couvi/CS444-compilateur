@@ -201,7 +201,7 @@ public class Verif {
 			ErreurContext err = ErreurContext.BorneNonEntier;
 			err.leverErreurContext("", a.getFils2().getNumLigne());
 		}
-		Type temp = Type.creationInterval(a.getFils1().getEntier(), a.getFils1().getEntier());
+		Type temp = Type.creationInterval(a.getFils1().getEntier(), a.getFils2().getEntier());
 		a.setDecor(new Decor(temp));
 		return temp;
 	}
@@ -245,8 +245,11 @@ public class Verif {
 			verifier_EXP(a.getFils2());
 			return;
 		case Pour:
-		case TantQue :
 			verifier_PAS(a.getFils1());
+			verifier_LISTE_INST(a.getFils2());
+			return;
+		case TantQue :
+			verifier_EXP(a.getFils1());
 			verifier_LISTE_INST(a.getFils2());
 			return;
 		case Si :
@@ -286,13 +289,23 @@ public class Verif {
 	
 	private void verifier_PLACE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Ident:
+		case Ident: {
 			verifier_IDF(a);
 			return;
-		case Index:
+		}
+		case Index: {
 			verifier_PLACE(a.getFils1());
+			Type elem = a.getFils1().getDecor().getType().getElement();
+			Type index = a.getFils1().getDecor().getType().getIndice();
+			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
+			if(!index instanceof TypeInterval 	|| ((TypeInterval)index).getBorneInf()!=((TypeInterval)a.getFils2()).getBorneInf() 
+				|| ((TypeInterval)index).getBorneSup()!=((TypeInterval)a.getFils2()).getBorneSup()) {
+				ErreurContext err = ErreurContext.TypeIndex;
+				err.leverErreurContext(index.toString(), a.getFils2().getNumLigne());
+			}
 			return;
+		}
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Place", a.getFils1().getNumLigne());
@@ -306,7 +319,7 @@ public class Verif {
 		case Vide: {
 			return;
 		}
-		case ListeInst: {
+		case ListeExp: {
 			verifier_LISTE_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
 			return;
@@ -613,6 +626,10 @@ public class Verif {
 				ErreurContext err = ErreurContext.TypesNonCompatible;
 					err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
 			}
+			break;
+		}
+		case Chaine: {
+			verifier_FACTEUR(a);
 			break;
 		}
 		case Ident: {
