@@ -1,0 +1,42 @@
+program
+	A : real;
+	B : real;
+	C : real;
+	D : boolean; --Commentaire de test
+	E : boolean;
+	F : boolean;
+	I : 1 .. 13;
+	J : 2 .. 5;
+	K : integer;
+begin
+	D := not(E);
+	
+	E := D and E;
+	F := E or not(D);
+	
+	D := (K = I);
+	E := (I < A);
+	F := (C > B);
+	D := (B /= C);
+	E := (K <= C);
+	F := (B >= K);
+	
+	A := +B;
+	K := J;
+		
+	A := B + C;
+	B := (C - A);
+	C := A * B;
+	
+	K := I div J;
+	K := I mod J;
+	
+	A := I / J;
+	A := I / B;
+	A := B / J;
+	A := B / C;
+	
+	--Reste à tester les Array
+
+end.
+	
