@@ -35,15 +35,12 @@ public class TestVerif {
       } catch (ErreurLexicale e) {
          // Recuperation de l'exception ErreurLexicale
          // On ne fait rien
-    	  System.out.println("mabite");
       } catch (ErreurSyntaxe e) {
          // Recuperation de l'exception ErreurSyntaxe
          // On ne fait rien
-    	  System.out.println("mabite2");
       } catch (ErreurVerif e) {
          // Recuperation de l'exception ErreurVerif
          // On ne fait rien
-    	  System.out.println("mabite3");
       }
    }
 
