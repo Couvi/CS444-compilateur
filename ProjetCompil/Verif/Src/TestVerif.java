@@ -37,10 +37,10 @@ public class TestVerif {
          System.exit(-1);
       } catch (ErreurSyntaxe e) {
          // Recuperation de l'exception ErreurSyntaxe
-         System.exit(-1);
+         System.exit(-2);
       } catch (ErreurVerif e) {
          // Recuperation de l'exception ErreurVerif
-         System.exit(-1);
+         System.exit(-3);
       }
    }
 

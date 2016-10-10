@@ -48,9 +48,14 @@ public enum ErreurContext {
    
    /**
    * TypesNonCompatible signifie que l'opération n'est pas possible car les types des variables 
-   * dans l'opération ne sont pas compatible
+   * dans l'opération ne sont pas compatibles
    */
    TypesNonCompatible;
+   
+   /**
+   * IndexationNonArray signifie que l'on essaie d'indexer un type qui n'est pas un tableau
+   */
+   IndexationNonArray;
    
    /**
    * Cette méthode permet de lever une exception en précisant l'erreur (type et ligne)
@@ -62,30 +67,32 @@ public enum ErreurContext {
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
-	   case TypeInconnu :
-			System.err.print("Type inconnu ("+s+") ");
-			break;
-		case RedeclarationIdent :
-			System.out.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
-			break;
-		case IdentificateurInconnu :
-			System.out.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
-			break;		
-		case BorneNonEntier :
-			System.out.print("Les bornes de l'Interval ne sont pas des entier ");
-			break;	
-		case ProblemeCompilateur : 
-			System.out.print("Erreur du compilateur ("+s+")");
-			break;
-		case TypesNonCompatible :
-			System.out.print("Types non compatible ( "+s+") ");
-			break;
-      case TypeIndex :
-         System.out.print("Index de type non valide ( "+s+") ");
-         break;
-      default:
-        	 System.err.print("non repertoriee");
-	 
+	case TypeInconnu :
+		System.err.print("Type inconnu ("+s+") ");
+		break;
+	case RedeclarationIdent :
+		System.err.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
+		break;
+	case IdentificateurInconnu :
+		System.err.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
+		break;		
+	case BorneNonEntier :
+		System.err.print("Les bornes de l'Interval ne sont pas des entier ");
+		break;	
+	case ProblemeCompilateur : 
+		System.err.print("Erreur du compilateur ("+s+")");
+		break;
+	case TypesNonCompatible :
+		System.err.print("Types non compatible ( "+s+") ");
+		break;
+	case TypeIndex :
+		System.err.print("Index de type non valide ( "+s+") ");
+		break;
+	case IndexationNonArray :
+		System.err.print("Un type qui n'est pas un tableau ne peut pas être indexé ");
+		break;
+      	default:
+        	System.err.print("non repertoriee");	 
       }
       System.err.println(" ... ligne " + numLigne);
       StackTraceElement[] stack = Thread.currentThread().getStackTrace();

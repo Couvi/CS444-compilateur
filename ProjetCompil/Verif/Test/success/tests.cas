@@ -45,5 +45,21 @@ begin
 	M := L;
 	
 	-- Test des instructions
+	
+	while ((B <= I) and not F) or (D = E) or (L[5] > K) do
+	end;
+
+	
+	-- Instructions if et while : la condition doit être de type Type.Boolean. 
+
+	-- Instruction for : la variable de contrôle, ainsi que les deux expressions 
+	  doivent être de type Type.Interval.
+
+	-- Instruction read : la place doit etre de type Type.Interval ou Type.Real.
+
+	-- Instruction write : les expressions doivent être de type Type.Interval, 
+	  Type.Real ou Type.String.
+	
+	
 end.
 	
