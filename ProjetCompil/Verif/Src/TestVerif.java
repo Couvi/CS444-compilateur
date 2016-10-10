@@ -27,10 +27,10 @@ public class TestVerif {
          
          // On construit un verificateur de passe 2
          Verif passe2 = new Verif();
-         passe2.verifierDecorer(arbre); 
-         arbre.afficher(1);
+         //passe2.verifierDecorer(arbre); 
+         //arbre.afficher(1);
          // Décompilation de l'arbre
-         arbre.decompiler(1);
+         //arbre.decompiler(1);
          
       } catch (ErreurLexicale e) {
          // Recuperation de l'exception ErreurLexicale

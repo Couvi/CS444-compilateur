@@ -1,5 +1,5 @@
 program
-	A : [1..10] of integer;
+	A : array [1..10] of integer;
 	i, j, value : integer;
 begin
 for i := 1 to 9 do
