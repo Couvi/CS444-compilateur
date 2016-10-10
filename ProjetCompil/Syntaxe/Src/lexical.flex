@@ -275,7 +275,7 @@ LETTRE         = [a-zA-Z]
 "+"			{return symbol(sym.PLUS);}
 "-"			{return symbol(sym.MOINS);}
 "*"			{return symbol(sym.MULT);}
-"/"			{return symbol(sym.DIV);}
+"/"			{return symbol(sym.DIV_REEL);}
 "."			{return symbol(sym.POINT);}
 "["			{return symbol(sym.CROCH_OUVR);}
 "]"			{return symbol(sym.CROCH_FERM);}
