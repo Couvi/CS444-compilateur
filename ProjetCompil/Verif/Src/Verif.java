@@ -111,7 +111,7 @@ public class Verif {
 		case ListeIdent: {
 			verifier_LISTE_IDF(a.getFils1(), t);
 			boolean isPresent = env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
-			if(isPresent) {
+			if(isPresent) {//TODO testfail
 				ErreurContext err = ErreurContext.RedeclarationIdent;
 				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
 			}
@@ -129,7 +129,7 @@ public class Verif {
 
 	private void verifier_IDF(Arbre a) throws ErreurVerif{
 		Defn def = env.chercher(a.getChaine());
-		if(def == null) {
+		if(def == null) {//TODO testfail
 			ErreurContext err = ErreurContext.IdentificateurInconnu;
 			err.leverErreurContext(a.getChaine(), a.getNumLigne());
 			return;
@@ -193,11 +193,11 @@ public class Verif {
 		verifier_CONSTANTE(a.getFils2());
 		Type t1 = a.getFils1().getDecor().getType();
 		Type t2 = a.getFils2().getDecor().getType();
-		if(!(t1 instanceof TypeInterval)) {
+		if(!(t1 instanceof TypeInterval)) {//TODO testfail
 			ErreurContext err = ErreurContext.BorneNonEntier;
 			err.leverErreurContext("", a.getFils1().getNumLigne());
 		}
-		if(!(t2 instanceof TypeInterval)) {
+		if(!(t2 instanceof TypeInterval)) {//TODO testfail
 			ErreurContext err = ErreurContext.BorneNonEntier;
 			err.leverErreurContext("", a.getFils2().getNumLigne());
 		}
@@ -295,7 +295,7 @@ public class Verif {
 		}
 		case Index: {
 			verifier_PLACE(a.getFils1());
-			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {
+			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {//TODO testfail
 				ErreurContext err = ErreurContext.IndexationNonArray;
 				err.leverErreurContext("", a.getFils1().getNumLigne());
 			}
@@ -303,7 +303,7 @@ public class Verif {
 			Type index = ((TypeArray)(a.getFils1().getDecor().getType())).getIndice();
 			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
-			if(!(index instanceof TypeInterval)){
+			if(!(index instanceof TypeInterval)){//TODO testfail
 				ErreurContext err = ErreurContext.TypeIndex;
 				err.leverErreurContext(index.toString(), a.getFils2().getNumLigne());
 			}
@@ -356,12 +356,12 @@ public class Verif {
 			Type t1= a.getFils1().getDecor().getType();
 			Type t2= a.getFils2().getDecor().getType();
 			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
-			if(res.getOk()== true){
-				if(res.getConv1()==true){
+			if(res.getOk()== true){//TODO testfail
+				if(res.getConv1()==true){//TODO testfail
 					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
 					a.getFils1().setDecor(new Decor(Type.Real));
 				}
-				if(res.getConv2()==true){
+				if(res.getConv2()==true){//TODO testfail
 					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
 					a.getFils2().setDecor(new Decor(Type.Real));
 				}
@@ -431,7 +431,7 @@ public class Verif {
 		
 	
 		Defn t= env.chercher(s);
-		if(t!= null){
+		if(t!= null){//TODO testfail
 			return t.getType();
 		}
 		else {

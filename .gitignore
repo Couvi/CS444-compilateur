@@ -12,5 +12,6 @@ ProjetCompil/Html/*/
 ProjetCompil/Html/*.html
 ProjetCompil/Html/*.css
 ProjetCompil/Html/*.js
-
+ProjetCompil/Cobertura/CouvertureVerif
+ProjetCompil/Cobertura/couverture.ser
 /bin/

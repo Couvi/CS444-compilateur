@@ -33,6 +33,6 @@ clean :
 	cd Gencode/Src; make clean
 
 cobertura :
-	cd Cobertura ; ./testCouvertureVerif ../.. ../Verif/Test/devverif/*.cas
+	cd Cobertura ; ./testCouvertureVerif ../.. ../Verif/Test/*/*.cas
 	firefox Cobertura/CouvertureVerif/index.html
 	
