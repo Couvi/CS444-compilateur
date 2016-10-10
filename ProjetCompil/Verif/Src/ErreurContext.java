@@ -95,9 +95,9 @@ public enum ErreurContext {
         	System.err.print("non repertoriee");	 
       }
       System.err.println(" ... ligne " + numLigne);
-      StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+      /*StackTraceElement[] stack = Thread.currentThread().getStackTrace();
       for (int i=0; i< stack.length; i++)
-         System.err.println(stack[i]);
+         System.err.println(stack[i]);*/
       throw new ErreurVerif();
    }
 

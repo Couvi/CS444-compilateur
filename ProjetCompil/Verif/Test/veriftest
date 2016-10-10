@@ -28,7 +28,7 @@ for fich in $fich2
 do
 	
 	echo "--------------- $fich (doit echouer) ---------------"
-	java ProjetCompil.Verif.Src.TestVerif $fich > /dev/null
+	java ProjetCompil.Verif.Src.TestVerif $fich 
 	if [ $? -ne 0 ]
 	then
 		echo "${GREEN}veriftest $fich OK${NC}"
