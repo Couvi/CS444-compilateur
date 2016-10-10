@@ -359,9 +359,11 @@ public class Verif {
 			if(res.getOk()== true){
 				if(res.getConv1()==true){
 					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
+					a.getFils1().setDecor(new Decor(Type.Real));
 				}
 				if(res.getConv2()==true){
 					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.getFils2().setDecor(new Decor(Type.Real));
 				}
 				a.setDecor(new Decor(res.getTypeRes()));
 			}
