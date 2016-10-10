@@ -44,7 +44,7 @@ parser code {:
     */
    public void syntax_error(Symbol cur_token) {
       // Affichage du message d'erreur, avec le numero de ligne 
-      System.out.println("Erreur de syntaxe ... ligne " + numLigne()) ;
+      System.err.println("Erreur de syntaxe ... ligne " + numLigne()) ;
    }
 
    /**

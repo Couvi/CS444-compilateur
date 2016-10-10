@@ -321,7 +321,7 @@ LETTRE         = [a-zA-Z]
 			try {
 				return symbol(sym.CONST_ENT,Integer.parseInt(yytext()));
 			} catch (NumberFormatException e) {
-				System.out.println("Erreur Lexicale : '" +
+				System.err.println("Erreur Lexicale : '" +
 					yytext() + "' ne peux pas etre lu comme entier ... ligne " + numLigne()) ;
 				throw new ErreurLexicale();
 			}
@@ -331,7 +331,7 @@ LETTRE         = [a-zA-Z]
 			try {
 				return symbol(sym.CONST_REEL,Float.parseFloat(yytext()));
 			} catch (NumberFormatException e) {
-				System.out.println("Erreur Lexicale : '" +
+				System.err.println("Erreur Lexicale : '" +
 					yytext() + "' ne peux pas etre lu comme reel ... ligne " + numLigne()) ;
 				throw new ErreurLexicale();
 			}
@@ -347,7 +347,7 @@ LETTRE         = [a-zA-Z]
 {COMMENTAIRE}	{}
 
 . 	{ 
-		System.out.println("Erreur Lexicale : '" +
+		System.err.println("Erreur Lexicale : '" +
 			yytext() + "' non reconnu ... ligne " + numLigne()) ;
 		throw new ErreurLexicale() ; 
 	}
