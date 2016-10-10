@@ -97,20 +97,16 @@ public class Verif {
 
 	private void verifier_LISTE_DECL(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Vide: {
+		case Vide: 
 			return;
-		}
-		case ListeDecl: {
+		case ListeDecl: 
 			verifier_LISTE_DECL(a.getFils1());
 			verifier_DECL(a.getFils2());
 			return;
-		}
-		default: {
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Liste Decl", a.getFils2
-				().getNumLigne());
+			err.leverErreurContext("Liste Decl", a.getFils2().getNumLigne());
 			return;
-		}
 		}
 	}
 
@@ -121,10 +117,9 @@ public class Verif {
 
 	private void verifier_LISTE_IDF(Arbre a, Type t) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Vide: {
+		case Vide: 
 			return;
-		}
-		case ListeIdent: {
+		case ListeIdent: 
 			verifier_LISTE_IDF(a.getFils1(), t);
 			boolean isPresent = env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
 			if(isPresent) {//TODO testfail
@@ -134,12 +129,10 @@ public class Verif {
 			a.getFils2().setDecor(new Decor(Defn.creationVar(t),t));
 			verifier_IDF(a.getFils2());
 			return;
-		}
-		default: {
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Liste Idf", a.getFils2().getNumLigne());
 			return;
-		}
 		}
 	}
 
@@ -156,50 +149,41 @@ public class Verif {
 
 	private Type verifier_TYPE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Ident: {
+		case Ident: 
 			verifier_IDF(a);
 			return trouverType(a.getChaine(), a.getNumLigne());
-		}
-		case Intervalle: {
+		case Intervalle: 
 			Type t = verifier_INTERVALLE(a);
 			return t;
-		}
-		case Tableau: {
-			Type t = verifier_TABLEAU(a);
-			return t;
-		}
-		default: {
+		case Tableau: 
+			Type t2 = verifier_TABLEAU(a);
+			return t2;
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Type", a.getNumLigne());
 			return null;
-		}
 		}
 	}
 
 	private void verifier_CONSTANTE(Arbre a) throws ErreurVerif{
 		switch (a.getNoeud()) {
-		case PlusUnaire: {
+		case PlusUnaire: 
 			verifier_CONSTANTE(a.getFils1());
 			return;
-		}
-		case MoinsUnaire: {
+		case MoinsUnaire: 
 			verifier_CONSTANTE(a.getFils1());
 			return;
-		}
-		case Ident: {
+		case Ident: 
 			verifier_IDF(a);
 			a.setDecor(new Decor(Type.Integer));
 			return;
-		}
-		case Entier: {
+		case Entier: 
 			a.setDecor(new Decor(Type.Integer));
 			return;
-		}
-		default: {
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Constante", a.getNumLigne());
 			return;
-		}
 		}
 	}
 
@@ -236,19 +220,16 @@ public class Verif {
 	private void verifier_LISTE_INST(Arbre a) throws ErreurVerif {
 
 		switch (a.getNoeud()) {
-		case Vide: {
+		case Vide: 
 			return;
-		}
-		case ListeInst: {
+		case ListeInst: 
 			verifier_LISTE_INST(a.getFils1());
 			verifier_INST(a.getFils2());
 			return;
-		}
-		default: {
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Liste Inst", a.getFils2().getNumLigne());
 			return;
-		}
 		}
 	}
 
@@ -304,12 +285,12 @@ public class Verif {
 
 	private void verifier_PAS(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-	  		case Increment :
-	  		case Decrement :
-	  			verifier_IDF(a.getFils1());
-	  			verifier_EXP(a.getFils2());
-	  			verifier_EXP(a.getFils3());
-	  			return;
+  		case Increment :
+  		case Decrement :
+  			verifier_IDF(a.getFils1());
+  			verifier_EXP(a.getFils2());
+  			verifier_EXP(a.getFils3());
+  			return;
 	  	default:
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Pas", a.getFils1().getNumLigne());
@@ -319,11 +300,10 @@ public class Verif {
 	
 	private void verifier_PLACE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Ident: {
+		case Ident: 
 			verifier_IDF(a);
 			return;
-		}
-		case Index: {
+		case Index: 
 			verifier_PLACE(a.getFils1());
 			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {//TODO testfail
 				ErreurContext err = ErreurContext.IndexationNonArray;
@@ -338,30 +318,25 @@ public class Verif {
 				err.leverErreurContext(index.toString(), a.getFils2().getNumLigne());
 			}
 			return;
-		}
-		default: {
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Place", a.getFils1().getNumLigne());
 			return;
-		}
 		}
 	}
 		
 	private void verifier_LISTE_EXP(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Vide: {
+		case Vide: 
 			return;
-		}
-		case ListeExp: {
+		case ListeExp: 
 			verifier_LISTE_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
 			return;
-		}
-		default: {
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Liste Exp", a.getFils2().getNumLigne());
 			return;
-		}
 		}
 	}
 
@@ -380,7 +355,7 @@ public class Verif {
 		case Mult: 
 		case DivReel: 
 		case Reste: 
-		case Quotient: {
+		case Quotient: 
 			verifier_EXP(a.getFils1());
 			verifier_EXP(a.getFils2());
 			Type t1= a.getFils1().getDecor().getType();
@@ -403,7 +378,6 @@ public class Verif {
 				err.leverErreurContext(a.getNoeud()+"=>"+"("+t1.toString()+","+t2.toString()+")", a.getNumLigne());
 			}
 			return;
-		}
 		case Chaine: 
 		case Ident: 
 		case Index: 
@@ -415,9 +389,9 @@ public class Verif {
 		case Non: 
 			verifier_FACTEUR(a.getFils1());
 			Type t= a.getFils1().getDecor().getType();
-			ResultatUnaireCompatible res = ReglesTypage.unaireCompatible(a.getNoeud(), t);
-			if(res.getOk()== true){ 
-				a.setDecor(new Decor(res.getTypeRes()));
+			ResultatUnaireCompatible res2 = ReglesTypage.unaireCompatible(a.getNoeud(), t);
+			if(res2.getOk()== true){ 
+				a.setDecor(new Decor(res2.getTypeRes()));
 			}
 			else {
 				ErreurContext err = ErreurContext.TypesNonCompatible;
@@ -436,38 +410,30 @@ public class Verif {
 
 	private void verifier_FACTEUR(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
-		case Entier: {
+		case Entier: 
 			a.setDecor(new Decor(Type.Integer));
 			return;
-		}	
-		case Reel: {
+		case Reel: 
 			a.setDecor(new Decor(Type.Real));
 			return;
-		}
-		case Chaine: {
+		case Chaine: 
 			a.setDecor(new Decor(Type.String));
 			return;
-		}
-		case Index: {
+		case Index: 
 			verifier_PLACE(a);
 			return;
-		}
-		case Ident: {
+		case Ident: 
 			verifier_IDF(a);
 			return;
-		}
-		default: {
+		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Facteur", a.getNumLigne());
 			return;
-		}
 		}
 	}
 
 	
 	private Type trouverType(String s, int numLigne) throws ErreurVerif{
-		
-	
 		Defn t= env.chercher(s);
 		if(t!= null){//TODO testfail
 			return t.getType();
@@ -484,12 +450,10 @@ public class Verif {
 	private void verifier_SAMPLE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
 	  		case Vide :
-
-	  	default: {
+	  	default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Sample", a.getNumLigne());
 			return;
-		}
 		}
 	}
 }
