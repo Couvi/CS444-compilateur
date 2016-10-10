@@ -1,3 +1,9 @@
+/**
+ * Classe Verif
+ * Cette classe permet de verifier et de dédorer contextuellement l'arbre de syntaxe d'un programme
+ * 
+ */
+
 package ProjetCompil.Verif.Src;
 
 import ProjetCompil.Global.Src.*;
@@ -243,6 +249,20 @@ public class Verif {
 		case Affect:
 			verifier_PLACE(a.getFils1());
 			verifier_EXP(a.getFils2());
+			Type t1= a.getFils1().getDecor().getType();
+			Type t2= a.getFils2().getDecor().getType();
+			ResultatAffectCompatible res = ReglesTypage.affectCompatible(t1, t2);
+			if(res.getOk()== true){ 
+				if(res.getConv2()==true){
+					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
+					a.getFils2().setDecor(new Decor(Type.Real));
+				}
+				a.setDecor(new Decor(t1));
+			}
+			else{
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(a.getNoeud()+"=>"+"("+t1.toString()+","+t2.toString()+")", a.getNumLigne());
+			}
 			return;
 		case Pour:
 			verifier_PAS(a.getFils1());
@@ -356,7 +376,7 @@ public class Verif {
 			Type t1= a.getFils1().getDecor().getType();
 			Type t2= a.getFils2().getDecor().getType();
 			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
-			if(res.getOk()== true){
+			if(res.getOk()== true){ 
 				if(res.getConv1()==true){
 					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
 					a.getFils1().setDecor(new Decor(Type.Real));
@@ -383,7 +403,16 @@ public class Verif {
 		case MoinsUnaire: 
 		case Non: 
 			verifier_FACTEUR(a.getFils1());
-			a.setDecor(a.getFils1().getDecor());
+			Type t= a.getFils1().getDecor().getType();
+			ResultatUnaireCompatible res = ReglesTypage.unaireCompatible(a.getNoeud(), t);
+			if(res.getOk()== true){ 
+				a.setDecor(new Decor(res.getTypeRes()));
+			}
+			else {
+				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext(a.getNoeud()+"=>"+"("+t.toString()+")", a.getNumLigne());
+			}
+			
 			return;
 		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
@@ -416,8 +445,6 @@ public class Verif {
 			verifier_IDF(a);
 			return;
 		}
-
-
 		default: {
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
 			err.leverErreurContext("Facteur", a.getNumLigne());
