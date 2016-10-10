@@ -111,7 +111,7 @@ public class Verif {
 		case ListeIdent: {
 			verifier_LISTE_IDF(a.getFils1(), t);
 			boolean isPresent = env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
-			if(isPresent) {
+			if(isPresent) {//TODO testfail
 				ErreurContext err = ErreurContext.RedeclarationIdent;
 				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
 			}
@@ -129,7 +129,7 @@ public class Verif {
 
 	private void verifier_IDF(Arbre a) throws ErreurVerif{
 		Defn def = env.chercher(a.getChaine());
-		if(def == null) {
+		if(def == null) {//TODO testfail
 			ErreurContext err = ErreurContext.IdentificateurInconnu;
 			err.leverErreurContext(a.getChaine(), a.getNumLigne());
 			return;
@@ -193,11 +193,11 @@ public class Verif {
 		verifier_CONSTANTE(a.getFils2());
 		Type t1 = a.getFils1().getDecor().getType();
 		Type t2 = a.getFils2().getDecor().getType();
-		if(!(t1 instanceof TypeInterval)) {
+		if(!(t1 instanceof TypeInterval)) {//TODO testfail
 			ErreurContext err = ErreurContext.BorneNonEntier;
 			err.leverErreurContext("", a.getFils1().getNumLigne());
 		}
-		if(!(t2 instanceof TypeInterval)) {
+		if(!(t2 instanceof TypeInterval)) {//TODO testfail
 			ErreurContext err = ErreurContext.BorneNonEntier;
 			err.leverErreurContext("", a.getFils2().getNumLigne());
 		}
