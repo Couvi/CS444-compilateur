@@ -369,7 +369,7 @@ public class Verif {
 			}
 			else{
 				ErreurContext err = ErreurContext.TypesNonCompatible;
-				err.leverErreurContext(t1.toString()+","+t2.toString(), a.getNumLigne());
+				err.leverErreurContext(a.getNoeud()+"=>"+"("+t1.toString()+","+t2.toString()+")", a.getNumLigne());
 			}
 			return;
 		}
