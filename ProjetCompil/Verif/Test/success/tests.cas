@@ -50,19 +50,17 @@ begin
 		NULL;
 	end;
 	
-	if (A < B) and 
-
+	if (A < B) and (L[5] = K) then
+		null;
+	end;
 	
-	-- Instructions if et while : la condition doit être de type Type.Boolean. 
-
-	-- Instruction for : la variable de contrôle, ainsi que les deux expressions 
-	-- doivent être de type Type.Interval.
-
-	-- Instruction read : la place doit etre de type Type.Interval ou Type.Real.
-
-	-- Instruction write : les expressions doivent être de type Type.Interval, 
-	-- Type.Real ou Type.String.
+	read(J) ;
+	read(C) ; 
+	write("Valeur ", I, " non trouvee", real) ;
 	
+	for J := I to 20 do 
+      		K := J ; 
+  	end ; 
 	
 end.
 	
