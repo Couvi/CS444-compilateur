@@ -14,5 +14,5 @@ testTypage : all
 veriftest: 
 	../Test/veriftest
 
-test-% : ../Test/devverif/%.cas 
+test-% : ../Test/success/%.cas 
 	java ProjetCompil.Verif.Src.TestVerif $^
