@@ -46,9 +46,11 @@ begin
 	
 	-- Test des instructions
 	
-	while ((B <= I) and not F) or (D = E) or (L[5] > K) do
-	NULL;
+	while ((B <= I) and not F) or (L[5] > K) do
+		NULL;
 	end;
+	
+	if (A < B) and 
 
 	
 	-- Instructions if et while : la condition doit être de type Type.Boolean. 
