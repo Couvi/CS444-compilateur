@@ -1,0 +1,6 @@
+program
+	D : integer;
+begin
+	D := not(D);
+end.
+	
