@@ -11,8 +11,8 @@ clean :
 testTypage : all
 	java ProjetCompil.Verif.Src.TestReglesTypage
 
-veriftest-%: ../Test/%/*.cas 
-	../Test/veriftest $^
+veriftest: 
+	../Test/veriftest
 
 test-% : ../Test/devverif/%.cas 
 	java ProjetCompil.Verif.Src.TestVerif $^

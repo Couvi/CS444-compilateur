@@ -6,12 +6,14 @@ RED="$(tput bold ; tput setaf 1)"
 GREEN="$(tput bold ; tput setaf 2)"
 NC="$(tput sgr0)" # No Color
 
-cd ../../../ 
-for fich in $* 
+fich1=`ls ../Test/success/*.cas`
+fich2=`ls ../Test/fail/*.cas`
+
+for fich in $fich1  
 do
 	
-	echo "--------------- $fich ---------------"
-	java ProjetCompil.Verif.Src.TestVerif ProjetCompil/Verif/Test/$fich 
+	echo "--------------- $fich (doit reussir) ---------------"
+	java ProjetCompil.Verif.Src.TestVerif $fich 
 	if [ $? -ne 0 ]
 	then
 		echo "${RED}veriftest $fich FAILED${NC}"
@@ -21,4 +23,18 @@ do
 	echo ""
 	
 done
-cd ProjetCompil/Syntaxe/Test
+
+for fich in $fich2
+do
+	
+	echo "--------------- $fich (doit echouer) ---------------"
+	java ProjetCompil.Verif.Src.TestVerif $fich 
+	if [ $? -ne 0 ]
+	then
+		echo "${GREEN}veriftest $fich OK${NC}"
+	else
+		echo "${RED}veriftest $fich FAILED${NC}"
+	fi
+	echo ""
+	
+done
