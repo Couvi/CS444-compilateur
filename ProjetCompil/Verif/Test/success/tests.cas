@@ -8,7 +8,11 @@ program
 	I : 1 .. 13;
 	J : 2 .. 5;
 	K : integer;
+	L : [1 .. 18] OF integer;
+	M : [1 .. 18] OF real;
 begin
+	--Test des affectable et des opérateur
+	
 	D := not(E);
 	
 	E := D and E;
@@ -22,7 +26,7 @@ begin
 	F := (B >= K);
 	
 	A := +B;
-	K := J;
+	K := -J;
 		
 	A := B + C;
 	B := (C - A);
@@ -36,7 +40,10 @@ begin
 	A := B / J;
 	A := B / C;
 	
-	--Reste à tester les Array
-
+	L[I] := K;
+	L[5] := K;
+	M := L;
+	
+	-- Test des instructions
 end.
 	
