@@ -295,8 +295,12 @@ public class Verif {
 		}
 		case Index: {
 			verifier_PLACE(a.getFils1());
-			Type elem = a.getFils1().getDecor().getType().getElement();
-			Type index = a.getFils1().getDecor().getType().getIndice();
+			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {
+				ErreurContext err = ErreurContext.IndexationNonArray;
+				err.leverErreurContext("", a.getFils1().getNumLigne());
+			}
+			Type elem = ((TypeArray)(a.getFils1().getDecor().getType())).getElement();
+			Type index = ((TypeArray)(a.getFils1().getDecor().getType())).getIndice();
 			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
 			if(!(index instanceof TypeInterval)){

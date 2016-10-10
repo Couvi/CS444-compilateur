@@ -62,35 +62,35 @@ public enum ErreurContext {
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
-	case TypeInconnu :
-		System.err.print("Type inconnu ("+s+") ");
-		break;
-	case RedeclarationIdent :
-		System.err.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
-		break;
-	case IdentificateurInconnu :
-		System.err.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
-		break;		
-	case BorneNonEntier :
-		System.err.print("Les bornes de l'Interval ne sont pas des entier ");
-		break;	
-	case ProblemeCompilateur : 
-		System.err.print("Erreur du compilateur ("+s+")");
-		break;
-	case TypesNonCompatible :
-		System.err.print("Types non compatible ( "+s+") ");
-		break;
-	case TypeIndex :
-		System.err.print("Index de type non valide ( "+s+") ");
-		break;
-      	default:
-        	System.err.print("non repertoriee");
+	   case TypeInconnu :
+			System.err.print("Type inconnu ("+s+") ");
+			break;
+		case RedeclarationIdent :
+			System.out.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
+			break;
+		case IdentificateurInconnu :
+			System.out.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
+			break;		
+		case BorneNonEntier :
+			System.out.print("Les bornes de l'Interval ne sont pas des entier ");
+			break;	
+		case ProblemeCompilateur : 
+			System.out.print("Erreur du compilateur ("+s+")");
+			break;
+		case TypesNonCompatible :
+			System.out.print("Types non compatible ( "+s+") ");
+			break;
+      case TypeIndex :
+         System.out.print("Index de type non valide ( "+s+") ");
+         break;
+      default:
+        	 System.err.print("non repertoriee");
 	 
       }
       System.err.println(" ... ligne " + numLigne);
       StackTraceElement[] stack = Thread.currentThread().getStackTrace();
       for (int i=0; i< stack.length; i++)
-         System.err.println(stack[i]);
+         System.out.println(stack[i]);
       throw new ErreurVerif();
    }
 
