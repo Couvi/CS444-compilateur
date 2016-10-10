@@ -1,6 +1,21 @@
 /**
  * Classe Verif
- * Cette classe permet de verifier et de dédorer contextuellement l'arbre de syntaxe d'un programme
+ * Cette classe permet de verifier et de décorer contextuellement 
+ * l'arbre de syntaxe d'un programme. 
+ * le parcours de l'arbre se fait de manière descendante, il y a
+ * une fonction de vérification pour chaque élément de grammaire 
+ * de la syntaxe. dans certains cas, ces fonctions de verification
+ * prennent en paramètre des informations sur leur context pour mieux
+ * décorer l'arbre (voir verifier_TYPE())
+ *
+ * les verifications redondantes à l'analyseur syntaxique ne sont pas
+ * systématiquement réalisés, sauf dans les cas où cela peux être fait
+ * sans difficulté: 
+ * Dans un switch sur le type de noeud d'un arbre,
+ * le cas default est théoriquement non necessaire, car l'arbre est correct
+ * du point de vu de la syntaxe mais une double verification ne fais pas de mal
+ * et n'alterne pas les performances du compilateur car on est déja dans un switch.
+ *
  * 
  */
 
@@ -73,18 +88,13 @@ public class Verif {
 
 	}
 
-	/**************************************************************************
-	 * PROGRAMME
-	 **************************************************************************/
 	private void verifier_PROGRAMME(Arbre a) throws ErreurVerif {
 		initialiserEnv();
 		verifier_LISTE_DECL(a.getFils1());
 		verifier_LISTE_INST(a.getFils2());
 	}
 
-	/**************************************************************************
-	 * LISTE_DECL
-	 **************************************************************************/
+
 	private void verifier_LISTE_DECL(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
 		case Vide: {
