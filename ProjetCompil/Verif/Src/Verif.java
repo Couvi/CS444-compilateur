@@ -295,7 +295,7 @@ public class Verif {
 		}
 		case Index: {
 			verifier_PLACE(a.getFils1());
-			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {
+			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {//TODO testfail
 				ErreurContext err = ErreurContext.IndexationNonArray;
 				err.leverErreurContext("", a.getFils1().getNumLigne());
 			}
@@ -303,7 +303,7 @@ public class Verif {
 			Type index = ((TypeArray)(a.getFils1().getDecor().getType())).getIndice();
 			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
-			if(!(index instanceof TypeInterval)){
+			if(!(index instanceof TypeInterval)){//TODO testfail
 				ErreurContext err = ErreurContext.TypeIndex;
 				err.leverErreurContext(index.toString(), a.getFils2().getNumLigne());
 			}
@@ -356,12 +356,12 @@ public class Verif {
 			Type t1= a.getFils1().getDecor().getType();
 			Type t2= a.getFils2().getDecor().getType();
 			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
-			if(res.getOk()== true){
-				if(res.getConv1()==true){
+			if(res.getOk()== true){//TODO testfail
+				if(res.getConv1()==true){//TODO testfail
 					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
 					a.getFils1().setDecor(new Decor(Type.Real));
 				}
-				if(res.getConv2()==true){
+				if(res.getConv2()==true){//TODO testfail
 					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
 					a.getFils2().setDecor(new Decor(Type.Real));
 				}
@@ -431,7 +431,7 @@ public class Verif {
 		
 	
 		Defn t= env.chercher(s);
-		if(t!= null){
+		if(t!= null){//TODO testfail
 			return t.getType();
 		}
 		else {
