@@ -48,9 +48,14 @@ public enum ErreurContext {
    
    /**
    * TypesNonCompatible signifie que l'opération n'est pas possible car les types des variables 
-   * dans l'opération ne sont pas compatible
+   * dans l'opération ne sont pas compatibles
    */
    TypesNonCompatible;
+   
+   /**
+   * IndexationNonArray signifie que l'on essaie d'indexer un type qui n'est pas un tableau
+   */
+   IndexationNonArray;
    
    /**
    * Cette méthode permet de lever une exception en précisant l'erreur (type et ligne)
@@ -82,6 +87,9 @@ public enum ErreurContext {
 		break;
 	case TypeIndex :
 		System.err.print("Index de type non valide ( "+s+") ");
+		break;
+	case IndexationNonArray :
+		System.err.print("Un type qui n'est pas un tableau ne peut pas être indexé ");
 		break;
       	default:
         	System.err.print("non repertoriee");
