@@ -13,7 +13,7 @@ for fich in $fich1
 do
 	
 	echo "--------------- $fich (doit reussir) ---------------"
-	java ProjetCompil.Verif.Src.TestVerif $fich 
+	java ProjetCompil.Verif.Src.TestVerif $fich > /dev/null
 	if [ $? -ne 0 ]
 	then
 		echo "${RED}veriftest $fich FAILED${NC}"
@@ -28,7 +28,7 @@ for fich in $fich2
 do
 	
 	echo "--------------- $fich (doit echouer) ---------------"
-	java ProjetCompil.Verif.Src.TestVerif $fich 
+	java ProjetCompil.Verif.Src.TestVerif $fich > /dev/null
 	if [ $? -ne 0 ]
 	then
 		echo "${GREEN}veriftest $fich OK${NC}"

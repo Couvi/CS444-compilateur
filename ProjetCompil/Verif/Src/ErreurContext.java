@@ -65,39 +65,39 @@ public enum ErreurContext {
    * err.leverErreurContext(String detail, int numLigne);
    **/
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
-      System.out.println("Erreur contextuelle : ");
+      System.err.println("Erreur contextuelle : ");
       switch (this) {
 	case TypeInconnu :
-		System.out.print("Type inconnu ("+s+") ");
+		System.err.print("Type inconnu ("+s+") ");
 		break;
 	case RedeclarationIdent :
-		System.out.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
+		System.err.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
 		break;
 	case IdentificateurInconnu :
-		System.out.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
+		System.err.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
 		break;		
 	case BorneNonEntier :
-		System.out.print("Les bornes de l'Interval ne sont pas des entier ");
+		System.err.print("Les bornes de l'Interval ne sont pas des entier ");
 		break;	
 	case ProblemeCompilateur : 
-		System.out.print("Erreur du compilateur ("+s+")");
+		System.err.print("Erreur du compilateur ("+s+")");
 		break;
 	case TypesNonCompatible :
-		System.out.print("Types non compatible ( "+s+") ");
+		System.err.print("Types non compatible ( "+s+") ");
 		break;
 	case TypeIndex :
-		System.out.print("Index de type non valide ( "+s+") ");
+		System.err.print("Index de type non valide ( "+s+") ");
 		break;
 	case IndexationNonArray :
-		System.out.print("Un type qui n'est pas un tableau ne peut pas être indexé ");
+		System.err.print("Un type qui n'est pas un tableau ne peut pas être indexé ");
 		break;
       	default:
-        	System.out.print("non repertoriee");	 
+        	System.err.print("non repertoriee");	 
       }
-      System.out.println(" ... ligne " + numLigne);
+      System.err.println(" ... ligne " + numLigne);
       StackTraceElement[] stack = Thread.currentThread().getStackTrace();
       for (int i=0; i< stack.length; i++)
-         System.out.println(stack[i]);
+         System.err.println(stack[i]);
       throw new ErreurVerif();
    }
 
