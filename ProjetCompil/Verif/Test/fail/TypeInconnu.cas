@@ -1,0 +1,6 @@
+-- Recherche dichotomique dans un tableau trie 
+program
+   i : fauxType;
+begin
+   i := 1; 
+end.
