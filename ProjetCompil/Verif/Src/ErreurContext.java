@@ -83,7 +83,7 @@ public enum ErreurContext {
 		System.err.print("Erreur du compilateur ("+s+")");
 		break;
 	case TypesNonCompatible :
-		System.err.print("Types non compatible ( "+s+") ");
+		System.err.print("Types non compatible "+s+" ");
 		break;
 	case TypeIndex :
 		System.err.print("Index de type non valide ( "+s+") ");
