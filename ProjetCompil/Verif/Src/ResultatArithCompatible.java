@@ -20,11 +20,6 @@ public class ResultatArithCompatible extends ResultatAffectCompatible {
    private boolean conv1;
 	
 	public ResultatArithCompatible () {}
-		
-	public ResultatArithCompatible (boolean ok, boolean conv1, boolean conv2){
-		super(ok, conv2);
-		this.conv1 = conv1;
-	}
 
    boolean getConv1() {
       return conv1;
