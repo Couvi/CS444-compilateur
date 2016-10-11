@@ -121,12 +121,6 @@ public class ReglesTypage {
 				result.setOk(true);
 			}
 			break;
-
-		case Tableau :
-			if (t1.getNature() == NatureType.Array && t1.getIndice().getNature() == NatureType.Interval && t2.getNature() == NatureType.Interval) {
-				result.setOk(true);
-				result.setTypeRes(t1.getElement());
-			}
 	}
 					
       return result;

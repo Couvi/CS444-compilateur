@@ -1,6 +1,0 @@
-program
-   A : 1..5;
-   B : real;
-begin
-    --test des array
-end.
