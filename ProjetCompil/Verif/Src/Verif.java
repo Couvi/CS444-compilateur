@@ -280,9 +280,23 @@ public class Verif {
 			return;
 		case Ecriture :
 			verifier_LISTE_EXP(a.getFils1());
+			Arbre temp = a.getFils1();
+			while (temp.getNoeud() != Noeud.Vide) {
+				Type expWrite = temp.getFils2().getDecor().getType();
+	  			if (!(expWrite instanceof TypeInterval) && expWrite != Type.Real && expWrite != Type.String) {
+	  				ErreurContext err = ErreurContext.TypesNonCompatible;
+					err.leverErreurContext("("+expWrite+") au lieu de TypeInterval, Real ou String", temp.getFils2().getNumLigne());
+	  			}
+	  			temp = temp.getFils1();
+	  		}
 			return;
 		case Lecture :
 			verifier_PLACE(a.getFils1());
+			Type expRead = a.getFils1().getDecor().getType();
+  			if (!(expRead instanceof TypeInterval) && expRead != Type.Real) {
+  				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext("("+expRead+") au lieu de TypeInterval ou Real", a.getFils1().getNumLigne());
+  			}
 			return;
 		case Ligne :
 			return;
