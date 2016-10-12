@@ -351,7 +351,7 @@ public class Verif {
 			Type elem = ((TypeArray)(a.getFils1().getDecor().getType())).getElement();
 			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
-			Type exp = a.getFils2().getDecor().getType()
+			Type exp = a.getFils2().getDecor().getType();
 			if(!(exp instanceof TypeInterval)){//TODO testfail
 				ErreurContext err = ErreurContext.TypeIndex;
 				err.leverErreurContext(exp.toString(), a.getFils2().getNumLigne());
