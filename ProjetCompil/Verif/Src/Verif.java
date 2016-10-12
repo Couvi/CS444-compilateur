@@ -192,16 +192,6 @@ public class Verif {
 	private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif{
 		verifier_CONSTANTE(a.getFils1());
 		verifier_CONSTANTE(a.getFils2());
-		Type t1 = a.getFils1().getDecor().getType();
-		Type t2 = a.getFils2().getDecor().getType();
-		if(!(t1 instanceof TypeInterval)) {//TODO testfail
-			ErreurContext err = ErreurContext.BorneNonEntier;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
-		}
-		if(!(t2 instanceof TypeInterval)) {//TODO testfail
-			ErreurContext err = ErreurContext.BorneNonEntier;
-			err.leverErreurContext("", a.getFils2().getNumLigne());
-		}
 		int min, max;
 		if (a.getFils1().getNoeud() == Noeud.PlusUnaire) {
 			min = a.getFils1().getFils1().getEntier();
@@ -487,7 +477,7 @@ public class Verif {
 			verifier_IDF(a);
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur; //erreur interne
+			ErreurContext err = ErreurContext.ProblemeCompilateur; 
 			err.leverErreurContext("Facteur", a.getNumLigne());
 			return;
 		}
@@ -500,7 +490,7 @@ public class Verif {
 			return t.getType();
 		}
 		else {
-			ErreurContext err = ErreurContext.ProblemeCompilateur; //erreur interne
+			ErreurContext err = ErreurContext.ProblemeCompilateur; 
 			err.leverErreurContext("pas de type sur l'identificateur ("+s+")", numLigne);
 		}
 		return null;
