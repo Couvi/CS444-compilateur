@@ -1,0 +1,8 @@
+program
+	A : array [1..14] of integer;
+	B : array [1..14] of integer;
+	C : real;
+begin
+	C := A + B;
+end.
+	

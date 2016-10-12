@@ -1,0 +1,8 @@
+program
+	A : array [1..14] of boolean;
+	B : real;
+	C : boolean;
+begin
+	C := B >= A;
+end.
+	

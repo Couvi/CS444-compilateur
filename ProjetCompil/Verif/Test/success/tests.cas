@@ -29,8 +29,9 @@ begin
 	K := -J;
 		
 	A := B + C;
-	B := (C - A);
-	C := A * B;
+	B := (I - A);
+	C := A * J;
+	I := I + J;
 	
 	K := I div J;
 	K := I mod J;
@@ -43,6 +44,7 @@ begin
 	L[I] := K;
 	L[5] := K;
 	M := L;
+	K := L[14];
 	
 	-- Test des instructions
 	
@@ -56,6 +58,7 @@ begin
 	
 	read(J) ;
 	read(C) ; 
+	read(L[5]) ; 
 	write("Valeur ", I, " non trouvee", real) ;
 	
 	for J := I to 20 do 

@@ -1,0 +1,8 @@
+program
+	A : real;
+begin
+	if (A) then
+		null;
+	end;
+	
+end.
