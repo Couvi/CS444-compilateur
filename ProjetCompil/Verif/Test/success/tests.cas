@@ -10,6 +10,7 @@ program
 	K : integer;
 	L : array [1 .. 18] OF integer;
 	M : array [1 .. 18] OF real;
+	N : array [18 ..25] of array [1.. 18] of integer; 
 begin
 	--Test des affectable et des opérateur
 	
@@ -45,6 +46,11 @@ begin
 	L[5] := K;
 	M := L;
 	K := L[14];
+	A := L[18];
+	L := N[18];
+	B := N[20][8];
+	K := N[J][8];
+	
 	
 	-- Test des instructions
 	
