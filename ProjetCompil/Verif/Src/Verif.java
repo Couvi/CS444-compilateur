@@ -349,12 +349,12 @@ public class Verif {
 				err.leverErreurContext("", a.getFils1().getNumLigne());
 			}
 			Type elem = ((TypeArray)(a.getFils1().getDecor().getType())).getElement();
-			Type index = ((TypeArray)(a.getFils1().getDecor().getType())).getIndice();
 			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
-			if(!(index instanceof TypeInterval)){//TODO testfail
+			Type exp = a.getFils2().getDecor().getType()
+			if(!(exp instanceof TypeInterval)){//TODO testfail
 				ErreurContext err = ErreurContext.TypeIndex;
-				err.leverErreurContext(index.toString(), a.getFils2().getNumLigne());
+				err.leverErreurContext(exp.toString(), a.getFils2().getNumLigne());
 			}
 			return;
 		default: 
