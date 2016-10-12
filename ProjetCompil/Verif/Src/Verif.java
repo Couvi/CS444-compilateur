@@ -261,18 +261,42 @@ public class Verif {
 			return;
 		case TantQue :
 			verifier_EXP(a.getFils1());
+			Type exp = a.getFils1().getDecor().getType();
+  			if (!(exp == Type.Boolean)) {
+  				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext("("+exp+") au lieu de Boolean", a.getFils1().getNumLigne());
+  			}
 			verifier_LISTE_INST(a.getFils2());
 			return;
 		case Si :
 			verifier_EXP(a.getFils1());
+			Type cond = a.getFils1().getDecor().getType();
+  			if (!(cond == Type.Boolean)) {
+  				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext("("+cond+") au lieu de Boolean", a.getFils1().getNumLigne());
+  			}
 			verifier_LISTE_INST(a.getFils2());
 			verifier_LISTE_INST(a.getFils3());
 			return;
 		case Ecriture :
 			verifier_LISTE_EXP(a.getFils1());
+			Arbre temp = a.getFils1();
+			while (temp.getNoeud() != Noeud.Vide) {
+				Type expWrite = temp.getFils2().getDecor().getType();
+	  			if (!(expWrite instanceof TypeInterval) && expWrite != Type.Real && expWrite != Type.String) {
+	  				ErreurContext err = ErreurContext.TypesNonCompatible;
+					err.leverErreurContext("("+expWrite+") au lieu de TypeInterval, Real ou String", temp.getFils2().getNumLigne());
+	  			}
+	  			temp = temp.getFils1();
+	  		}
 			return;
 		case Lecture :
 			verifier_PLACE(a.getFils1());
+			Type expRead = a.getFils1().getDecor().getType();
+  			if (!(expRead instanceof TypeInterval) && expRead != Type.Real) {
+  				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext("("+expRead+") au lieu de TypeInterval ou Real", a.getFils1().getNumLigne());
+  			}
 			return;
 		case Ligne :
 			return;
@@ -288,8 +312,23 @@ public class Verif {
   		case Increment :
   		case Decrement :
   			verifier_IDF(a.getFils1());
+  			Type idf = a.getFils1().getDecor().getType();
+  			if (!(idf instanceof TypeInterval)) {
+  				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext("("+idf+") au lieu de TypeInterval", a.getFils1().getNumLigne());
+  			}
   			verifier_EXP(a.getFils2());
+  			Type exp1 = a.getFils2().getDecor().getType();
+  			if (!(exp1 instanceof TypeInterval)) {
+  				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext("("+exp1+") au lieu de TypeInterval", a.getFils2().getNumLigne());
+  			}
   			verifier_EXP(a.getFils3());
+  			Type exp2 = a.getFils3().getDecor().getType();
+  			if (!(exp2 instanceof TypeInterval)) {
+  				ErreurContext err = ErreurContext.TypesNonCompatible;
+				err.leverErreurContext("("+exp2+") au lieu de TypeInterval", a.getFils3().getNumLigne());
+  			}
   			return;
 	  	default:
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
@@ -310,12 +349,12 @@ public class Verif {
 				err.leverErreurContext("", a.getFils1().getNumLigne());
 			}
 			Type elem = ((TypeArray)(a.getFils1().getDecor().getType())).getElement();
-			Type index = ((TypeArray)(a.getFils1().getDecor().getType())).getIndice();
 			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
-			if(!(index instanceof TypeInterval)){//TODO testfail
+			Type exp = a.getFils2().getDecor().getType()
+			if(!(exp instanceof TypeInterval)){//TODO testfail
 				ErreurContext err = ErreurContext.TypeIndex;
-				err.leverErreurContext(index.toString(), a.getFils2().getNumLigne());
+				err.leverErreurContext(exp.toString(), a.getFils2().getNumLigne());
 			}
 			return;
 		default: 
