@@ -8,14 +8,17 @@ program
 	I : 1 .. 13;
 	J : 2 .. 5;
 	K : integer;
-	L : array [1 .. 18] OF integer;
-	M : array [1 .. 18] OF real;
+	L : array [+1 .. 18] OF integer;
+	M : array [1 .. +18] OF real;
 	N : array [18 ..25] of array [1.. 18] of integer; 
+	O : array [-42 .. -3] of real;
 begin
 	--Test des affectable et des opérateur
-	
+	M[6] := O[-10];
 	D := not(E);
 	
+	B := 3.14e+10;
+
 	E := D and E;
 	F := E or not(D);
 	

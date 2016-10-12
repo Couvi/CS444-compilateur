@@ -1,0 +1,5 @@
+program
+   A : 3 .. "youhouuuuuu";
+begin
+   NULL;
+end.
