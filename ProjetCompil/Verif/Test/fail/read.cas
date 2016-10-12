@@ -1,0 +1,5 @@
+program
+	A : array [1..10] of integer;
+begin
+	read(A) ;
+end.
