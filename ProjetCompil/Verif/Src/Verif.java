@@ -127,7 +127,7 @@ public class Verif {
 				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
 			}
 			a.getFils2().setDecor(new Decor(Defn.creationVar(t),t));
-			verifier_IDF(a.getFils2());
+			verifier_IDF(a.getFils2(),NatureDefn.Var);
 			return;
 		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur;
@@ -136,7 +136,7 @@ public class Verif {
 		}
 	}
 
-	private void verifier_IDF(Arbre a) throws ErreurVerif{
+	private void verifier_IDF(Arbre a, NatureDefn reqNat) throws ErreurVerif{
 		Defn def = env.chercher(a.getChaine());
 		if(def == null) {//TODO testfail
 			ErreurContext err = ErreurContext.IdentificateurInconnu;
@@ -144,13 +144,18 @@ public class Verif {
 			return;
 		}
 		a.setDecor(new Decor(def,def.getType()));	
+		NatureDefn nat = a.getDecor().getDefn().getNature();
+		if (nat != reqNat) {
+			ErreurContext err = ErreurContext.IdentBadNature;
+			err.leverErreurContext(nat+" au lieu de "+reqNat+" ", a.getNumLigne());
+		}
 
 	}
 
 	private Type verifier_TYPE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
 		case Ident: 
-			verifier_IDF(a);
+			verifier_IDF(a,NatureDefn.Type);
 			return trouverType(a.getChaine(), a.getNumLigne());
 		case Intervalle: 
 			Type t = verifier_INTERVALLE(a);
@@ -176,7 +181,12 @@ public class Verif {
 			a.setDecor(new Decor(a.getFils1().getDecor().getType()));
 			return;
 		case Ident: 
-			verifier_IDF(a);
+			verifier_IDF(a,NatureDefn.ConstInteger);
+			NatureDefn nat = a.getDecor().getDefn().getNature();
+			if (nat != NatureDefn.ConstInteger) {
+				ErreurContext err = ErreurContext.IdentBadNature;
+				err.leverErreurContext(nat+"", a.getNumLigne());
+			}
 			return;
 		case Entier: 
 			a.setDecor(new Decor(Type.Integer));
@@ -322,7 +332,7 @@ public class Verif {
 		switch (a.getNoeud()) {
   		case Increment :
   		case Decrement :
-  			verifier_IDF(a.getFils1());
+  			verifier_IDF(a.getFils1(),NatureDefn.Var);
   			Type idf = a.getFils1().getDecor().getType();
   			if (!(idf instanceof TypeInterval)) {
   				ErreurContext err = ErreurContext.TypesNonCompatible;
@@ -351,7 +361,7 @@ public class Verif {
 	private void verifier_PLACE(Arbre a) throws ErreurVerif {
 		switch (a.getNoeud()) {
 		case Ident: 
-			verifier_IDF(a);
+			verifier_IDF(a,NatureDefn.Var);
 			return;
 		case Index: 
 			verifier_PLACE(a.getFils1());
@@ -474,7 +484,16 @@ public class Verif {
 			verifier_PLACE(a);
 			return;
 		case Ident: 
-			verifier_IDF(a);
+			Defn def = env.chercher(a.getChaine());
+			if(def == null) {
+				throw new ErreurInterneVerif("identificateur "+a.getChaine()+" inconnu");
+			}
+			NatureDefn nat = def.getNature();
+			if (nat != NatureDefn.Var && nat != NatureDefn.ConstInteger && nat != NatureDefn.ConstBoolean) {
+				ErreurContext err = ErreurContext.IdentBadNature;
+				err.leverErreurContext(nat+" au lieu de Var, ConstInteger ou ConstBoolean", a.getNumLigne());
+			}
+			a.setDecor(new Decor(def,def.getType()));	
 			return;
 		default: 
 			ErreurContext err = ErreurContext.ProblemeCompilateur; 
@@ -492,6 +511,10 @@ public class Verif {
 		else {
 			ErreurContext err = ErreurContext.ProblemeCompilateur; 
 			err.leverErreurContext("pas de type sur l'identificateur ("+s+")", numLigne);
+		}
+		if(t.getNature() != NatureDefn.Type) {
+			ErreurContext err = ErreurContext.IdentBadNature; 
+			err.leverErreurContext(s, numLigne);
 		}
 		return null;
 	}

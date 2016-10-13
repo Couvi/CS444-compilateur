@@ -68,7 +68,7 @@ begin
 	read(J) ;
 	read(C) ; 
 	read(L[5]) ; 
-	write("Valeur ", I, " non trouvee", real) ;
+	write("Valeur ", I, " non trouvee") ;
 	
 	for J := I to 20 do 
       		K := J ; 

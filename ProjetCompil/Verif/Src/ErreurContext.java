@@ -24,8 +24,12 @@ public enum ErreurContext {
    * IdentificateurInconnu est généré lorsque un identificateur n'a pas été déclaré préalablement
    **/
    IdentificateurInconnu,
-   
-   
+
+   /**
+   * IdentBadNature est génèré lors de la recherche d'un identificateur de type, 
+   * si le defn associé n'est pas de nature type
+   **/
+   IdentBadNature,
 
    /**
    * ProblemeCompilateur est généré lorsque le compilateur est en défault
@@ -64,7 +68,9 @@ public enum ErreurContext {
 		break;
 	case IdentificateurInconnu :
 		System.err.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
-		break;		
+		break;
+   case IdentBadNature : 
+      System.err.print("L'identificateur n'est pas de la bonne nature: "+s);
 	case ProblemeCompilateur : 
 		System.err.print("Erreur du compilateur ("+s+")");
 		break;
