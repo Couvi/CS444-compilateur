@@ -15,11 +15,6 @@ public enum ErreurContext {
    ErreurNonRepertoriee,
    
    /**
-   * TypeInconnu est déclanché lorsque l'on cherche un type qui n'existe pas
-   */
-   TypeInconnu, 
-   
-   /**
    * RedeclarationIdent est généré lorsque un identificateur à déjà été déclaré ou
    * est réservé.
    **/
@@ -30,10 +25,7 @@ public enum ErreurContext {
    **/
    IdentificateurInconnu,
    
-   /**
-   * BorneNonEntier est généré lorsque l'on veut créer un type Interval mais les bornes ne sont pas des entiers
-   **/
-   BorneNonEntier,
+   
 
    /**
    * ProblemeCompilateur est généré lorsque le compilateur est en défault
@@ -67,18 +59,12 @@ public enum ErreurContext {
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
-	case TypeInconnu :
-		System.err.print("Type inconnu ("+s+") ");
-		break;
 	case RedeclarationIdent :
 		System.err.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
 		break;
 	case IdentificateurInconnu :
 		System.err.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
 		break;		
-	case BorneNonEntier :
-		System.err.print("Les bornes de l'Interval ne sont pas des entier ");
-		break;	
 	case ProblemeCompilateur : 
 		System.err.print("Erreur du compilateur ("+s+")");
 		break;

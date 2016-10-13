@@ -1,0 +1,6 @@
+program
+   	A : integer;
+   	A : real;
+begin
+	NULL;
+end.

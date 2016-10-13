@@ -169,13 +169,14 @@ public class Verif {
 		switch (a.getNoeud()) {
 		case PlusUnaire: 
 			verifier_CONSTANTE(a.getFils1());
+			a.setDecor(new Decor(a.getFils1().getDecor().getType()));
 			return;
 		case MoinsUnaire: 
 			verifier_CONSTANTE(a.getFils1());
+			a.setDecor(new Decor(a.getFils1().getDecor().getType()));
 			return;
 		case Ident: 
 			verifier_IDF(a);
-			a.setDecor(new Decor(Type.Integer));
 			return;
 		case Entier: 
 			a.setDecor(new Decor(Type.Integer));
@@ -191,17 +192,27 @@ public class Verif {
 	private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif{
 		verifier_CONSTANTE(a.getFils1());
 		verifier_CONSTANTE(a.getFils2());
-		Type t1 = a.getFils1().getDecor().getType();
-		Type t2 = a.getFils2().getDecor().getType();
-		if(!(t1 instanceof TypeInterval)) {//TODO testfail
-			ErreurContext err = ErreurContext.BorneNonEntier;
-			err.leverErreurContext("", a.getFils1().getNumLigne());
+		int min, max;
+		if (a.getFils1().getNoeud() == Noeud.PlusUnaire) {
+			min = a.getFils1().getFils1().getEntier();
+		} 
+		else if (a.getFils1().getNoeud() == Noeud.MoinsUnaire) {
+			min = -a.getFils1().getFils1().getEntier();
+		} 
+		else {
+			min = a.getFils1().getEntier();
 		}
-		if(!(t2 instanceof TypeInterval)) {//TODO testfail
-			ErreurContext err = ErreurContext.BorneNonEntier;
-			err.leverErreurContext("", a.getFils2().getNumLigne());
+		if (a.getFils2().getNoeud() == Noeud.PlusUnaire) {
+			max = a.getFils2().getFils1().getEntier();
+		} 
+		else if (a.getFils2().getNoeud() == Noeud.MoinsUnaire) {
+			max = -a.getFils2().getFils1().getEntier();
+		} 
+		else {
+			max = a.getFils2().getEntier();
 		}
-		Type temp = Type.creationInterval(a.getFils1().getEntier(), a.getFils2().getEntier());
+
+		Type temp = Type.creationInterval(min, max);
 		a.setDecor(new Decor(temp));
 		return temp;
 	}
@@ -344,7 +355,7 @@ public class Verif {
 			return;
 		case Index: 
 			verifier_PLACE(a.getFils1());
-			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {//TODO testfail
+			if (!(a.getFils1().getDecor().getType() instanceof TypeArray)) {
 				ErreurContext err = ErreurContext.IndexationNonArray;
 				err.leverErreurContext("", a.getFils1().getNumLigne());
 			}
@@ -352,7 +363,7 @@ public class Verif {
 			a.setDecor(new Decor(elem));
 			verifier_EXP(a.getFils2());
 			Type exp = a.getFils2().getDecor().getType();
-			if(!(exp instanceof TypeInterval)){//TODO testfail
+			if(!(exp instanceof TypeInterval)){
 				ErreurContext err = ErreurContext.TypeIndex;
 				err.leverErreurContext(exp.toString(), a.getFils2().getNumLigne());
 			}
@@ -400,13 +411,13 @@ public class Verif {
 			Type t1= a.getFils1().getDecor().getType();
 			Type t2= a.getFils2().getDecor().getType();
 			ResultatBinaireCompatible res = ReglesTypage.binaireCompatible(a.getNoeud(), t1, t2);
-			if(res.getOk()== true){//TODO testfail
-				if(res.getConv1()==true){//TODO testfail
+			if(res.getOk()== true){
+				if(res.getConv1()==true){
 
 					a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));
 					a.getFils1().setDecor(new Decor(Type.Real));
 				}
-				if(res.getConv2()==true){//TODO testfail
+				if(res.getConv2()==true){
 					a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));
 					a.getFils2().setDecor(new Decor(Type.Real));
 				}
@@ -421,6 +432,7 @@ public class Verif {
 		case Ident: 
 		case Index: 
 		case Entier:
+		case Reel:
 			verifier_FACTEUR(a);
 			return;
 		case PlusUnaire: 
@@ -465,7 +477,7 @@ public class Verif {
 			verifier_IDF(a);
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
+			ErreurContext err = ErreurContext.ProblemeCompilateur; 
 			err.leverErreurContext("Facteur", a.getNumLigne());
 			return;
 		}
@@ -474,12 +486,12 @@ public class Verif {
 	
 	private Type trouverType(String s, int numLigne) throws ErreurVerif{
 		Defn t= env.chercher(s);
-		if(t!= null){//TODO testfail
+		if(t!= null){
 			return t.getType();
 		}
 		else {
-			ErreurContext err = ErreurContext.TypeInconnu;
-			err.leverErreurContext(s, numLigne);
+			ErreurContext err = ErreurContext.ProblemeCompilateur; 
+			err.leverErreurContext("pas de type sur l'identificateur ("+s+")", numLigne);
 		}
 		return null;
 	}
