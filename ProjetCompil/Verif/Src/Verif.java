@@ -1,3 +1,7 @@
+package ProjetCompil.Verif.Src;
+
+import ProjetCompil.Global.Src.*;
+
 /**
  * Classe Verif
  * Cette classe permet de verifier et de décorer contextuellement 
@@ -18,15 +22,6 @@
  *
  * 
  */
-
-package ProjetCompil.Verif.Src;
-
-import ProjetCompil.Global.Src.*;
-
-/**
- * Cette classe permet de réaliser la vérification et la décoration de l'arbre
- * abstrait d'un programme.
- */
 public class Verif {
 
 	private Environ env; // L'environnement des identificateurs
@@ -45,7 +40,7 @@ public class Verif {
 	 * contextuelle, un message d'erreur est affiché et l'exception ErreurVerif
 	 * est levée.
 	 */
-	public void verifierDecorer(Arbre a) throws ErreurVerif {
+	public void verifierDecorer(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		verifier_PROGRAMME(a);
 	}
 
@@ -58,9 +53,6 @@ public class Verif {
 		def = Defn.creationType(Type.Integer);
 		def.setGenre(Genre.PredefInteger);
 		env.enrichir("integer", def);
-		// ------------
-		// A COMPLETER
-		// ------------
 		// string
 		def = Defn.creationType(Type.String);
 		// pas de genre...
@@ -88,14 +80,14 @@ public class Verif {
 
 	}
 
-	private void verifier_PROGRAMME(Arbre a) throws ErreurVerif {
+	private void verifier_PROGRAMME(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		initialiserEnv();
 		verifier_LISTE_DECL(a.getFils1());
 		verifier_LISTE_INST(a.getFils2());
 	}
 
 
-	private void verifier_LISTE_DECL(Arbre a) throws ErreurVerif {
+	private void verifier_LISTE_DECL(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
 		case Vide: 
 			return;
@@ -104,25 +96,23 @@ public class Verif {
 			verifier_DECL(a.getFils2());
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Liste Decl", a.getFils2().getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Liste Decl : "+a.getFils2().getNumLigne());
 		}
 	}
 
-	private void verifier_DECL(Arbre a) throws ErreurVerif {
+	private void verifier_DECL(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		Type type = verifier_TYPE(a.getFils2());
 		verifier_LISTE_IDF(a.getFils1(), type);
 	}
 
-	private void verifier_LISTE_IDF(Arbre a, Type t) throws ErreurVerif {
+	private void verifier_LISTE_IDF(Arbre a, Type t) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
 		case Vide: 
 			return;
 		case ListeIdent: 
 			verifier_LISTE_IDF(a.getFils1(), t);
 			boolean isPresent = env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
-			if(isPresent) {//TODO testfail
+			if(isPresent) {
 				ErreurContext err = ErreurContext.RedeclarationIdent;
 				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
 			}
@@ -130,15 +120,13 @@ public class Verif {
 			verifier_IDF(a.getFils2(),NatureDefn.Var);
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Liste Idf", a.getFils2().getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Liste Idf : "+a.getFils2().getNumLigne());
 		}
 	}
 
-	private void verifier_IDF(Arbre a, NatureDefn reqNat) throws ErreurVerif{
+	private void verifier_IDF(Arbre a, NatureDefn reqNat) throws ErreurVerif, ErreurInterneVerif {
 		Defn def = env.chercher(a.getChaine());
-		if(def == null) {//TODO testfail
+		if(def == null) {
 			ErreurContext err = ErreurContext.IdentificateurInconnu;
 			err.leverErreurContext(a.getChaine(), a.getNumLigne());
 			return;
@@ -152,7 +140,7 @@ public class Verif {
 
 	}
 
-	private Type verifier_TYPE(Arbre a) throws ErreurVerif {
+	private Type verifier_TYPE(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
 		case Ident: 
 			verifier_IDF(a,NatureDefn.Type);
@@ -164,13 +152,11 @@ public class Verif {
 			Type t2 = verifier_TABLEAU(a);
 			return t2;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Type", a.getNumLigne());
-			return null;
+			throw new ErreurInterneVerif("Type : "+a.getNumLigne());
 		}
 	}
 
-	private void verifier_CONSTANTE(Arbre a) throws ErreurVerif{
+	private void verifier_CONSTANTE(Arbre a) throws ErreurVerif, ErreurInterneVerif{
 		switch (a.getNoeud()) {
 		case PlusUnaire: 
 			verifier_CONSTANTE(a.getFils1());
@@ -192,14 +178,12 @@ public class Verif {
 			a.setDecor(new Decor(Type.Integer));
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Constante", a.getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Constante : "+a.getNumLigne());
 		}
 	}
 
 
-	private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif{
+	private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif, ErreurInterneVerif{
 		verifier_CONSTANTE(a.getFils1());
 		verifier_CONSTANTE(a.getFils2());
 		int min, max;
@@ -227,7 +211,7 @@ public class Verif {
 		return temp;
 	}
 
-	private Type verifier_TABLEAU(Arbre a) throws ErreurVerif {
+	private Type verifier_TABLEAU(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		Type t1 = verifier_INTERVALLE(a.getFils1());
 		Type t2 = verifier_TYPE(a.getFils2());
 		Type arr = Type.creationArray(t1,t2);
@@ -238,7 +222,7 @@ public class Verif {
 	/**************************************************************************
 	 * LISTE_INST
 	 **************************************************************************/
-	private void verifier_LISTE_INST(Arbre a) throws ErreurVerif {
+	private void verifier_LISTE_INST(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 
 		switch (a.getNoeud()) {
 		case Vide: 
@@ -248,13 +232,11 @@ public class Verif {
 			verifier_INST(a.getFils2());
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Liste Inst", a.getFils2().getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Liste Inst : "+a.getFils2().getNumLigne());
 		}
 	}
 
-	private void verifier_INST(Arbre a) throws ErreurVerif {
+	private void verifier_INST(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
 		case Nop:
 			return;
@@ -322,13 +304,11 @@ public class Verif {
 		case Ligne :
 			return;
 		default:
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Inst", a.getFils1().getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Inst : "+a.getFils1().getNumLigne());
 		}
 	}
 
-	private void verifier_PAS(Arbre a) throws ErreurVerif {
+	private void verifier_PAS(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
   		case Increment :
   		case Decrement :
@@ -352,13 +332,11 @@ public class Verif {
   			}
   			return;
 	  	default:
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Pas", a.getFils1().getNumLigne());
-			return;
+	  		throw new ErreurInterneVerif("Pas : "+a.getFils1().getNumLigne());
 		}
 	}
 	
-	private void verifier_PLACE(Arbre a) throws ErreurVerif {
+	private void verifier_PLACE(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
 		case Ident: 
 			verifier_IDF(a,NatureDefn.Var);
@@ -379,13 +357,11 @@ public class Verif {
 			}
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Place", a.getFils1().getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Place : "+a.getFils1().getNumLigne());
 		}
 	}
 		
-	private void verifier_LISTE_EXP(Arbre a) throws ErreurVerif {
+	private void verifier_LISTE_EXP(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
 		case Vide: 
 			return;
@@ -394,13 +370,11 @@ public class Verif {
 			verifier_EXP(a.getFils2());
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Liste Exp", a.getFils2().getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Liste Exp : "+a.getFils2().getNumLigne());
 		}
 	}
 
-	private void verifier_EXP(Arbre a) throws ErreurVerif{
+	private void verifier_EXP(Arbre a) throws ErreurVerif, ErreurInterneVerif{
 		switch (a.getNoeud()) {
 		case Et: 
 		case Ou: 
@@ -461,15 +435,13 @@ public class Verif {
 			
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Exp", a.getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Exp : "+a.getNumLigne());
 		}
 	}
 
 	
 
-	private void verifier_FACTEUR(Arbre a) throws ErreurVerif {
+	private void verifier_FACTEUR(Arbre a) throws ErreurVerif, ErreurInterneVerif {
 		switch (a.getNoeud()) {
 		case Entier: 
 			a.setDecor(new Decor(Type.Integer));
@@ -496,38 +468,23 @@ public class Verif {
 			a.setDecor(new Decor(def,def.getType()));	
 			return;
 		default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur; 
-			err.leverErreurContext("Facteur", a.getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Facteur : "+a.getNumLigne());
 		}
 	}
 
 	
-	private Type trouverType(String s, int numLigne) throws ErreurVerif{
+	private Type trouverType(String s, int numLigne) throws ErreurVerif, ErreurInterneVerif{
 		Defn t= env.chercher(s);
 		if(t!= null){
+			if(t.getNature() != NatureDefn.Type) {
+				ErreurContext err = ErreurContext.IdentBadNature; 
+				err.leverErreurContext(s, numLigne);
+			}
 			return t.getType();
 		}
 		else {
-			ErreurContext err = ErreurContext.ProblemeCompilateur; 
-			err.leverErreurContext("pas de type sur l'identificateur ("+s+")", numLigne);
-		}
-		if(t.getNature() != NatureDefn.Type) {
-			ErreurContext err = ErreurContext.IdentBadNature; 
-			err.leverErreurContext(s, numLigne);
-		}
-		return null;
-	}
-	
-	
-	@SuppressWarnings("unused")
-	private void verifier_SAMPLE(Arbre a) throws ErreurVerif {
-		switch (a.getNoeud()) {
-	  		case Vide :
-	  	default: 
-			ErreurContext err = ErreurContext.ProblemeCompilateur;
-			err.leverErreurContext("Sample", a.getNumLigne());
-			return;
+			throw new ErreurInterneVerif("Pas de type sur l'identificateur : "+ numLigne);
 		}
 	}
+
 }
