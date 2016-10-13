@@ -9,12 +9,6 @@ package ProjetCompil.Verif.Src;
 public enum ErreurContext {
    
    /**
-   * ErreurNonRepertoriee signifie qu'aucune autre erreur ne correspond au problème
-   * (cela ne devrait jamais ce produire ...)
-   */
-   ErreurNonRepertoriee,
-   
-   /**
    * RedeclarationIdent est généré lorsque un identificateur à déjà été déclaré ou
    * est réservé.
    **/
@@ -24,14 +18,6 @@ public enum ErreurContext {
    * IdentificateurInconnu est généré lorsque un identificateur n'a pas été déclaré préalablement
    **/
    IdentificateurInconnu,
-   
-   
-
-   /**
-   * ProblemeCompilateur est généré lorsque le compilateur est en défault
-   * (cela ne devrait jamais ce produire ...)
-   **/
-   ProblemeCompilateur,
 
    /**
    * TypeIndex est généré lorsque l'index donné pour un type Array n'est pas du bon interval
@@ -65,9 +51,6 @@ public enum ErreurContext {
 	case IdentificateurInconnu :
 		System.err.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
 		break;		
-	case ProblemeCompilateur : 
-		System.err.print("Erreur du compilateur ("+s+")");
-		break;
 	case TypesNonCompatible :
 		System.err.print("Types non compatible "+s+" ");
 		break;

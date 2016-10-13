@@ -12,4 +12,4 @@ Ensuite nous avons rédigé des tests qui devaient passé, en partant des règle
 Ensuite, nous avons rédigé une série de test qui ne devaient pas passé, afin d'être sur que notre compilateur ne soit pas trop permissif.
 Enfin, après avoir lancé l'analyse de Cobertura, nous avons pu compléter nos tests avec des nouvelles instructions auquels nous n'avions pas pensé. 
 
-Tous les tests sont disponible dans le dossier Test (voir le readme.txt de ce dossier).
+Tous les tests sont disponible dans le dossier Test (voir le readme.txt du dossier).
