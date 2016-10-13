@@ -1,0 +1,5 @@
+program
+   i : max_int;
+begin
+   i := 1; 
+end.

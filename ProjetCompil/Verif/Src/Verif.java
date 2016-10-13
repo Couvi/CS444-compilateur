@@ -144,10 +144,11 @@ public class Verif {
 		switch (a.getNoeud()) {
 		case Ident: 
 			verifier_IDF(a,NatureDefn.Type);
-			return trouverType(a.getChaine(), a.getNumLigne());
+			Defn t= env.chercher(a.getChaine());
+			return t.getType();
 		case Intervalle: 
-			Type t = verifier_INTERVALLE(a);
-			return t;
+			Type t1 = verifier_INTERVALLE(a);
+			return t1;
 		case Tableau: 
 			Type t2 = verifier_TABLEAU(a);
 			return t2;
@@ -168,11 +169,6 @@ public class Verif {
 			return;
 		case Ident: 
 			verifier_IDF(a,NatureDefn.ConstInteger);
-			NatureDefn nat = a.getDecor().getDefn().getNature();
-			if (nat != NatureDefn.ConstInteger) {
-				ErreurContext err = ErreurContext.IdentBadNature;
-				err.leverErreurContext(nat+"", a.getNumLigne());
-			}
 			return;
 		case Entier: 
 			a.setDecor(new Decor(Type.Integer));
@@ -469,21 +465,6 @@ public class Verif {
 			return;
 		default: 
 			throw new ErreurInterneVerif("Facteur : "+a.getNumLigne());
-		}
-	}
-
-	
-	private Type trouverType(String s, int numLigne) throws ErreurVerif, ErreurInterneVerif{
-		Defn t= env.chercher(s);
-		if(t!= null){
-			if(t.getNature() != NatureDefn.Type) {
-				ErreurContext err = ErreurContext.IdentBadNature; 
-				err.leverErreurContext(s, numLigne);
-			}
-			return t.getType();
-		}
-		else {
-			throw new ErreurInterneVerif("Pas de type sur l'identificateur : "+ numLigne);
 		}
 	}
 

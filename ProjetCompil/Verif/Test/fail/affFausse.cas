@@ -1,0 +1,5 @@
+program
+   i : integer;
+begin
+   65 := i; 
+end.

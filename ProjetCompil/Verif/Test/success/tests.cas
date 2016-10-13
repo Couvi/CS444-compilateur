@@ -12,6 +12,7 @@ program
 	M : array [1 .. +18] OF real;
 	N : array [18 ..25] of array [1.. 18] of integer; 
 	O : array [-42 .. -3] of real;
+	P : array [7..max_int] of real;
 begin
 	--Test des affectable et des opérateur
 	M[6] := O[-10];
@@ -68,7 +69,7 @@ begin
 	read(J) ;
 	read(C) ; 
 	read(L[5]) ; 
-	write("Valeur ", I, " non trouvee") ;
+	write("Valeur ", I, " non trouvee", A) ;
 	
 	for J := I to 20 do 
       		K := J ; 
