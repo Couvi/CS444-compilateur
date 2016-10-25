@@ -1,0 +1,8 @@
+program
+	A : real;
+begin
+	while (A) do
+		NULL;
+	end;
+	
+end.

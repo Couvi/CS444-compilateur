@@ -1,0 +1,6 @@
+program
+	D : boolean;
+begin
+	D := -D;
+end.
+	

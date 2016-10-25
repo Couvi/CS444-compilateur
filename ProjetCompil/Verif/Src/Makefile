@@ -3,8 +3,6 @@
 all : 
 	cd ../../..; javac ProjetCompil/Verif/Src/*.java
 
-html :
-	cd ../Doc; javadoc ..*/Src/*.java
 clean : 
 	/bin/rm -f *.class
 	

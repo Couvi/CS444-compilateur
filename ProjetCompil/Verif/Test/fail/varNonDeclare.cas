@@ -1,0 +1,6 @@
+program
+
+begin
+	D := not(D);
+end.
+	

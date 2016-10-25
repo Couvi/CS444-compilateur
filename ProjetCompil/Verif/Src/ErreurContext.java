@@ -9,17 +9,6 @@ package ProjetCompil.Verif.Src;
 public enum ErreurContext {
    
    /**
-   * ErreurNonRepertoriee signifie qu'aucune autre erreur ne correspond au problème
-   * (cela ne devrait jamais ce produire ...)
-   */
-   ErreurNonRepertoriee,
-   
-   /**
-   * TypeInconnu est déclanché lorsque l'on cherche un type qui n'existe pas
-   */
-   TypeInconnu, 
-   
-   /**
    * RedeclarationIdent est généré lorsque un identificateur à déjà été déclaré ou
    * est réservé.
    **/
@@ -29,17 +18,12 @@ public enum ErreurContext {
    * IdentificateurInconnu est généré lorsque un identificateur n'a pas été déclaré préalablement
    **/
    IdentificateurInconnu,
-   
-   /**
-   * BorneNonEntier est généré lorsque l'on veut créer un type Interval mais les bornes ne sont pas des entiers
-   **/
-   BorneNonEntier,
 
    /**
-   * ProblemeCompilateur est généré lorsque le compilateur est en défault
-   * (cela ne devrait jamais ce produire ...)
+   * IdentBadNature est génèré lors de la recherche d'un identificateur de type, 
+   * si le defn associé n'est pas de nature type
    **/
-   ProblemeCompilateur,
+   IdentBadNature,
 
    /**
    * TypeIndex est généré lorsque l'index donné pour un type Array n'est pas du bon interval
@@ -67,21 +51,15 @@ public enum ErreurContext {
    void leverErreurContext(String s, int numLigne) throws ErreurVerif {
       System.err.println("Erreur contextuelle : ");
       switch (this) {
-	case TypeInconnu :
-		System.err.print("Type inconnu ("+s+") ");
-		break;
 	case RedeclarationIdent :
 		System.err.print("L'identificateur "+s+" a déjà été déclaré ou est reservé ");
 		break;
 	case IdentificateurInconnu :
 		System.err.print("L'identificateur "+s+" n'a pas été déclaré et est inconnu ");
-		break;		
-	case BorneNonEntier :
-		System.err.print("Les bornes de l'Interval ne sont pas des entier ");
-		break;	
-	case ProblemeCompilateur : 
-		System.err.print("Erreur du compilateur ("+s+")");
 		break;
+   case IdentBadNature : 
+      System.err.print("L'identificateur n'est pas de la bonne nature: "+s);
+      break;
 	case TypesNonCompatible :
 		System.err.print("Types non compatible "+s+" ");
 		break;
@@ -95,9 +73,9 @@ public enum ErreurContext {
         	System.err.print("non repertoriee");	 
       }
       System.err.println(" ... ligne " + numLigne);
-      StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+      /*StackTraceElement[] stack = Thread.currentThread().getStackTrace();
       for (int i=0; i< stack.length; i++)
-         System.err.println(stack[i]);
+         System.err.println(stack[i]);*/
       throw new ErreurVerif();
    }
 

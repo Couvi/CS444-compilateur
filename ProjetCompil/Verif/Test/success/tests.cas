@@ -8,13 +8,18 @@ program
 	I : 1 .. 13;
 	J : 2 .. 5;
 	K : integer;
-	L : array [1 .. 18] OF integer;
-	M : array [1 .. 18] OF real;
+	L : array [+1 .. 18] OF integer;
+	M : array [1 .. +18] OF real;
+	N : array [18 ..25] of array [1.. 18] of integer; 
+	O : array [-42 .. -3] of real;
+	P : array [7..max_int] of real;
 begin
 	--Test des affectable et des opérateur
-	
+	M[6] := O[-10];
 	D := not(E);
 	
+	B := 3.14e+10;
+
 	E := D and E;
 	F := E or not(D);
 	
@@ -29,8 +34,9 @@ begin
 	K := -J;
 		
 	A := B + C;
-	B := (C - A);
-	C := A * B;
+	B := (I - A);
+	C := A * J;
+	I := I + J;
 	
 	K := I div J;
 	K := I mod J;
@@ -43,6 +49,12 @@ begin
 	L[I] := K;
 	L[5] := K;
 	M := L;
+	K := L[14];
+	A := L[18];
+	L := N[18];
+	B := N[20][8];
+	K := N[J][8];
+	
 	
 	-- Test des instructions
 	
@@ -56,7 +68,8 @@ begin
 	
 	read(J) ;
 	read(C) ; 
-	write("Valeur ", I, " non trouvee", real) ;
+	read(L[5]) ; 
+	write("Valeur ", I, " non trouvee", A) ;
 	
 	for J := I to 20 do 
       		K := J ; 

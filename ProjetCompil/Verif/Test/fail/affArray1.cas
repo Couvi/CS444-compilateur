@@ -1,0 +1,5 @@
+program
+   A : integer;
+begin
+   A[3] := 3;
+end.

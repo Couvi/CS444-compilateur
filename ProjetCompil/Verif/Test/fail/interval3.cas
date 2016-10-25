@@ -1,0 +1,5 @@
+program
+   i : 2..true;
+begin
+   i := 1; 
+end.

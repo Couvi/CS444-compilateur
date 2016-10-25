@@ -143,6 +143,8 @@ public class Arbre {
     *    this.getNoeud() == Noeud.Entier
     */
    public int getEntier() {
+      if (getNoeud() == Noeud.Ident && getChaine().equals("max_int"))
+          return java.lang.Integer.MAX_VALUE;
       throw new ErreurArbre("getEntier() impossible sur " + noeudArbre);
    }
 

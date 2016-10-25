@@ -1,0 +1,9 @@
+program
+	A : boolean;
+	B : array [1 .. 18] OF integer;
+	C : integer;
+begin
+	C := B[A];
+	
+end.
+	

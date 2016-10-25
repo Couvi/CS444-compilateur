@@ -1,0 +1,8 @@
+program
+	B : array [1 .. 18] OF real;
+	C : integer;
+begin
+	C := B[3];
+	
+end.
+	

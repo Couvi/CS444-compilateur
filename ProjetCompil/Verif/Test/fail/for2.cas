@@ -1,0 +1,10 @@
+program
+	B : real;
+	A : 1..14;
+begin
+	for A := B to 20 do 
+      		null ; 
+  	end ; 
+	
+end.
+	

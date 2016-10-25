@@ -1,0 +1,8 @@
+program
+	A : array [1..14] of boolean;
+	B : 1..10;
+	C : 1..10;
+begin
+	C := B / A;
+end.
+	

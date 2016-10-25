@@ -1,0 +1,6 @@
+program
+   A : 1..5;
+   B : real;
+begin
+    --pas d'instruction
+end.

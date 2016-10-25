@@ -1,0 +1,7 @@
+program
+   A : 1..5;
+   B : 1..5;
+   C : 1..5;
+begin
+    A := B and C;
+end.
