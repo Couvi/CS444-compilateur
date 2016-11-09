@@ -39,7 +39,11 @@ public enum ErreurContext {
    /**
    * IndexationNonArray signifie que l'on essaie d'indexer un type qui n'est pas un tableau
    */
-   IndexationNonArray;
+   IndexationNonArray,
+   /**
+   * IdentUnconnu signifie que l'identificateur n'a pas été déclaré
+   */
+   IdentUnconnu;
    
    /**
    * Cette méthode permet de lever une exception en précisant l'erreur (type et ligne)
@@ -69,9 +73,12 @@ public enum ErreurContext {
 	case IndexationNonArray :
 		System.err.print("Un type qui n'est pas un tableau ne peut pas être indexé ");
 		break;
-      	default:
-        	System.err.print("non repertoriee");	 
-      }
+   case IdentUnconnu :
+      System.err.print("identificateur "+s+" inconnu");
+      break;
+   default:
+      System.err.print("non repertoriee");	 
+   }
       System.err.println(" ... ligne " + numLigne);
       /*StackTraceElement[] stack = Thread.currentThread().getStackTrace();
       for (int i=0; i< stack.length; i++)

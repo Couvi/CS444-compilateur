@@ -111,7 +111,7 @@ public class Verif {
 			return;
 		case ListeIdent: 
 			verifier_LISTE_IDF(a.getFils1(), t);
-			boolean isPresent = env.enrichir(a.getFils2().getChaine(), Defn.creationVar(t));
+			boolean isPresent = env.enrichir(a.getFils2().getChaine().toLowerCase(), Defn.creationVar(t));
 			if(isPresent) {
 				ErreurContext err = ErreurContext.RedeclarationIdent;
 				err.leverErreurContext(a.getFils2().getChaine(), a.getFils2().getNumLigne());
@@ -125,7 +125,7 @@ public class Verif {
 	}
 
 	private void verifier_IDF(Arbre a, NatureDefn reqNat) throws ErreurVerif, ErreurInterneVerif {
-		Defn def = env.chercher(a.getChaine());
+		Defn def = env.chercher(a.getChaine().toLowerCase());
 		if(def == null) {
 			ErreurContext err = ErreurContext.IdentificateurInconnu;
 			err.leverErreurContext(a.getChaine(), a.getNumLigne());
@@ -144,7 +144,7 @@ public class Verif {
 		switch (a.getNoeud()) {
 		case Ident: 
 			verifier_IDF(a,NatureDefn.Type);
-			Defn t= env.chercher(a.getChaine());
+			Defn t= env.chercher(a.getChaine().toLowerCase());
 			return t.getType();
 		case Intervalle: 
 			Type t1 = verifier_INTERVALLE(a);
@@ -452,9 +452,10 @@ public class Verif {
 			verifier_PLACE(a);
 			return;
 		case Ident: 
-			Defn def = env.chercher(a.getChaine());
+			Defn def = env.chercher(a.getChaine().toLowerCase());
 			if(def == null) {
-				throw new ErreurInterneVerif("identificateur "+a.getChaine()+" inconnu");
+				ErreurContext err = ErreurContext.IdentUnconnu;
+				err.leverErreurContext(a.getChaine(), a.getNumLigne());
 			}
 			NatureDefn nat = def.getNature();
 			if (nat != NatureDefn.Var && nat != NatureDefn.ConstInteger && nat != NatureDefn.ConstBoolean) {
