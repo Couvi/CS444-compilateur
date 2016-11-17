@@ -26,32 +26,30 @@ class Generation {
     case Quotient: op=Operation.SUB; break;
     default: break;
     }
-
-    //if(il reste des registres?) { TODO
+    Registre rd;
+    if((rd=Reg.Allouer_Reg())!=null) {
       coder_EXP(a.getFils1(), rc);
-      Registre rd = null; //allouer un registre TODO
       coder_EXP(a.getFils2(), rd);
-      Prog.ajouter(Inst.creation2(op, new OperandeDirect(rd), new OperandeDirect(rc)));
-      //libèrer rd
-    //} fin du if
-    //else {
+      Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
+      Reg.Liberer(rd);
+    }
+    else {
       coder_EXP(a.getFils2(), rc);
       int temp = 0; //allouer un emplacement sur la pile
       Prog.ajouter(Inst.creation2(
-        Operation.STORE, new OperandeDirect(rc), 
-                         new OperandeIndirect(temp,Registre.LB)));
+        Operation.STORE, Operande.opDirect(rc), 
+                         Operande.creationOpIndirect(temp,Registre.LB)));
       coder_EXP(a.getFils1(), rc);
       Prog.ajouter(Inst.creation2(
-        op, new OperandeIndirect(temp,Registre.LB), 
-            new OperandeDirect(rc)));
+        op, Operande.creationOpIndirect(temp,Registre.LB), 
+            Operande.opDirect(rc)));
       //libèrer temp
-    //}fin else
-    
+    }
   }
 
   static Prog coder(Arbre a) {
     Prog.ajouterGrosComment("Programme généré par JCasc");
-
+    Reg.init();
     // -----------
     // A COMPLETER
     // -----------
