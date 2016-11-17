@@ -48,7 +48,6 @@ class Generation {
       return;
     }
 
-    // HENRI à toi de jouer!
     //opérations binaires logiques
     switch (a.getNoeud()) {
     //remplir les cas (ne pas oublier le break)
@@ -66,6 +65,38 @@ class Generation {
       //actions communes à réaliser
       return;
     }
+
+    //opérations unaires TODO
+    switch (a.getNoeud()) {
+    //remplir les cas (ne pas oublier le break)
+    case PlusUnaire: 
+    case MoinsUnaire: 
+    case Non:
+    default: break;
+    }
+    if(op!=null) {
+      //actions communes à réaliser
+      return;
+    }
+
+    //expressions feuilles TODO
+    switch (a.getNoeud()) {
+    //remplir les cas (ne pas oublier le break)
+    case Chaine: 
+    case Ident: 
+    case Index: 
+    case Entier:
+    case Reel:
+    default: break;
+    }
+    if(op!=null) {
+      //actions communes à réaliser
+      return;
+    }
+  }
+
+  public void coder_INST(Arbre a) {
+    //TODO
   }
 
   static Prog coder(Arbre a) {
