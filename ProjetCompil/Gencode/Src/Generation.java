@@ -2,7 +2,6 @@ package ProjetCompil.Gencode.Src;
 
 import ProjetCompil.Global.Src.*;
 import ProjetCompil.Global.Src3.*;
-
 /**
  * Génération de code pour un programme JCas à partir d'un arbre décoré.
  */
@@ -15,35 +14,57 @@ class Generation {
     */
   public void coder_EXP(Arbre a, Registre rc) {
     Operation op = null;
-
     switch (a.getNoeud()) {
     //opérations binaires arithmétiques
     case Plus: op=Operation.ADD; break;
     case Moins: op=Operation.SUB; break;
-    case Mult: op=Operation.SUB; break;
-    case DivReel: op=Operation.SUB; break;
-    case Reste: op=Operation.SUB; break;
-    case Quotient: op=Operation.SUB; break;
+    case Mult: op=Operation.MUL; break;
+    case DivReel: op=Operation.DIV; break;
+    case Reste: op=Operation.MOD; break;
+    case Quotient: op=Operation.DIV; break;
     default: break;
     }
-    Registre rd;
-    if((rd=Reg.Allouer_Reg())!=null) {
-      coder_EXP(a.getFils1(), rc);
-      coder_EXP(a.getFils2(), rd);
-      Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
-      Reg.Liberer(rd);
+    if(op!=null) {
+      //actions communes à réaliser
+      Registre rd;
+      if((rd=Reg.Allouer_Reg())!=null) {
+        coder_EXP(a.getFils1(), rc);
+        coder_EXP(a.getFils2(), rd);
+        Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
+        Reg.Liberer(rd);
+      }
+      else {
+        coder_EXP(a.getFils2(), rc);
+        int temp = 0; //allouer un emplacement sur la pile
+        Prog.ajouter(Inst.creation2(
+          Operation.STORE, Operande.opDirect(rc), 
+                           Operande.creationOpIndirect(temp,Registre.LB)));
+        coder_EXP(a.getFils1(), rc);
+        Prog.ajouter(Inst.creation2(
+          op, Operande.creationOpIndirect(temp,Registre.LB), 
+              Operande.opDirect(rc)));
+        //libèrer temp
+      }
+      return;
     }
-    else {
-      coder_EXP(a.getFils2(), rc);
-      int temp = 0; //allouer un emplacement sur la pile
-      Prog.ajouter(Inst.creation2(
-        Operation.STORE, Operande.opDirect(rc), 
-                         Operande.creationOpIndirect(temp,Registre.LB)));
-      coder_EXP(a.getFils1(), rc);
-      Prog.ajouter(Inst.creation2(
-        op, Operande.creationOpIndirect(temp,Registre.LB), 
-            Operande.opDirect(rc)));
-      //libèrer temp
+
+    // HENRI à toi de jouer!
+    //opérations binaires logiques
+    switch (a.getNoeud()) {
+    //remplir les cas (ne pas oublier le break)
+    case Et: 
+    case Ou: 
+    case Egal: 
+    case InfEgal: 
+    case SupEgal: 
+    case NonEgal: 
+    case Inf: 
+    case Sup: 
+    default: break;
+    }
+    if(op!=null) {
+      //actions communes à réaliser
+      return;
     }
   }
 
