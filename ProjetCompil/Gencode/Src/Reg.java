@@ -18,7 +18,7 @@ public class Reg {
 	    pool.put(Registre.LB, false);
 	  }
 
-	  public static Registre Allouer_Reg() {
+	  public static Registre Allouer() {
 	    for (Registre r : Registre.values()) {
 	      if (pool.get(r)) {
 	        pool.put(r, false);

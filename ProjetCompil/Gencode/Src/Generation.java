@@ -27,7 +27,7 @@ class Generation {
     if(op!=null) {
       //actions communes à réaliser
       Registre rd;
-      if((rd=Reg.Allouer_Reg())!=null) {
+      if((rd=Reg.Allouer())!=null) {
         coder_EXP(a.getFils1(), rc);
         coder_EXP(a.getFils2(), rd);
         Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
@@ -61,7 +61,7 @@ class Generation {
     case Sup: 
     default: break;
     }
-    if(op!=null) {
+    if(false) { //condition si on match une des cases au dessus
       //actions communes à réaliser
       return;
     }
@@ -74,7 +74,7 @@ class Generation {
     case Non:
     default: break;
     }
-    if(op!=null) {
+    if(false) { //condition si on match une des cases au dessus
       //actions communes à réaliser
       return;
     }
@@ -89,14 +89,30 @@ class Generation {
     case Reel:
     default: break;
     }
-    if(op!=null) {
+    if(false) { //condition si on match une des cases au dessus
       //actions communes à réaliser
       return;
     }
   }
 
   public void coder_INST(Arbre a) {
-    //TODO
+    Registre rc = Registre.R15; //registre réservé pour les instructions
+    switch (a.getNoeud()) {
+    case Nop: //TODO mettre un commentaire?
+    case Affect: {
+      //Operande destination = getOpFromPlace(a.getFils1());
+      coder_EXP(a.getFils2(), rc);
+      //Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(rc), destination);
+      break;
+    }
+    case Pour:
+    case TantQue:
+    case Si:
+    case Ecriture:
+    case Lecture:
+    case Ligne:
+    default: break;
+    }
   }
 
   static Prog coder(Arbre a) {
