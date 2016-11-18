@@ -27,11 +27,11 @@ class Generation {
     if(op!=null) {
       //actions communes à réaliser
       Registre rd;
-      if((rd=Reg.Allouer())!=null) {
+      if((rd=Reg.allouer())!=null) {
         coder_EXP(a.getFils1(), rc);
         coder_EXP(a.getFils2(), rd);
         Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
-        Reg.Liberer(rd);
+        Reg.liberer(rd);
         return;
       }
       else {
@@ -121,8 +121,16 @@ class Generation {
     }
   }
 
-  public void coder_DECL(Arbre a) {
-
+  public void coder_LISTE_DECL(Arbre a) {
+    switch (a.getNoeud()) {
+    case Vide: 
+      return;
+    case ListeIdent: 
+      coder_LISTE_DECL(a.getFils1());
+      coder_DECL(a.getFils2());
+      return;
+    default: 
+    }
   }
 
   static Prog coder(Arbre a) {
