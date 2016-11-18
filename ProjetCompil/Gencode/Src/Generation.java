@@ -32,6 +32,7 @@ class Generation {
         coder_EXP(a.getFils2(), rd);
         Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
         Reg.Liberer(rd);
+        return;
       }
       else {
         coder_EXP(a.getFils2(), rc);
@@ -95,6 +96,11 @@ class Generation {
     }
   }
 
+
+  private Operande getOpFromPlace(Arbre a) {
+    //retourne un objet OperandeDirect correspondant à l'emplacement global voulu
+    return null;
+  }
   public void coder_INST(Arbre a) {
     Registre rc = Registre.R15; //registre réservé pour les instructions
     switch (a.getNoeud()) {
@@ -113,6 +119,10 @@ class Generation {
     case Ligne:
     default: break;
     }
+  }
+
+  public void coder_DECL(Arbre a) {
+
   }
 
   static Prog coder(Arbre a) {
