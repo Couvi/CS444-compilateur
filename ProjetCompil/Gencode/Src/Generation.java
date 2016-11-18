@@ -97,8 +97,9 @@ class Generation {
   }
 
 
-  private OperandeDirect getOpFromPlace(Arbre a) {
+  private Operande getOpFromPlace(Arbre a) {
     //retourne un objet OperandeDirect correspondant à l'emplacement global voulu
+    return null;
   }
   public void coder_INST(Arbre a) {
     Registre rc = Registre.R15; //registre réservé pour les instructions
@@ -120,7 +121,7 @@ class Generation {
     }
   }
 
-  public coder_DECL(Arbre a) {
+  public void coder_DECL(Arbre a) {
 
   }
 
