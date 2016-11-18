@@ -16,6 +16,7 @@ public class Reg {
 	    pool.put(Registre.R0, false);
 	    pool.put(Registre.GB, false);
 	    pool.put(Registre.LB, false);
+	    pool.put(Registre.R15, false);
 	  }
 
 	  public static Registre Allouer_Reg() {
@@ -29,7 +30,7 @@ public class Reg {
 	  }
 
 	  public static void Liberer(Registre reg) {
-		  if (reg != null)
+		  if (reg != null && reg!=Registre.R0 && reg!=Registre.GB && reg!=Registre.LB, reg!=Registre.R15)
 			  pool.put(reg, true);
 	  }
 }
