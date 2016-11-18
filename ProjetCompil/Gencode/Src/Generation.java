@@ -127,11 +127,23 @@ class Generation {
       return;
     case ListeIdent: 
       coder_LISTE_DECL(a.getFils1());
-      coder_DECL(a.getFils2());
+      coder_LISTE_IDF(a.getFils1());
       return;
     default: 
     }
   }
+  public void coder_LISTE_IDF(Arbre a) {
+    switch (a.getNoeud()) {
+    case Vide: 
+      return;
+    case ListeIdent: 
+      coder_LISTE_IDF(a.getFils1());
+      //addGlobale(a.getFils2().getChaine().toLowerCase(), a.getFils2().getDecor().getType());
+      return;
+    default:
+    }
+  }
+
 
   static Prog coder(Arbre a) {
     Prog.ajouterGrosComment("Programme généré par JCasc");
