@@ -6,6 +6,7 @@ import ProjetCompil.Global.Src3.*;
  * Génération de code pour un programme JCas à partir d'un arbre décoré.
  */
 
+
 class Generation {
    
    /**
@@ -36,7 +37,7 @@ class Generation {
       }
       else {
         coder_EXP(a.getFils2(), rc);
-        int temp = 0; //allouer un emplacement sur la pile
+        int temp = Pile.allouer(); //allouer un emplacement sur la pile
         Prog.ajouter(Inst.creation2(
           Operation.STORE, Operande.opDirect(rc), 
                            Operande.creationOpIndirect(temp,Registre.LB)));
@@ -44,7 +45,7 @@ class Generation {
         Prog.ajouter(Inst.creation2(
           op, Operande.creationOpIndirect(temp,Registre.LB), 
               Operande.opDirect(rc)));
-        //libèrer temp
+        Pile.liberer(temp);//libèrer temp
       }
       return;
     }
@@ -104,7 +105,7 @@ class Generation {
   public void coder_INST(Arbre a) {
     Registre rc = Registre.R15; //registre réservé pour les instructions
     switch (a.getNoeud()) {
-    case Nop: //TODO mettre un commentaire?
+    case Nop: break;//TODO mettre un commentaire?
     case Affect: {
       //Operande destination = getOpFromPlace(a.getFils1());
       coder_EXP(a.getFils2(), rc);
@@ -120,6 +121,18 @@ class Generation {
     default: break;
     }
   }
+
+  private void coder_LISTE_INST(Arbre a) {
+		switch (a.getNoeud()) {
+		case Vide: 
+			return;
+		case ListeInst: 
+			coder_LISTE_INST(a.getFils1());
+			coder_INST(a.getFils2());
+			return;
+		default: 
+		}
+	}
 
   public void coder_LISTE_DECL(Arbre a) {
     switch (a.getNoeud()) {
@@ -138,20 +151,22 @@ class Generation {
       return;
     case ListeIdent: 
       coder_LISTE_IDF(a.getFils1());
-      //addGlobale(a.getFils2().getChaine().toLowerCase(), a.getFils2().getDecor().getType());
+      Pile.addGlobale(a.getFils2());
       return;
     default:
     }
   }
-
+  
+  
 
   static Prog coder(Arbre a) {
     Prog.ajouterGrosComment("Programme généré par JCasc");
     Reg.init();
-    // -----------
-    // A COMPLETER
-    // -----------
-    
+    Generation gen = new Generation();
+    gen.coder_LISTE_DECL(a.getFils1());
+    Pile.finDeclaration();
+    gen.coder_LISTE_INST(a.getFils2());
+
 
     // Fin du programme
     // L'instruction "HALT"
