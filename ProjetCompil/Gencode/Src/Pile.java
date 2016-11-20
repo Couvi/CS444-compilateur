@@ -14,15 +14,14 @@ public class Pile {
 	public static void addGlobale(Arbre a) {
 		if (declaration) {
 			switch(a.getNoeud()){
-				/*case Boolean:
-				case Real:
-				case Interval:
+				case Entier:
+				case Intervalle:
 					SP++; GB++;
-					//Ajouter l'information dans le décor (SP)
+					a.getDecor().setInfoCode(SP);
 					break;
-				case Array: 
+				case Tableau: 
 					//todo !					
-					break;*/
+					break;
 			}
 		}
 	}
