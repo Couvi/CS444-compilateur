@@ -104,13 +104,15 @@ class Generation {
 
 
   private Operande getOpFromPlace(Arbre a) {
-    //retourne un objet OperandeDirect correspondant à l'emplacement global voulu
-	  /*a =noeud chaine ou ident
-	   d=identificateur/variable
+    //retourne un objet OperandeDirect??? correspondant à l'emplacement global voulu
+	  /*
+	   -d=identificateur/variable dans une liste de declaration
+	   -d.getIndex servirait de déplacement
 	  if (d.getNomVar().equals(a.getChaine()){
-	  
+		  Operande destination =  Operande.creationOpIndirect(d.getIndex, Registre.GB);
 	   }
-	    */
+	   return destination;*/
+	   
     return null;
   }
   public void coder_INST(Arbre a) {
