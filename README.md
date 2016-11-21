@@ -1,6 +1,10 @@
 # CS444-compilateur
 ## Modifier le CLASSPATH
 Executer la commande `source` avec le fichier setenv.sh a la racine
+setenv.sh initialise: 
+- Le CLASSPATH
+- Le PATH pour ima
+- Le LD_LIBRARY_PATH pour les librairies partagées de ima
 
 ## Compiler
 - cd ProjetCompil
