@@ -1,0 +1,12 @@
+#!/bin/sh
+
+outdir=$2
+fich=$1
+outfile=$(basename $fich .cas).ass
+infile=$(basename $fich)
+indir=$(dirname $fich)
+cd $indir
+java ProjetCompil.Gencode.Src.JCasc $infile
+cd -
+mv $indir/$outfile $outdir
+

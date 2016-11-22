@@ -1,0 +1,6 @@
+-- Programme le plus simple
+
+program
+begin
+   null;
+end.
