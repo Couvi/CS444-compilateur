@@ -1,5 +1,7 @@
 package ProjetCompil.Gencode.Src;
 
+import java.security.spec.ECFieldF2m;
+
 import ProjetCompil.Global.Src.*;
 import ProjetCompil.Global.Src3.*;
 /**
@@ -53,7 +55,37 @@ class Generation {
     //opérations binaires logiques
     switch (a.getNoeud()) {
     //remplir les cas (ne pas oublier le break)
-    case Et: 
+    case Et:
+    	      //actions communes à réaliser
+    	      Registre rd;
+    	      Etiq et1Faux = Etiq.nouvelle("et1faux");
+    	      Etiq suite = Etiq.nouvelle("suite");
+    	      if((rd=Reg.allouer())!=null) {
+    	        coder_EXP(a.getFils1(), rc);
+    	        coder_EXP(a.getFils2(), rd);
+    	        Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc), Operande.creationOpEntier(-1))); //CMP rc, #-1
+    	        Prog.ajouter(Inst.creation1(Operation.BEQ, Operande.creationOpEtiq(et1Faux))); //BEQ aF
+    	        Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rd), Operande.creationOpEntier(1))); //CMP r3, #1 ; a est vrais
+    	        Prog.ajouter(Inst.creation1(Operation.SEQ, Operande.opDirect(rc))); //SEQ r1 ; c prend la valeur de b
+    	        Prog.ajouter(Inst.creation1(Operation.BRA, Operande.creationOpEtiq(suite)));//BRA suite
+    	        Prog.ajouter(et1Faux);
+    	        Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(-1), Operande.opDirect(rc)));//aF: 	LOAD #-1, R1 ; a est faux
+    	        Prog.ajouter(suite);
+    	        Reg.liberer(rd);
+    	      }
+    	      else {
+    	        coder_EXP(a.getFils2(), rc);
+    	        int temp = 0; //allouer un emplacement sur la pile
+    	        Prog.ajouter(Inst.creation2(
+    	          Operation.STORE, Operande.opDirect(rc), 
+    	                           Operande.creationOpIndirect(temp,Registre.LB)));
+    	        coder_EXP(a.getFils1(), rc);
+    	        Prog.ajouter(Inst.creation2(
+    	          op, Operande.creationOpIndirect(temp,Registre.LB), 
+    	              Operande.opDirect(rc)));
+    	        //libèrer temp
+    	      }
+    	      return;
     case Ou: 
     case Egal: 
     case InfEgal: 
@@ -63,8 +95,8 @@ class Generation {
     case Sup: 
     default: break;
     }
-    if(false) { //condition si on match une des cases au dessus
-      //actions communes à réaliser
+    if(op!=null) { 
+    	
       return;
     }
 
