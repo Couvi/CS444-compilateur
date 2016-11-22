@@ -157,17 +157,25 @@ class Generation {
 			return;
 		}
 
-    //opérations unaires TODO
-    switch (a.getNoeud()) {
-    //remplir les cas (ne pas oublier le break)
-    case PlusUnaire: return;
-    case Non:
-    case MoinsUnaire: 
-    	coder_EXP(a.getFils1(), rc);
-        Prog.ajouter(Inst.creation2(Operation.OPP, Operande.opDirect(rc), Operande.opDirect(rc)));
-      return;
-    default: break;
-    }
+		// opérations unaires TODO
+		switch (a.getNoeud()) {
+		// remplir les cas (ne pas oublier le break)
+		case PlusUnaire:
+			coder_EXP(a.getFils1(), rc);
+			return;
+		case Non:
+			coder_EXP(a.getFils1(), rc);
+			Prog.ajouter(Inst.creation1(Operation.CMP, Operande.opDirect(rc)));
+			Prog.ajouter(Inst.creation1(Operation.SEQ, Operande.opDirect(rc)));
+			return;
+		case MoinsUnaire:
+			coder_EXP(a.getFils1(), rc);
+			Prog.ajouter(Inst.creation2(Operation.OPP, Operande.opDirect(rc),
+					Operande.opDirect(rc)));
+			return;
+		default:
+			break;
+		}
     
 
     //expressions feuilles TODO
