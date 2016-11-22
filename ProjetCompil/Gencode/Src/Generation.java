@@ -135,18 +135,18 @@ class Generation {
   }
 
 
-  private Operande getOpFromPlace(Arbre a) {
+ /* private Operande getOpFromPlace(Arbre a) {
     //retourne un objet OperandeDirect??? correspondant à l'emplacement global voulu
-	  /*
+	  
 	   -d=identificateur/variable dans une liste de declaration
 	   -d.getIndex servirait de déplacement
 	  if (d.getNomVar().equals(a.getChaine()){
 		  Operande destination =  Operande.creationOpIndirect(d.getIndex, Registre.GB);
 	   }
-	   return destination;*/
+	   return destination;
 	   
     return null;
-  }
+  }*/
   public void coder_INST(Arbre a) {
     Registre rc = Registre.R15; //registre réservé pour les instructions
     switch (a.getNoeud()) {
