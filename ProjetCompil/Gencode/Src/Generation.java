@@ -160,24 +160,29 @@ class Generation {
     //opérations unaires TODO
     switch (a.getNoeud()) {
     //remplir les cas (ne pas oublier le break)
-    case PlusUnaire: 
-    case MoinsUnaire: 
+    case PlusUnaire: return;
     case Non:
+    case MoinsUnaire: 
+    	coder_EXP(a.getFils1(), rc);
+        Prog.ajouter(Inst.creation2(Operation.OPP, Operande.opDirect(rc), Operande.opDirect(rc)));
+      return;
     default: break;
     }
-    if(false) { //condition si on match une des cases au dessus
-      //actions communes à réaliser
-      return;
-    }
+    
 
     //expressions feuilles TODO
     switch (a.getNoeud()) {
     //remplir les cas (ne pas oublier le break)
-    case Chaine: 
-    case Ident: 
-    case Index: 
+    case Chaine: break;
+    case Ident: break;
+    case Index: break;
     case Entier:
+      Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(a.getEntier()), Operande.opDirect(rc)));
+      break;
     case Reel:
+      Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpReel(a.getReel()), Operande.opDirect(rc)));
+      break;
+
     default: break;
     }
     if(false) { //condition si on match une des cases au dessus
@@ -187,10 +192,18 @@ class Generation {
   }
 
 
-  private Operande getOpFromPlace(Arbre a) {
-    //retourne un objet OperandeDirect correspondant à l'emplacement global voulu
+ /* private Operande getOpFromPlace(Arbre a) {
+    //retourne un objet OperandeDirect??? correspondant à l'emplacement global voulu
+	  
+	   -d=identificateur/variable dans une liste de declaration
+	   -d.getIndex servirait de déplacement
+	  if (d.getNomVar().equals(a.getChaine()){
+		  Operande destination =  Operande.creationOpIndirect(d.getIndex, Registre.GB);
+	   }
+	   return destination;
+	   
     return null;
-  }
+  }*/
   public void coder_INST(Arbre a) {
     Registre rc = Registre.R15; //registre réservé pour les instructions
     switch (a.getNoeud()) {
