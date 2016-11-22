@@ -60,7 +60,7 @@ class Generation {
     	      Registre rd;
     	      Etiq et1Faux = Etiq.nouvelle("et1faux");
     	      Etiq suite = Etiq.nouvelle("suite");
-    	      if((rd=Reg.Allouer())!=null) {
+    	      if((rd=Reg.allouer())!=null) {
     	        coder_EXP(a.getFils1(), rc);
     	        coder_EXP(a.getFils2(), rd);
     	        Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc), Operande.creationOpEntier(-1))); //CMP rc, #-1
@@ -71,7 +71,7 @@ class Generation {
     	        Prog.ajouter(et1Faux);
     	        Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(-1), Operande.opDirect(rc)));//aF: 	LOAD #-1, R1 ; a est faux
     	        Prog.ajouter(suite);
-    	        Reg.Liberer(rd);
+    	        Reg.liberer(rd);
     	      }
     	      else {
     	        coder_EXP(a.getFils2(), rc);
