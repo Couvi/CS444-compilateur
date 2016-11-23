@@ -9,6 +9,7 @@ public class Pile {
 	//Tout est exprimé par rapport à GB
 	private static int SP = 0;
 	private static boolean declaration = true;
+	private static Library lib = Library.get_instance();
 
 	public static void addGlobale(Arbre a) {
 		if (declaration) {
@@ -17,7 +18,7 @@ public class Pile {
 				case Real:
 				case Interval:
 					Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(1)));
-					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Library.getInstance().get_StackOverFlow())));
+					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(lib.get_StackOverflow())));
 					SP++;
 					a.getDecor().setInfoCode(SP);
 					break;
@@ -30,7 +31,7 @@ public class Pile {
 						temp = temp.getElement();
 					}
 					Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(taille)));
-					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Library.getInstance().get_StackOverFlow())));
+					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(lib.get_StackOverflow())));
 					SP += taille;				
 					break;
 			}
@@ -55,7 +56,7 @@ public class Pile {
 	public static void liberer(int ref) {
 		if (!declaration && ref == SP) {
 			SP--;
-			Prog.ajouter(Inst.creation1(Operation.ADDSP, Operande.creationOpEntier(-1)));
+			Prog.ajouter(Inst.creation1(Operation.SUBSP, Operande.creationOpEntier(1)));
 		}
 	}
 	  

@@ -11,9 +11,10 @@ import ProjetCompil.Global.Src3.*;
 
 class Generation {
   
-  private static Library lib = new Library();
-  private Registre rx = Registre.R1; //registre réservé pour les instructions
-  private Registre ry = Registre.R2;
+  private static Library lib = Library.get_instance();
+  private Registre rx = Registre.R0; //registre réservé pour les instructions
+  private Registre ry = Registre.R1;
+  private boolean noVerif = true;
    /**
     * Méthode principale de génération de code.
     * Génère du code pour l'arbre décoré a.
@@ -36,19 +37,21 @@ class Generation {
       if((rd=Reg.allouer())!=null) {
         coder_EXP(a.getFils1(), rc);
         coder_EXP(a.getFils2(), rd);
-        Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
+        Prog.ajouter(Inst.creation2(op, 
+                                    Operande.opDirect(rd), 
+                                    Operande.opDirect(rc)));
         Reg.liberer(rd);
       }
       else {
         coder_EXP(a.getFils2(), rc);
         int temp = Pile.allouer(); //allouer un emplacement sur la pile
-        Prog.ajouter(Inst.creation2(
-          Operation.STORE, Operande.opDirect(rc), 
-                           Operande.creationOpIndirect(temp,Registre.LB)));
+        Prog.ajouter(Inst.creation2(Operation.STORE, 
+                                    Operande.opDirect(rc), 
+                                    Operande.creationOpIndirect(temp,Registre.LB)));
         coder_EXP(a.getFils1(), rc);
-        Prog.ajouter(Inst.creation2(
-          op, Operande.creationOpIndirect(temp,Registre.LB), 
-              Operande.opDirect(rc)));
+        Prog.ajouter(Inst.creation2(op, 
+                                    Operande.creationOpIndirect(temp,Registre.LB), 
+                                    Operande.opDirect(rc)));
         Pile.liberer(temp);//libèrer temp
       }
       return;
@@ -64,11 +67,12 @@ class Generation {
 			// debut: %calculer a dans r1
 			coder_EXP(a.getFils1(), rc);
 			// CMP rc, #0
-			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc),
-					Operande.creationOpEntier(0)));
+			Prog.ajouter(Inst.creation2(Operation.CMP, 
+                                  Operande.opDirect(rc),
+					                        Operande.creationOpEntier(0)));
 			// BEQ aF
 			Prog.ajouter(Inst.creation1(Operation.BEQ,
-					Operande.creationOpEtiq(etOp1Faux)));
+			                         		Operande.creationOpEtiq(etOp1Faux)));
 			// %calculer b dans rc
 			coder_EXP(a.getFils2(), rc);
 			// CMP r1, #1 ; a est vrais
@@ -78,11 +82,12 @@ class Generation {
 			Prog.ajouter(Inst.creation1(Operation.SEQ, Operande.opDirect(rc)));
 			// BRA suite
 			Prog.ajouter(Inst.creation1(Operation.BRA,
-					Operande.creationOpEtiq(suite)));
+				                        	Operande.creationOpEtiq(suite)));
 			// aF: LOAD #0, R1 ; a est faux
 			Prog.ajouter(etOp1Faux);
 			Prog.ajouter(Inst.creation2(Operation.LOAD,
-					Operande.creationOpEntier(0), Operande.opDirect(rc)));
+					                        Operande.creationOpEntier(0), 
+                                  Operande.opDirect(rc)));
 			Prog.ajouter(suite);
 			return;
 		}
@@ -92,17 +97,19 @@ class Generation {
 			// debut: %calculer a dans r1
 			coder_EXP(a.getFils1(), rc);
 			// CMP rc, #0
-			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc),
-					Operande.creationOpEntier(0)));
+			Prog.ajouter(Inst.creation2(Operation.CMP, 
+                                  Operande.opDirect(rc),
+				                        	Operande.creationOpEntier(0)));
 			// BEQ aF
 			Prog.ajouter(Inst.creation1(Operation.BEQ,
-					Operande.creationOpEtiq(ouOp1Faux)));
+					                        Operande.creationOpEtiq(ouOp1Faux)));
 			// aT: LOAD #1, r1 ; a est vrais
 			Prog.ajouter(Inst.creation2(Operation.LOAD,
-					Operande.creationOpEntier(1), Operande.opDirect(rc)));
+					                        Operande.creationOpEntier(1), 
+                                  Operande.opDirect(rc)));
 			// BRA suite
 			Prog.ajouter(Inst.creation1(Operation.BRA,
-					Operande.creationOpEtiq(suite)));
+			                            Operande.creationOpEtiq(suite)));
 			// %calculer b dans rc
 			coder_EXP(a.getFils2(), rc);
 			// aF : CMP r1, #1 ; a est faux
@@ -140,20 +147,21 @@ class Generation {
 			if ((rd = Reg.allouer()) != null) {
 				coder_EXP(a.getFils1(), rc);
 				coder_EXP(a.getFils2(), rd);
-				Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rd),
-						Operande.opDirect(rc)));
+				Prog.ajouter(Inst.creation2(Operation.CMP, 
+                                    Operande.opDirect(rd),
+						                        Operande.opDirect(rc)));
 				Prog.ajouter(Inst.creation1(op, Operande.opDirect(rc)));
 				Reg.liberer(rd);
 			} else {
 				coder_EXP(a.getFils2(), rc);
 				int temp = Pile.allouer(); // allouer un emplacement sur la pile
 				Prog.ajouter(Inst.creation2(Operation.STORE,
-						Operande.opDirect(rc),
-						Operande.creationOpIndirect(temp, Registre.LB)));
+						                        Operande.opDirect(rc),
+						                        Operande.creationOpIndirect(temp, Registre.LB)));
 				coder_EXP(a.getFils1(), rc);
 				Prog.ajouter(Inst.creation2(Operation.CMP,
-						Operande.creationOpIndirect(temp, Registre.LB),
-						Operande.opDirect(rc)));
+				                            Operande.creationOpIndirect(temp, Registre.LB),
+						                        Operande.opDirect(rc)));
 				Prog.ajouter(Inst.creation1(op, Operande.opDirect(rc)));
 				Pile.liberer(temp);// libèrer temp
 			}
@@ -173,36 +181,40 @@ class Generation {
 			return;
 		case MoinsUnaire:
 			coder_EXP(a.getFils1(), rc);
-			Prog.ajouter(Inst.creation2(Operation.OPP, Operande.opDirect(rc),
-					Operande.opDirect(rc)));
+			Prog.ajouter(Inst.creation2(Operation.OPP, 
+                                  Operande.opDirect(rc),
+                                  Operande.opDirect(rc)));
 			return;
 		default:
 			break;
 		}
-    
-
     //expressions feuilles TODO
     switch (a.getNoeud()) {
     //remplir les cas (ne pas oublier le break)
-    case Chaine: break;
-    case Ident: break;
-    case Index: break;
-    case Entier:
-      Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(a.getEntier()), Operande.opDirect(rc)));
-      break;
-    case Reel:
-      Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpReel(a.getReel()), Operande.opDirect(rc)));
-      break;
-
-    default: break;
-    }
-    if(false) { //condition si on match une des cases au dessus
-      //actions communes à réaliser
+    case Chaine: return;
+    case Ident:
+    case Index:
+      coder_PLACE(a, rc);
+      coder_load_reg_index(rc,rc);
       return;
+    case Entier:
+      Prog.ajouter(Inst.creation2(Operation.LOAD, 
+                                  Operande.creationOpEntier(a.getEntier()), 
+                                  Operande.opDirect(rc)));
+      return;
+    case Reel:
+      Prog.ajouter(Inst.creation2(Operation.LOAD, 
+                                  Operande.creationOpReel(a.getReel()), 
+                                  Operande.opDirect(rc)));
+      return;
+    default: break;
     }
   }
 
   private void coder_verif_borne_interval(Type interv, Registre rc) {
+    if(noVerif) {
+      return;
+    }
     int inf = interv.getBorneInf();
     int sup = interv.getBorneSup();
     Prog.ajouter(Inst.creation2(Operation.CMP, 
@@ -337,14 +349,20 @@ class Generation {
   public void coder_INST(Arbre a) {
     
     switch (a.getNoeud()) {
-    case Nop: break;//TODO mettre un commentaire?
+    case Nop: Prog.ajouterComment("NOOP"+" Ligne :"+a.getNumLigne()); break;//TODO mettre un commentaire?
     case Affect: 
+      Prog.ajouterComment("Affect"+" Ligne :"+a.getNumLigne());
       coder_PLACE(a.getFils1(),ry);
       coder_EXP(a.getFils2(),rx);
+      coder_verif_borne_interval(a.getDecor().getType(),rx);
       coder_store_reg_index(rx,ry);
       break;
-    case Pour: coder_boucle_for(a); break;
+    case Pour: 
+      Prog.ajouterComment("Pour"+" Ligne :"+a.getNumLigne());
+      coder_boucle_for(a); 
+      break;
     case TantQue: {
+      Prog.ajouterComment("TantQue"+" Ligne :"+a.getNumLigne());
       Etiq expBool = Etiq.nouvelle("condTantQue");
       Etiq finBoucle = Etiq.nouvelle("finTantQue");
       Prog.ajouter(expBool);
@@ -355,6 +373,7 @@ class Generation {
       Prog.ajouter(finBoucle);
     } break;
     case Si: {
+      Prog.ajouterComment("Si"+" Ligne :"+a.getNumLigne());
       Etiq faux = Etiq.nouvelle("faux");
       coder_if(a.getFils1(),faux);
       coder_LISTE_INST(a.getFils2());
@@ -362,6 +381,7 @@ class Generation {
       coder_LISTE_INST(a.getFils3());
     } break;
     case Ecriture: {
+      Prog.ajouterComment("Ecriture"+" Ligne :"+a.getNumLigne());
       Arbre temp = a.getFils1();
       while (temp.getNoeud() != Noeud.Vide) {
         NatureType natureExp = temp.getFils2().getDecor().getType().getNature();
@@ -371,11 +391,11 @@ class Generation {
                                       Operande.creationOpChaine(temp.getFils2().getChaine())));
           break;
         case Interval:
-          coder_EXP(temp.getFils2(),rx);
+          coder_EXP(temp.getFils2(),ry);
           Prog.ajouter(Inst.creation0(Operation.WINT));
           break;
         case Real:
-          coder_EXP(temp.getFils2(),rx);
+          coder_EXP(temp.getFils2(),ry);
           Prog.ajouter(Inst.creation0(Operation.WFLOAT));
           break;
         }
@@ -384,15 +404,17 @@ class Generation {
       break;
     }
     case Lecture: {
+      Prog.ajouterComment("Lecture"+" Ligne :"+a.getNumLigne());
       NatureType natureExp = a.getFils1().getDecor().getType().getNature();
-      coder_PLACE(a.getFils1(),ry);
+      coder_PLACE(a.getFils1(),rx);
       if(natureExp == NatureType.Interval)
         Prog.ajouter(Inst.creation0(Operation.RINT));
       else 
         Prog.ajouter(Inst.creation0(Operation.RFLOAT));
-      coder_store_reg_index(rx,ry);
+      coder_store_reg_index(ry,rx);
     }
     case Ligne:
+      Prog.ajouterComment("newline"+" Ligne :"+a.getNumLigne());
       Prog.ajouter(Inst.creation0(Operation.WNL));
     default: break;
     }
@@ -414,18 +436,22 @@ class Generation {
     switch (a.getNoeud()) {
     case Vide: 
       return;
-    case ListeIdent: 
+    case ListeDecl: 
       coder_LISTE_DECL(a.getFils1());
-      coder_LISTE_IDF(a.getFils1());
+      coder_DECL(a.getFils2());
       return;
     default: 
     }
+  }
+  public void coder_DECL(Arbre a) {
+    coder_LISTE_IDF(a.getFils1());
   }
   public void coder_LISTE_IDF(Arbre a) {
     switch (a.getNoeud()) {
     case Vide: 
       return;
     case ListeIdent: 
+          System.out.println("Ajout d'une variable");
       coder_LISTE_IDF(a.getFils1());
       Pile.addGlobale(a.getFils2());
       return;
@@ -442,13 +468,14 @@ class Generation {
     gen.coder_LISTE_DECL(a.getFils1());
     Pile.finDeclaration();
     gen.coder_LISTE_INST(a.getFils2());
-    lib.writeLib();
-
+    
     // Fin du programme
     // L'instruction "HALT"
     Inst inst = Inst.creation0(Operation.HALT);
     // On ajoute l'instruction à la fin du programme
     Prog.ajouter(inst);
+    lib.writeLib();
+
 
     // On retourne le programme assembleur généré
     return Prog.instance(); 

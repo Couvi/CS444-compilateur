@@ -5,14 +5,15 @@ alltest=$(subst src/,test-,$(subst .cas,,$(allcas)))
 
 all: $(allass)
 
-asm/%.ass: src/%.cas
-	../compile $^ asm/
+asm/%.ass: src/%.cas FORCE
+	../compile $< asm/
 
 test-%: asm/%.ass
-	ima $^
-	#cat $^
+	ima $<
 
 all-test: $(alltest)
+
+FORCE:
 
 clean: 
 	rm -f asm/*.ass
