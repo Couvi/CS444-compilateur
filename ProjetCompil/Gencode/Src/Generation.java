@@ -1,5 +1,7 @@
 package ProjetCompil.Gencode.Src;
 
+import java.security.spec.ECFieldF2m;
+
 import ProjetCompil.Global.Src.*;
 import ProjetCompil.Global.Src3.*;
 /**
@@ -36,7 +38,6 @@ class Generation {
         coder_EXP(a.getFils2(), rd);
         Prog.ajouter(Inst.creation2(op, Operande.opDirect(rd), Operande.opDirect(rc)));
         Reg.liberer(rd);
-        return;
       }
       else {
         coder_EXP(a.getFils2(), rc);
@@ -53,45 +54,146 @@ class Generation {
       return;
     }
 
-    //opérations binaires logiques
-    switch (a.getNoeud()) {
-    //remplir les cas (ne pas oublier le break)
-    case Et: 
-    case Ou: 
-    case Egal: 
-    case InfEgal: 
-    case SupEgal: 
-    case NonEgal: 
-    case Inf: 
-    case Sup: 
-    default: break;
-    }
-    if(false) { //condition si on match une des cases au dessus
-      //actions communes à réaliser
-      return;
-    }
+		// opérations binaires logiques
+		switch (a.getNoeud()) {
+		// on note que les commentaires ne correspondent pas exactement au code,
+		// ce sont plus des aides qu'autre chose
+		case Et: {
+			Etiq suite = Etiq.nouvelle("suite");
+			Etiq etOp1Faux = Etiq.nouvelle("etOp1Faux");
+			// debut: %calculer a dans r1
+			coder_EXP(a.getFils1(), rc);
+			// CMP rc, #0
+			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc),
+					Operande.creationOpEntier(0)));
+			// BEQ aF
+			Prog.ajouter(Inst.creation1(Operation.BEQ,
+					Operande.creationOpEtiq(etOp1Faux)));
+			// %calculer b dans rc
+			coder_EXP(a.getFils2(), rc);
+			// CMP r1, #1 ; a est vrais
+			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc),
+					Operande.creationOpEntier(1)));
+			// SEQ r1 ; c prend la valeur de b
+			Prog.ajouter(Inst.creation1(Operation.SEQ, Operande.opDirect(rc)));
+			// BRA suite
+			Prog.ajouter(Inst.creation1(Operation.BRA,
+					Operande.creationOpEtiq(suite)));
+			// aF: LOAD #0, R1 ; a est faux
+			Prog.ajouter(etOp1Faux);
+			Prog.ajouter(Inst.creation2(Operation.LOAD,
+					Operande.creationOpEntier(0), Operande.opDirect(rc)));
+			Prog.ajouter(suite);
+			return;
+		}
+		case Ou: {
+			Etiq suite = Etiq.nouvelle("suite");
+			Etiq ouOp1Faux = Etiq.nouvelle("ouOp1Faux");
+			// debut: %calculer a dans r1
+			coder_EXP(a.getFils1(), rc);
+			// CMP rc, #0
+			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc),
+					Operande.creationOpEntier(0)));
+			// BEQ aF
+			Prog.ajouter(Inst.creation1(Operation.BEQ,
+					Operande.creationOpEtiq(ouOp1Faux)));
+			// aT: LOAD #1, r1 ; a est vrais
+			Prog.ajouter(Inst.creation2(Operation.LOAD,
+					Operande.creationOpEntier(1), Operande.opDirect(rc)));
+			// BRA suite
+			Prog.ajouter(Inst.creation1(Operation.BRA,
+					Operande.creationOpEtiq(suite)));
+			// %calculer b dans rc
+			coder_EXP(a.getFils2(), rc);
+			// aF : CMP r1, #1 ; a est faux
+			Prog.ajouter(ouOp1Faux);
+			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rc),
+					Operande.creationOpEntier(1)));
+			// SEQ r1 ; c prend la valeur de b
+			Prog.ajouter(Inst.creation1(Operation.SEQ, Operande.opDirect(rc)));
+			Prog.ajouter(suite);
+		}
+		case Egal:
+			op = Operation.SEQ;
+			break;
+		case InfEgal:
+			op = Operation.SLE;
+			break;
+		case SupEgal:
+			op = Operation.SGE;
+			break;
+		case NonEgal:
+			op = Operation.SNE;
+			break;
+		case Inf:
+			op = Operation.SLT;
+			break;
+		case Sup:
+			op = Operation.SGT;
+			break;
+		default:
+			break;
+		}
+		if (op != null) {
+			// actions communes à réaliser
+			Registre rd;
+			if ((rd = Reg.allouer()) != null) {
+				coder_EXP(a.getFils1(), rc);
+				coder_EXP(a.getFils2(), rd);
+				Prog.ajouter(Inst.creation2(Operation.CMP, Operande.opDirect(rd),
+						Operande.opDirect(rc)));
+				Prog.ajouter(Inst.creation1(op, Operande.opDirect(rc)));
+				Reg.liberer(rd);
+			} else {
+				coder_EXP(a.getFils2(), rc);
+				int temp = Pile.allouer(); // allouer un emplacement sur la pile
+				Prog.ajouter(Inst.creation2(Operation.STORE,
+						Operande.opDirect(rc),
+						Operande.creationOpIndirect(temp, Registre.LB)));
+				coder_EXP(a.getFils1(), rc);
+				Prog.ajouter(Inst.creation2(Operation.CMP,
+						Operande.creationOpIndirect(temp, Registre.LB),
+						Operande.opDirect(rc)));
+				Prog.ajouter(Inst.creation1(op, Operande.opDirect(rc)));
+				Pile.liberer(temp);// libèrer temp
+			}
+			return;
+		}
 
-    //opérations unaires TODO
-    switch (a.getNoeud()) {
-    //remplir les cas (ne pas oublier le break)
-    case PlusUnaire: 
-    case MoinsUnaire: 
-    case Non:
-    default: break;
-    }
-    if(false) { //condition si on match une des cases au dessus
-      //actions communes à réaliser
-      return;
-    }
+		// opérations unaires TODO
+		switch (a.getNoeud()) {
+		// remplir les cas (ne pas oublier le break)
+		case PlusUnaire:
+			coder_EXP(a.getFils1(), rc);
+			return;
+		case Non:
+			coder_EXP(a.getFils1(), rc);
+			Prog.ajouter(Inst.creation1(Operation.CMP, Operande.opDirect(rc)));
+			Prog.ajouter(Inst.creation1(Operation.SEQ, Operande.opDirect(rc)));
+			return;
+		case MoinsUnaire:
+			coder_EXP(a.getFils1(), rc);
+			Prog.ajouter(Inst.creation2(Operation.OPP, Operande.opDirect(rc),
+					Operande.opDirect(rc)));
+			return;
+		default:
+			break;
+		}
+    
 
     //expressions feuilles TODO
     switch (a.getNoeud()) {
     //remplir les cas (ne pas oublier le break)
-    case Chaine: 
-    case Ident: 
-    case Index: 
+    case Chaine: break;
+    case Ident: break;
+    case Index: break;
     case Entier:
+      Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(a.getEntier()), Operande.opDirect(rc)));
+      break;
     case Reel:
+      Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpReel(a.getReel()), Operande.opDirect(rc)));
+      break;
+
     default: break;
     }
     if(false) { //condition si on match une des cases au dessus
@@ -231,7 +333,6 @@ class Generation {
     Prog.ajouter(Inst.creation1(Operation.BNE, 
                                 Operande.creationOpEtiq(faux)));
   }
-
 
   public void coder_INST(Arbre a) {
     

@@ -1,4 +1,4 @@
-# Makefile pour la passe 2
+# Makefile pour la passe 3
 
 all : 
 	cd ../../..; javac ProjetCompil/Gencode/Src/*.java
