@@ -9,8 +9,8 @@ asm/%.ass: src/%.cas
 	../compile $^ asm/
 
 test-%: asm/%.ass
-	#ima $^
-	cat $^
+	ima $^
+	#cat $^
 
 all-test: $(alltest)
 
