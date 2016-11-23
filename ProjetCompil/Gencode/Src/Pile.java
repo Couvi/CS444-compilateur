@@ -10,6 +10,7 @@ public class Pile {
 	private static int SP = 0;
 	private static boolean declaration = true;
 	private static Library lib = Library.get_instance();
+	private static Map<String, Integer> variables = new HashMap<String, Integer>();
 
 	public static void addGlobale(Arbre a) {
 		if (declaration) {
@@ -17,29 +18,31 @@ public class Pile {
 				case Boolean:
 				case Real:
 				case Interval:
-					Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(1)));
-					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(lib.get_StackOverflow())));
 					SP++;
-					a.getDecor().setInfoCode(SP);
+					variables.put(a.getChaine(), SP);
 					break;
 				case Array: 
-					a.getDecor().setInfoCode(SP+1);
+					variables.put(a.getChaine(), SP+1);
 					Type temp = a.getDecor().getType();
 					int taille = 1;
 					while(temp.getNature() == NatureType.Array) {
 						taille *= temp.getIndice().getBorneSup()-temp.getIndice().getBorneInf()+1;
 						temp = temp.getElement();
 					}
-					Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(taille)));
-					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(lib.get_StackOverflow())));
 					SP += taille;				
 					break;
 			}
 		}
 	}
+	
+	public static int getGlobale(String nom) {
+		return variables.get(a.getChaine());
+	}
 
 	public static void finDeclaration() {
 		declaration = false;
+		Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(SP)));
+		Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(lib.get_StackOverflow())));
 		Prog.ajouter(Inst.creation1(Operation.ADDSP, Operande.creationOpEntier(SP)));
 	}
 
@@ -47,6 +50,8 @@ public class Pile {
 	public static int allouer() {
 		if(!declaration) {
 			SP++;
+			Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(1)));
+			Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(lib.get_StackOverflow())));
 			Prog.ajouter(Inst.creation1(Operation.ADDSP, Operande.creationOpEntier(1)));
 			return SP;
 		}
