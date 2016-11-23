@@ -1,0 +1,13 @@
+proGram
+	Result : integer;
+	Counter : integer;
+	N : integer;
+	I : 1 .. 13;
+BegiN
+	N := 13;
+	Result := N;
+	Counter := N - 1;
+	for I := Counter downto 1 do
+		Result := Result * I;
+	end;
+end.
