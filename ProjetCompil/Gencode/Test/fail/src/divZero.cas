@@ -1,0 +1,8 @@
+program
+    J : 0 .. 5;
+	K : real;
+begin
+    K := 10 ;
+	J := 0 ;
+	K := K/J;
+end.

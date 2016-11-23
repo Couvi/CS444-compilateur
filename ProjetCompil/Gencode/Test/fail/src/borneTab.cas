@@ -1,0 +1,5 @@
+program
+    T : array[1..5] of REAL ; -- Ok
+begin
+    T[0] := 0 ;
+end.
