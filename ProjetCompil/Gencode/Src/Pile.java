@@ -16,6 +16,8 @@ public class Pile {
 				case Boolean:
 				case Real:
 				case Interval:
+					Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(1)));
+					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Library.getInstance().get_StackOverFlow())));
 					SP++;
 					a.getDecor().setInfoCode(SP);
 					break;
@@ -27,6 +29,8 @@ public class Pile {
 						taille *= temp.getIndice().getBorneSup()-temp.getIndice().getBorneInf()+1;
 						temp = temp.getElement();
 					}
+					Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(taille)));
+					Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Library.getInstance().get_StackOverFlow())));
 					SP += taille;				
 					break;
 			}
