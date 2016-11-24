@@ -19,10 +19,10 @@ public class Pile {
 				case Real:
 				case Interval:
 					SP++;
-					variables.put(a.getChaine(), SP);
+					variables.put(a.getChaine().toLowerCase(), SP);
 					break;
 				case Array: 
-					variables.put(a.getChaine(), SP+1);
+					variables.put(a.getChaine().toLowerCase(), SP+1);
 					Type temp = a.getDecor().getType();
 					int taille = 1;
 					while(temp.getNature() == NatureType.Array) {
@@ -36,7 +36,7 @@ public class Pile {
 	}
 	
 	public static int getGlobale(String nom) {
-		return variables.get(a.getChaine());
+		return variables.get(nom.toLowerCase());
 	}
 
 	public static void finDeclaration() {

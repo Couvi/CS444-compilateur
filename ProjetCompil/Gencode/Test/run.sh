@@ -1,13 +1,14 @@
 #!/bin/sh
 
+if [ ]
 fich=$1
-in=$2
-out=$3
+inf=$2
+outf=$3
 
-cat $in | ima $fich > ima_temp
-diff ima_temp out
+cat $inf | ima $fich > ima_temp
+diff ima_temp $outf
 ret=$?
 
 rm ima_temp
 
-exit ret
+exit $ret
