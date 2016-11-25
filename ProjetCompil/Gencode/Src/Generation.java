@@ -55,6 +55,9 @@ public class Generation {
                                     Operande.opDirect(rc)));
         Pile.liberer(temp);//libèrer temp
       }
+      if(a.getDecor().getType().getNature() == NatureType.Interval) {
+        coder_verif_borne_interval(a.getDecor().getType(), rc);
+      }
       //coder_verif_borne_interval(a.getDecor().getType(), rc);
       return;
     }
@@ -190,7 +193,9 @@ public class Generation {
 			Prog.ajouter(Inst.creation2(Operation.OPP, 
                                   Operande.opDirect(rc),
                                   Operande.opDirect(rc)));
-      //coder_verif_borne_interval(a.getDecor().getType(), rc);
+      if(a.getDecor().getType().getNature() == NatureType.Interval) {
+        coder_verif_borne_interval(a.getDecor().getType(), rc);
+      }
 			return;
 		default:
 			break;
@@ -234,6 +239,8 @@ public class Generation {
       Prog.ajouter(Inst.creation2(Operation.LOAD, 
                                   Operande.creationOpEntier(a.getEntier()), 
                                   Operande.opDirect(rc)));
+      coder_verif_borne_interval(a.getDecor().getType(), rc);
+      
       return;
     case Reel:
       Prog.ajouter(Inst.creation2(Operation.LOAD, 
