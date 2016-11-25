@@ -38,7 +38,7 @@ class Library {
 	    while (it.hasNext()) {
 	        Map.Entry pair = (Map.Entry)it.next();
 	        ((Codeur)pair.getValue()).code();
-	        it.remove(); // avoids a ConcurrentModificationException
+	        it.remove();
 	    }
 	}
 }
