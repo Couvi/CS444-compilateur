@@ -9,7 +9,7 @@ import ProjetCompil.Global.Src3.*;
  */
 
 
-class Generation {
+public class Generation {
   
   private static Library lib = Library.get_instance();
   private Registre rx = Registre.R0; //registre réservé pour les instructions

@@ -20,7 +20,13 @@ A compléter !
 
 
 ========== GESTION DES ERREURS POSSIBLES A L'EXECUTION ==========
+Afin de gérer de manière simple les différentes erreurs potentielles lors de l'exécution, nous avons crée une librarie, en charge de la gestion de ces erreurs.
+Ainsi, lorsque l'on fait des vérifications lors de l'exécution, s'il y a un problème, on peut drectement appeler le code correspondant à l'aide d'un label.
 
+Lors de la génération du code du programme, on ajoute du code afin d'effectuer des vérifications à l'exécution (borne intervalle, ...). Ces vérification peuvent conduire à une erreur. Il faut donc afficher l'erreur et arrêter le programme.
+Cette librairie permet de centraliser les messages d'erreurs. Durant la génération de code, on fait appel à ces erreurs pour récupèrer le label correspondant.
+Lorsque la génération de code est terminée, elle place à la fin les code à exécuter concernant les différentes erreurs qui peuvent se produire avec ce programme (avec les labels).
+La liste des erreurs détaillé est disponible dans la Javadoc (Html/ProjetCompil/Gencode/Src/Library.html)
 
 
 ===================================================================
