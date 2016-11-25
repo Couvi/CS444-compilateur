@@ -254,12 +254,12 @@ class Generation {
                                 Operande.creationOpEntier(inf), 
                                 Operande.opDirect(rc)));
     Prog.ajouter(Inst.creation1(Operation.BLT, 
-                                Operande.creationOpEtiq(lib.get_IndexOutOfBound())));
+                                Operande.creationOpEtiq(lib.get_IntervalOutOfBound())));
     Prog.ajouter(Inst.creation2(Operation.CMP, 
                                 Operande.creationOpEntier(sup), 
                                 Operande.opDirect(rc)));
     Prog.ajouter(Inst.creation1(Operation.BGT, 
-                                Operande.creationOpEtiq(lib.get_IndexOutOfBound())));
+                                Operande.creationOpEtiq(lib.get_IntervalOutOfBound())));
   }
 
 
@@ -287,7 +287,7 @@ class Generation {
       if((rd=Reg.allouer())!=null) {
         coder_EXP(a.getFils2(), rd);
         coder_verif_borne_interval(interval, rd);
-        if(elemLen >= 1) {
+        if(elemLen > 1) {
           Prog.ajouter(Inst.creation2(Operation.MUL,
                                       Operande.creationOpEntier(elemLen),
                                       Operande.opDirect(rd)));
@@ -299,12 +299,12 @@ class Generation {
       }
       else {
         int temp = Pile.allouer(); //allouer un emplacement sur la pile
-        Prog.ajouter(Inst.creation2(
-          Operation.STORE, Operande.opDirect(rc), 
-                           Operande.creationOpIndirect(temp,Registre.LB)));
+        Prog.ajouter(Inst.creation2(Operation.STORE, 
+                                    Operande.opDirect(rc), 
+                                    Operande.creationOpIndirect(temp,Registre.LB)));
         coder_EXP(a.getFils2(), rc);
         coder_verif_borne_interval(interval, rc);
-        if(elemLen >= 1) {
+        if(elemLen > 1) {
           Prog.ajouter(Inst.creation2(Operation.MUL,
                                       Operande.creationOpEntier(elemLen),
                                       Operande.opDirect(rc)));
@@ -466,11 +466,13 @@ class Generation {
           coder_verif_borne_interval(typePlace,rx);
         }
         coder_store_reg_index(rx,ry);
+        Prog.ajouterComment("Fin Affect"+" Ligne :"+a.getNumLigne());
       }
       break;
     case Pour: 
       Prog.ajouterComment("Pour"+" Ligne :"+a.getNumLigne());
       coder_boucle_for(a); 
+      Prog.ajouterComment("Fin Pour"+" Ligne :"+a.getNumLigne());
       break;
     case TantQue: {
       Prog.ajouterComment("TantQue"+" Ligne :"+a.getNumLigne());
@@ -482,6 +484,7 @@ class Generation {
       Prog.ajouter(Inst.creation1(Operation.BRA, 
                                   Operande.creationOpEtiq(expBool)));
       Prog.ajouter(finBoucle);
+      Prog.ajouterComment("Fin TantQue"+" Ligne :"+a.getNumLigne());
     } break;
     case Si: {
       Prog.ajouterComment("Si"+" Ligne :"+a.getNumLigne());
@@ -494,10 +497,12 @@ class Generation {
       Prog.ajouter(faux);
       coder_LISTE_INST(a.getFils3());
       Prog.ajouter(finsi);
+      Prog.ajouterComment("Fin Si"+" Ligne :"+a.getNumLigne());
     } break;
     case Ecriture:
       Prog.ajouterComment("Ecriture"+" Ligne :"+a.getNumLigne());
       coder_liste_ecriture(a.getFils1());
+      Prog.ajouterComment("Fin Ecriture"+" Ligne :"+a.getNumLigne());
       break;
     case Lecture: {
       Prog.ajouterComment("Lecture"+" Ligne :"+a.getNumLigne());
@@ -508,10 +513,12 @@ class Generation {
       else 
         Prog.ajouter(Inst.creation0(Operation.RFLOAT));
       coder_store_reg_index(ry,rx);
+      Prog.ajouterComment("Fin Lecture"+" Ligne :"+a.getNumLigne());
     }
     case Ligne:
       Prog.ajouterComment("newline"+" Ligne :"+a.getNumLigne());
       Prog.ajouter(Inst.creation0(Operation.WNL));
+      Prog.ajouterComment("Fin newline"+" Ligne :"+a.getNumLigne());
     default: break;
     }
   }
