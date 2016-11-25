@@ -1,0 +1,94 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+   TSTO #3 
+   BOV stackoverflow 
+   ADDSP #3 
+; ---------------------------Affect Ligne :4----------------------------
+   LOAD #1, R1 
+   LOAD #12, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :4--------------------------
+; ---------------------------Affect Ligne :5----------------------------
+   LOAD #2, R1 
+   LOAD #8, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :5--------------------------
+; ---------------------------Affect Ligne :6----------------------------
+   LOAD #3, R1 
+   LOAD #1, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #2, R3 
+   LOAD 0(GB, R3), R3 
+   MOD R3, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :6--------------------------
+; ---------------------------TantQue Ligne :7---------------------------
+condtantque.1: 
+   LOAD #3, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #0, R3 
+   CMP R3, R0 
+   SNE R0 
+   CMP #1, R0 
+   BNE fintantque.2 
+; ---------------------------Affect Ligne :8----------------------------
+   LOAD #1, R1 
+   LOAD #2, R0 
+   LOAD 0(GB, R0), R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :8--------------------------
+; ---------------------------Affect Ligne :9----------------------------
+   LOAD #2, R1 
+   LOAD #3, R0 
+   LOAD 0(GB, R0), R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :9--------------------------
+; ---------------------------Affect Ligne :10---------------------------
+   LOAD #3, R1 
+   LOAD #1, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #2, R3 
+   LOAD 0(GB, R3), R3 
+   MOD R3, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :10-------------------------
+   BRA condtantque.1 
+fintantque.2: 
+; -------------------------Fin TantQue Ligne :7-------------------------
+; --------------------------Ecriture Ligne :12--------------------------
+   LOAD #2, R1 
+   LOAD 0(GB, R1), R1 
+   WINT 
+; ------------------------Fin Ecriture Ligne :12------------------------
+   HALT 
+intervaloutofbound: 
+   WSTR "ERREUR Interval Out Of Bound" 
+   HALT 
+stackoverflow: 
+   WSTR "ERREUR Stack Overflow" 
+   HALT 

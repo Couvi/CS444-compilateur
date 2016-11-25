@@ -1,0 +1,33 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+   TSTO #2 
+   BOV stackoverflow 
+   ADDSP #2 
+; ---------------------------Affect Ligne :5----------------------------
+   LOAD #2, R1 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :5--------------------------
+; ---------------------------Affect Ligne :6----------------------------
+   LOAD #1, R1 
+   LOAD #0, R0 
+   CMP #0, R0 
+   BLT indexoutofbound 
+   CMP #5, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :6--------------------------
+; ---------------------------Affect Ligne :7----------------------------
+   LOAD #2, R1 
+   LOAD #2, R0 
+   LOAD 0(GB, R0), R0 
+   DIV R3, R0 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :7--------------------------
+   HALT 
+intervaloutofbound: 
+   WSTR "ERREUR Interval Out Of Bound" 
+   HALT 
+stackoverflow: 
+   WSTR "ERREUR Stack Overflow" 
+   HALT 

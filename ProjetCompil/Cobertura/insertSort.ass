@@ -1,0 +1,343 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+   TSTO #13 
+   BOV stackoverflow 
+   ADDSP #13 
+; ---------------------------Affect Ligne :6----------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #1, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #24, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :6--------------------------
+; ---------------------------Affect Ligne :7----------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #2, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #34, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :7--------------------------
+; ---------------------------Affect Ligne :8----------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #3, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #4, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :8--------------------------
+; ---------------------------Affect Ligne :9----------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #4, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #54, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :9--------------------------
+; ---------------------------Affect Ligne :10---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #5, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #24, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :10-------------------------
+; ---------------------------Affect Ligne :11---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #6, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #1, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :11-------------------------
+; ---------------------------Affect Ligne :12---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #7, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #3, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :12-------------------------
+; ---------------------------Affect Ligne :13---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #8, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #1, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :13-------------------------
+; ---------------------------Affect Ligne :14---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #9, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #67, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :14-------------------------
+; ---------------------------Affect Ligne :15---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #10, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #39, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :15-------------------------
+; ----------------------------Pour Ligne :17----------------------------
+   TSTO #1 
+   BOV stackoverflow 
+   ADDSP #1 
+   LOAD #2, R0 
+   STORE R0, 11(LB) 
+   LOAD #10, R0 
+   STORE R0, 14(LB) 
+boucle.1: 
+; ---------------------------Affect Ligne :18---------------------------
+   LOAD #13, R1 
+   LOAD #1, R0 
+   SUB #1, R0 
+   LOAD #11, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R0 
+   LOAD 0(GB, R0), R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :18-------------------------
+; ---------------------------Affect Ligne :19---------------------------
+   LOAD #12, R1 
+   LOAD #11, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #1, R3 
+   SUB R3, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :19-------------------------
+; --------------------------TantQue Ligne :20---------------------------
+condtantque.2: 
+   LOAD #12, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #0, R3 
+   CMP R3, R0 
+   SGT R0 
+   CMP #0, R0 
+   BEQ etop1faux.5 
+   LOAD #1, R0 
+   SUB #1, R0 
+   LOAD #12, R4 
+   LOAD 0(GB, R4), R4 
+   CMP #1, R4 
+   BLT indexoutofbound 
+   CMP #10, R4 
+   BGT indexoutofbound 
+   ADD R4, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #13, R3 
+   LOAD 0(GB, R3), R3 
+   CMP R3, R0 
+   SGT R0 
+   CMP #1, R0 
+   SEQ R0 
+   BRA suite.4 
+etop1faux.5: 
+   LOAD #0, R0 
+suite.4: 
+   CMP #1, R0 
+   BNE fintantque.3 
+; ---------------------------Affect Ligne :21---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #12, R3 
+   LOAD 0(GB, R3), R3 
+   LOAD #1, R4 
+   ADD R4, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #1, R0 
+   SUB #1, R0 
+   LOAD #12, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R0 
+   LOAD 0(GB, R0), R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :21-------------------------
+; ---------------------------Affect Ligne :22---------------------------
+   LOAD #12, R1 
+   LOAD #12, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #1, R3 
+   SUB R3, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :22-------------------------
+   BRA condtantque.2 
+fintantque.3: 
+; ------------------------Fin TantQue Ligne :20-------------------------
+; ---------------------------Affect Ligne :24---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #12, R3 
+   LOAD 0(GB, R3), R3 
+   LOAD #1, R4 
+   ADD R4, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #13, R0 
+   LOAD 0(GB, R0), R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :24-------------------------
+   LOAD 11(LB), R0 
+   ADD #1, R0 
+   STORE R0, 11(LB) 
+   CMP 14(GB), R0 
+   BLE boucle.1 
+   SUBSP #1 
+; --------------------------Fin Pour Ligne :17--------------------------
+; ----------------------------Pour Ligne :26----------------------------
+   TSTO #1 
+   BOV stackoverflow 
+   ADDSP #1 
+   LOAD #1, R0 
+   STORE R0, 11(LB) 
+   LOAD #10, R0 
+   STORE R0, 14(LB) 
+boucle.6: 
+; --------------------------Ecriture Ligne :27--------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #11, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #10, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD 0(GB, R1), R1 
+   WINT 
+   WSTR ", " 
+; ------------------------Fin Ecriture Ligne :27------------------------
+   LOAD 11(LB), R0 
+   ADD #1, R0 
+   STORE R0, 11(LB) 
+   CMP 14(GB), R0 
+   BLE boucle.6 
+   SUBSP #1 
+; --------------------------Fin Pour Ligne :26--------------------------
+   HALT 
+intervaloutofbound: 
+   WSTR "ERREUR Interval Out Of Bound" 
+   HALT 
+stackoverflow: 
+   WSTR "ERREUR Stack Overflow" 
+   HALT 
