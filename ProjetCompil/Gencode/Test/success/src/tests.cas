@@ -12,7 +12,7 @@ program
 	M : array [1 .. +18] OF real;
 	N : array [18 ..25] of array [1.. 18] of integer; 
 	O : array [-42 .. -3] of real;
-	P : array [7..max_int] of real;
+	P : array [7..500] of real;
 begin
 	--Test des affectable et des opérateur
 	M[6] := O[-10];

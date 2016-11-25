@@ -14,7 +14,8 @@ class Generation {
   private static Library lib = Library.get_instance();
   private Registre rx = Registre.R0; //registre réservé pour les instructions
   private Registre ry = Registre.R1;
-  private boolean noVerif = true;
+  private Registre rz = Registre.R2;
+  private boolean noVerif = false;
    /**
     * Méthode principale de génération de code.
     * Génère du code pour l'arbre décoré a.
@@ -54,6 +55,7 @@ class Generation {
                                     Operande.opDirect(rc)));
         Pile.liberer(temp);//libèrer temp
       }
+      //coder_verif_borne_interval(a.getDecor().getType(), rc);
       return;
     }
 
@@ -188,6 +190,7 @@ class Generation {
 			Prog.ajouter(Inst.creation2(Operation.OPP, 
                                   Operande.opDirect(rc),
                                   Operande.opDirect(rc)));
+      //coder_verif_borne_interval(a.getDecor().getType(), rc);
 			return;
 		default:
 			break;
@@ -214,14 +217,19 @@ class Generation {
                                     Operande.opDirect(rc)));
         return;
       default:
-        coder_PLACE(a, rc);
-        coder_load_reg_index(rc,rc);
+        Type t = coder_PLACE(a, rc);
+        if(t.getNature() != NatureType.Array) {
+          coder_load_reg_index(rc,rc);
+        }
         return;
       }
-    case Index:
-      coder_PLACE(a, rc);
-      coder_load_reg_index(rc,rc);
+    case Index: {
+      Type t = coder_PLACE(a, rc);
+      if(t.getNature() != NatureType.Array) {
+        coder_load_reg_index(rc,rc);
+      }
       return;
+    }
     case Entier:
       Prog.ajouter(Inst.creation2(Operation.LOAD, 
                                   Operande.creationOpEntier(a.getEntier()), 
@@ -245,40 +253,49 @@ class Generation {
     Prog.ajouter(Inst.creation2(Operation.CMP, 
                                 Operande.creationOpEntier(inf), 
                                 Operande.opDirect(rc)));
+    Prog.ajouter(Inst.creation1(Operation.BLT, 
+                                Operande.creationOpEtiq(lib.get_IndexOutOfBound())));
+    Prog.ajouter(Inst.creation2(Operation.CMP, 
+                                Operande.creationOpEntier(sup), 
+                                Operande.opDirect(rc)));
     Prog.ajouter(Inst.creation1(Operation.BGT, 
                                 Operande.creationOpEtiq(lib.get_IndexOutOfBound())));
   }
 
-  private void coder_PLACE(Arbre a, Registre rc) {
+
+  private Type coder_PLACE(Arbre a, Registre rc) {
+    Type t=null;
     switch (a.getNoeud()) {
     case Ident: //cas identificateur
       Prog.ajouter(Inst.creation2(Operation.LOAD, 
                                   Operande.creationOpEntier(Pile.getGlobale(a.getChaine())), 
                                   Operande.opDirect(rc)));
-      return;
+      t = a.getDecor().getType();
+      break;
     case Index: //cas identificateur[expr][expr]...
       coder_PLACE(a.getFils1(), rc); //offset de base ex: t[42][43] -> l'offset de t[42] est l'offset de base
-      Type interval = a.getFils2().getDecor().getType();
+      Type interval = a.getFils1().getDecor().getType().getIndice();
+      t = a.getDecor().getType();
+      int elemLen = totalLenCounter(a.getFils1().getDecor().getType().getElement());
+      System.out.println("merdier elemLen "+elemLen);
       //TOTO verifier les bornes
-      if(interval.getBorneInf() == -java.lang.Integer.MAX_VALUE &&
-         interval.getBorneSup() == java.lang.Integer.MAX_VALUE) {
-        //cas particulier des entiers de base, pas de soustraction de la borne inf
-      }
-      else {
-        //cas général des TypeInterval, il faut soustraire la borne inf
-        Prog.ajouter(Inst.creation2(Operation.SUB, 
-                                    Operande.creationOpEntier(interval.getBorneInf()), 
-                                    Operande.opDirect(rc)));
-      }
+      //cas général des TypeInterval, il faut soustraire la borne inf
+      Prog.ajouter(Inst.creation2(Operation.SUB, 
+                                  Operande.creationOpEntier(interval.getBorneInf()), 
+                                  Operande.opDirect(rc)));
       Registre rd;
       if((rd=Reg.allouer())!=null) {
         coder_EXP(a.getFils2(), rd);
         coder_verif_borne_interval(interval, rd);
+        if(elemLen >= 1) {
+          Prog.ajouter(Inst.creation2(Operation.MUL,
+                                      Operande.creationOpEntier(elemLen),
+                                      Operande.opDirect(rd)));
+        }
         Prog.ajouter(Inst.creation2(Operation.ADD, 
                                     Operande.opDirect(rd), 
                                     Operande.opDirect(rc)));
         Reg.liberer(rd);
-        return;
       }
       else {
         int temp = Pile.allouer(); //allouer un emplacement sur la pile
@@ -287,14 +304,20 @@ class Generation {
                            Operande.creationOpIndirect(temp,Registre.LB)));
         coder_EXP(a.getFils2(), rc);
         coder_verif_borne_interval(interval, rc);
+        if(elemLen >= 1) {
+          Prog.ajouter(Inst.creation2(Operation.MUL,
+                                      Operande.creationOpEntier(elemLen),
+                                      Operande.opDirect(rc)));
+        }
         Prog.ajouter(Inst.creation2(Operation.ADD, 
                                     Operande.creationOpIndirect(temp,Registre.LB), 
                                     Operande.opDirect(rc)));
         Pile.liberer(temp);//libèrer temp
       }
-      return;
+      break;
     default: 
     }
+    return t;
   }
   private void coder_store_reg(Registre reg, int pile) {
     Prog.ajouter(Inst.creation2(Operation.STORE,
@@ -321,21 +344,16 @@ class Generation {
   public void coder_boucle_for(Arbre a) {
     boolean incrementer = (a.getFils1().getNoeud() == Noeud.Increment);
     Etiq boucle = Etiq.nouvelle("boucle");
-    //utilisation des deux registres libres
     int valFin = Pile.allouer();
-    int addrCompteur = Pile.allouer();
-    coder_PLACE(a.getFils1().getFils1(), rx);
-    coder_store_reg(rx,addrCompteur);
+    int compteur = Pile.getGlobale(a.getFils1().getFils1().getChaine());
     coder_EXP(a.getFils1().getFils2(), rx);
-    coder_load_reg(ry,addrCompteur);
-    coder_store_reg_index(rx,ry);
+    coder_store_reg(rx,compteur);
     coder_EXP(a.getFils1().getFils3(), rx);
     coder_store_reg(rx,valFin);
     Prog.ajouter(boucle);
     coder_LISTE_INST(a.getFils2());
     //incrément/décrément
-    coder_load_reg(ry,addrCompteur);
-    coder_load_reg_index(rx,ry);
+    coder_load_reg(rx,compteur);
     if(incrementer) {
       Prog.ajouter(Inst.creation2(Operation.ADD,
                                   Operande.creationOpEntier(1),
@@ -346,20 +364,19 @@ class Generation {
                                   Operande.creationOpEntier(1),
                                   Operande.opDirect(rx)));
     }
-    coder_store_reg_index(rx,ry);
+    coder_store_reg(rx,compteur);
     //comparaison
     Prog.ajouter(Inst.creation2(Operation.CMP, 
                                 Operande.creationOpIndirect(valFin,Registre.GB), 
                                 Operande.opDirect(rx)));
     if(incrementer) {
-      Prog.ajouter(Inst.creation1(Operation.BLT, 
+      Prog.ajouter(Inst.creation1(Operation.BLE, 
                                   Operande.creationOpEtiq(boucle)));
     }
     else {
-      Prog.ajouter(Inst.creation1(Operation.BGT, 
+      Prog.ajouter(Inst.creation1(Operation.BGE, 
                                   Operande.creationOpEtiq(boucle)));
     }
-    Pile.liberer(addrCompteur);
     Pile.liberer(valFin);
   }
   public void coder_if(Arbre a, Etiq faux) {
@@ -393,17 +410,63 @@ class Generation {
       }
     }
   }
+  private int totalLenCounter(Type t) {
+    if(t.getNature() == NatureType.Array) {
+      int len = t.getIndice().getBorneSup() - t.getIndice().getBorneInf()+1;
+      return totalLenCounter(t.getElement())*len;
+    }
+    else {
+      return 1;
+    }
+  }
+  public void coder_copy_type(Type type) {
+    int totalLen = totalLenCounter(type);
+    Etiq boucleCopy = Etiq.nouvelle("boucleCopy");
+    Etiq finBoucleCopy = Etiq.nouvelle("finBoucleCopy");
+    int fin = Pile.allouer();
+    Prog.ajouter(Inst.creation2(Operation.LOAD,
+                                Operande.creationOpEntier(totalLen),
+                                Operande.opDirect(rz)));
+    Prog.ajouter(Inst.creation2(Operation.ADD,
+                                Operande.opDirect(rx),
+                                Operande.opDirect(rz)));
+    coder_store_reg(rz,fin);
+    Prog.ajouter(boucleCopy);
+    Prog.ajouter(Inst.creation2(Operation.CMP, 
+                                Operande.creationOpIndirect(fin,Registre.GB), 
+                                Operande.opDirect(rx)));
+    Prog.ajouter(Inst.creation1(Operation.BLT, 
+                                Operande.creationOpEtiq(finBoucleCopy)));
+    coder_load_reg_index(rz,rx);
+    coder_store_reg_index(rz,ry);
+    Prog.ajouter(Inst.creation2(Operation.ADD,
+                                Operande.creationOpEntier(1),
+                                Operande.opDirect(rx)));
+    Prog.ajouter(Inst.creation2(Operation.ADD,
+                                Operande.creationOpEntier(1),
+                                Operande.opDirect(ry)));
+    Prog.ajouter(Inst.creation1(Operation.BRA, 
+                                  Operande.creationOpEtiq(boucleCopy)));
+    Prog.ajouter(finBoucleCopy);
+  }
 
   public void coder_INST(Arbre a) {
-    
     switch (a.getNoeud()) {
     case Nop: Prog.ajouterComment("NOOP"+" Ligne :"+a.getNumLigne()); break;//TODO mettre un commentaire?
     case Affect: 
       Prog.ajouterComment("Affect"+" Ligne :"+a.getNumLigne());
-      coder_PLACE(a.getFils1(),ry);
+      Type typePlace = coder_PLACE(a.getFils1(),ry);
       coder_EXP(a.getFils2(),rx);
-      coder_verif_borne_interval(a.getDecor().getType(),rx);
-      coder_store_reg_index(rx,ry);
+      if(typePlace.getNature() == NatureType.Array) {
+        coder_copy_type(typePlace); //rx et ry doivent être initialisés
+        break;
+      }
+      else {
+        if(typePlace.getNature() == NatureType.Interval) {
+          coder_verif_borne_interval(typePlace,rx);
+        }
+        coder_store_reg_index(rx,ry);
+      }
       break;
     case Pour: 
       Prog.ajouterComment("Pour"+" Ligne :"+a.getNumLigne());

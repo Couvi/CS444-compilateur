@@ -30,7 +30,7 @@ class Library {
 		return Etiq.lEtiq("IndexOutOfBound");
 	}
 	public Etiq get_StackOverflow() {
-		register_error("StackOverflow", "ERREUR Index Out Of Bound");
+		register_error("StackOverflow", "ERREUR Stack Overflow");
 		return Etiq.lEtiq("StackOverflow");
 	}
 	public void writeLib() {
