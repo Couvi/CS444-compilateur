@@ -11,4 +11,5 @@ BegiN
 	for I := Counter downto 1 do
 		Result := Result * I;
 	end;
+	write(Result);
 end.

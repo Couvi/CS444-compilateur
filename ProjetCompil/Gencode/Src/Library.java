@@ -38,6 +38,11 @@ public class Library {
 		register_error("IntervalOutOfBound", "ERREUR Interval Out Of Bound");
 		return Etiq.lEtiq("IntervalOutOfBound");
 	}
+	/**Erreur qui intervient lors d'un overflow sur un registre**/
+	public Etiq get_ArithmeticOverflow() {
+		register_error("ArithmeticOverflow", "ERREUR  Arithmetic Overflow");
+		return Etiq.lEtiq("ArithmeticOverflow");
+	}
 	
 	/**Erreur de débordement de Stack**/
 	public Etiq get_StackOverflow() {

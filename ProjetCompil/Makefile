@@ -40,3 +40,4 @@ coberturaVerif :
 coberturaGencode :
 	cd Cobertura ; ./testCouvertureGencode ../.. ../Gencode/Test/*/src/*.cas
 	firefox Cobertura/CouvertureGencode/index.html
+	rm Cobertura/*.ass
