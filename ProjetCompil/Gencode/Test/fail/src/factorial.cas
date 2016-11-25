@@ -1,3 +1,4 @@
+--il est là car il doit générer une erreur de débordement (13! c'est trop fat !)
 proGram
 	Result : integer;
 	Counter : integer;
