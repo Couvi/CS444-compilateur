@@ -9,7 +9,7 @@ import ProjetCompil.Global.Src3.*;
  */
 
 
-class Generation {
+public class Generation {
   
   private static Library lib = Library.get_instance();
   private Registre rx = Registre.R0; //registre réservé pour les instructions
@@ -172,7 +172,7 @@ class Generation {
 			return;
 		}
 
-		// opérations unaires TODO
+		// opérations unaires
 		switch (a.getNoeud()) {
 		// remplir les cas (ne pas oublier le break)
 		case PlusUnaire:
