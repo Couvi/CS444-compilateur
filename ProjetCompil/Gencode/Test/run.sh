@@ -33,8 +33,8 @@ fi
 if [ $4 ]
 then
 	cat ima_temp
+else
+	rm ima_temp
 fi
-
-rm ima_temp
 echo ""
 exit $ret
