@@ -1,0 +1,7 @@
+program
+    J : 2 .. 5;
+	K : integer;
+begin
+    K := 0 ;
+	J := 0 ;
+end.

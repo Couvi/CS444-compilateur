@@ -23,7 +23,8 @@ test :
 	cd Syntaxe/Src; make syntest-devsyn
 
 html :
-	cd Html; javadoc ../Global/Src/*.java ../Global/Src3/*.java ../Syntaxe/Src/*.java ../Verif/Src/*.java ../Gencode/Src/*.java
+	cd Html; javadoc -encoding utf8 -docencoding utf8 -charset utf8 ../Global/Src/*.java ../Global/Src3/*.java ../Syntaxe/Src/*.java ../Verif/Src/*.java ../Gencode/Src/*.java
+	firefox Html/index.html
 
 clean : 
 	cd Global/Src; make clean
