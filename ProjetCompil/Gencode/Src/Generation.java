@@ -157,7 +157,7 @@ class Generation {
 			return;
 		}
 
-		// opérations unaires TODO
+		// opérations unaires
 		switch (a.getNoeud()) {
 		// remplir les cas (ne pas oublier le break)
 		case PlusUnaire:
