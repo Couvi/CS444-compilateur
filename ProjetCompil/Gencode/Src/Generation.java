@@ -277,13 +277,13 @@ public class Generation {
       Type interval = a.getFils1().getDecor().getType().getIndice();
       t = a.getDecor().getType();
       int elemLen = totalLenCounter(a.getFils1().getDecor().getType().getElement());
-      Prog.ajouter(Inst.creation2(Operation.SUB, 
-                                  Operande.creationOpEntier(interval.getBorneInf()), 
-                                  Operande.opDirect(rc)));
       Registre rd;
       if((rd=Reg.allouer())!=null) {
         coder_EXP(a.getFils2(), rd);
         coder_verif_borne_interval(interval, rd);
+        Prog.ajouter(Inst.creation2(Operation.SUB, 
+                                    Operande.creationOpEntier(interval.getBorneInf()), 
+                                    Operande.opDirect(rd)));
         if(elemLen > 1) {
           Prog.ajouter(Inst.creation2(Operation.MUL,
                                       Operande.creationOpEntier(elemLen),
@@ -301,6 +301,9 @@ public class Generation {
                                     Operande.creationOpIndirect(temp,Registre.LB)));
         coder_EXP(a.getFils2(), rc);
         coder_verif_borne_interval(interval, rc);
+        Prog.ajouter(Inst.creation2(Operation.SUB, 
+                                    Operande.creationOpEntier(interval.getBorneInf()), 
+                                    Operande.opDirect(rc)));
         if(elemLen > 1) {
           Prog.ajouter(Inst.creation2(Operation.MUL,
                                       Operande.creationOpEntier(elemLen),

@@ -36,7 +36,7 @@ public class Library {
 	/**Erreur qui intervient lorsque un nombre n'est plus pas compris dans l'intervalle défini à la délaration de la variable**/
 	public Etiq get_IntervalOutOfBound() {
 		register_error("IntervalOutOfBound", "ERREUR Interval Out Of Bound");
-		return Etiq.lEtiq("IndexOutOfBound");
+		return Etiq.lEtiq("IntervalOutOfBound");
 	}
 	
 	/**Erreur de débordement de Stack**/
