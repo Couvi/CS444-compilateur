@@ -1,9 +1,14 @@
-A faire :
-- [ ] Verif borne interval durant affectation
+A coder :
 - [ ] Division par 0
-- [ ] Verif overflow
+- [ ] Noeud conversion
+
+A tester :
+- [ ] Division par 0
+- [ ] Debordement arthmétique
+- [ ] Débordement d'intervalle
+- [ ] Débordement de la pile
+- [ ] Cas ou il n'y a plus de registre et qu'on passe par la pile 
+- [ ] Tout le reste !
 
 Doc à écrire :
-- [ ] Architecture passe 3
-- [ ] Algo passe 3
-- [ ] Message d'erreur
+- [ ] Architecture + Algo passe 3
