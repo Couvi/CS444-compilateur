@@ -41,6 +41,7 @@ public class Generation {
         Prog.ajouter(Inst.creation2(op, 
                                     Operande.opDirect(rd), 
                                     Operande.opDirect(rc)));
+        coder_verif_overflow();
         Reg.liberer(rd);
       }
       else {
@@ -53,12 +54,9 @@ public class Generation {
         Prog.ajouter(Inst.creation2(op, 
                                     Operande.creationOpIndirect(temp,Registre.LB), 
                                     Operande.opDirect(rc)));
+        coder_verif_overflow();
         Pile.liberer(temp);//libèrer temp
       }
-      if(a.getDecor().getType().getNature() == NatureType.Interval) {
-        coder_verif_borne_interval(a.getDecor().getType(), rc);
-      }
-      //coder_verif_borne_interval(a.getDecor().getType(), rc);
       return;
     }
 
@@ -193,9 +191,7 @@ public class Generation {
 			Prog.ajouter(Inst.creation2(Operation.OPP, 
                                   Operande.opDirect(rc),
                                   Operande.opDirect(rc)));
-      if(a.getDecor().getType().getNature() == NatureType.Interval) {
-        coder_verif_borne_interval(a.getDecor().getType(), rc);
-      }
+      coder_verif_overflow();
 			return;
 		default:
 			break;
@@ -249,6 +245,10 @@ public class Generation {
       return;
     default: break;
     }
+  }
+  private void coder_verif_overflow() {
+    Prog.ajouter(Inst.creation1(Operation.BOV, 
+                                Operande.creationOpEtiq(lib.get_ArithmeticOverflow())));
   }
 
   private void coder_verif_borne_interval(Type interv, Registre rc) {
