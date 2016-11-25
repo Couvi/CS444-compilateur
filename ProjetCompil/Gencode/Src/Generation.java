@@ -277,9 +277,6 @@ public class Generation {
       Type interval = a.getFils1().getDecor().getType().getIndice();
       t = a.getDecor().getType();
       int elemLen = totalLenCounter(a.getFils1().getDecor().getType().getElement());
-      System.out.println("merdier elemLen "+elemLen);
-      //TOTO verifier les bornes
-      //cas général des TypeInterval, il faut soustraire la borne inf
       Prog.ajouter(Inst.creation2(Operation.SUB, 
                                   Operande.creationOpEntier(interval.getBorneInf()), 
                                   Operande.opDirect(rc)));
