@@ -22,12 +22,13 @@ public class Generation {
     */
   public void coder_EXP(Arbre a, Registre rc) {
     Operation op = null;
+    boolean divReel = false;
     switch (a.getNoeud()) {
     //opérations binaires arithmétiques
     case Plus: op=Operation.ADD; break;
     case Moins: op=Operation.SUB; break;
     case Mult: op=Operation.MUL; break;
-    case DivReel: op=Operation.DIV; break;
+    case DivReel: op=Operation.DIV; divReel=true; break;
     case Reste: op=Operation.MOD; break;
     case Quotient: op=Operation.DIV; break;
     default: break;
@@ -36,8 +37,23 @@ public class Generation {
       //actions communes à réaliser
       Registre rd;
       if((rd=Reg.allouer())!=null) {
-        coder_EXP(a.getFils1(), rc);
-        coder_EXP(a.getFils2(), rd);
+        if(divReel && a.getFils1().getDecor().getType().getNature() == NatureType.Interval) {
+          //on assume que les 2 opérandes sont de nature type interval 
+          //(il y aura un neud conversion pour s'en assurer)
+          coder_EXP(a.getFils1(), rc);
+          Prog.ajouter(Inst.creation2(Operation.FLOAT, 
+                                      Operande.opDirect(rc), 
+                                      Operande.opDirect(rc)));
+          coder_EXP(a.getFils2(), rd);
+          Prog.ajouter(Inst.creation2(Operation.FLOAT, 
+                                      Operande.opDirect(rd), 
+                                      Operande.opDirect(rd)));
+
+        }
+        else {
+          coder_EXP(a.getFils1(), rc);
+          coder_EXP(a.getFils2(), rd);
+        }
         Prog.ajouter(Inst.creation2(op, 
                                     Operande.opDirect(rd), 
                                     Operande.opDirect(rc)));
@@ -45,12 +61,29 @@ public class Generation {
         Reg.liberer(rd);
       }
       else {
-        coder_EXP(a.getFils2(), rc);
-        int temp = Pile.allouer(); //allouer un emplacement sur la pile
-        Prog.ajouter(Inst.creation2(Operation.STORE, 
-                                    Operande.opDirect(rc), 
-                                    Operande.creationOpIndirect(temp,Registre.LB)));
-        coder_EXP(a.getFils1(), rc);
+        int temp = Pile.allouer();
+        if(divReel && a.getFils1().getDecor().getType().getNature() == NatureType.Interval) {
+          //on assume que les 2 opérandes sont de nature type interval 
+          //(il y aura un neud conversion pour s'en assurer)
+          coder_EXP(a.getFils2(), rc);
+          Prog.ajouter(Inst.creation2(Operation.FLOAT, 
+                                      Operande.opDirect(rc), 
+                                      Operande.opDirect(rc)));
+          Prog.ajouter(Inst.creation2(Operation.STORE, 
+                                      Operande.opDirect(rc), 
+                                      Operande.creationOpIndirect(temp,Registre.LB)));
+          coder_EXP(a.getFils1(), rc);
+          Prog.ajouter(Inst.creation2(Operation.FLOAT, 
+                                      Operande.opDirect(rc), 
+                                      Operande.opDirect(rc)));
+        }
+        else {
+          coder_EXP(a.getFils2(), rc);
+          Prog.ajouter(Inst.creation2(Operation.STORE, 
+                                      Operande.opDirect(rc), 
+                                      Operande.creationOpIndirect(temp,Registre.LB)));
+          coder_EXP(a.getFils1(), rc);
+        }
         Prog.ajouter(Inst.creation2(op, 
                                     Operande.creationOpIndirect(temp,Registre.LB), 
                                     Operande.opDirect(rc)));
@@ -193,6 +226,14 @@ public class Generation {
                                   Operande.opDirect(rc)));
       coder_verif_overflow();
 			return;
+    case Conversion:
+      coder_EXP(a.getFils1(), rc);
+      if(a.getFils1().getDecor().getType().getNature() != NatureType.Array) {
+        Prog.ajouter(Inst.creation2(Operation.FLOAT,
+                                    Operande.opDirect(rc),
+                                    Operande.opDirect(rc)));
+      }
+      return;
 		default:
 			break;
 		}
@@ -426,13 +467,13 @@ public class Generation {
       return 1;
     }
   }
-  public void coder_copy_type(Type type) {
+  public void coder_copy_type(Type type, boolean convertion) {
     int totalLen = totalLenCounter(type);
     Etiq boucleCopy = Etiq.nouvelle("boucleCopy");
     Etiq finBoucleCopy = Etiq.nouvelle("finBoucleCopy");
     int fin = Pile.allouer();
     Prog.ajouter(Inst.creation2(Operation.LOAD,
-                                Operande.creationOpEntier(totalLen),
+                                Operande.creationOpEntier(totalLen-1),
                                 Operande.opDirect(rz)));
     Prog.ajouter(Inst.creation2(Operation.ADD,
                                 Operande.opDirect(rx),
@@ -442,9 +483,14 @@ public class Generation {
     Prog.ajouter(Inst.creation2(Operation.CMP, 
                                 Operande.creationOpIndirect(fin,Registre.GB), 
                                 Operande.opDirect(rx)));
-    Prog.ajouter(Inst.creation1(Operation.BLT, 
+    Prog.ajouter(Inst.creation1(Operation.BGT, 
                                 Operande.creationOpEtiq(finBoucleCopy)));
     coder_load_reg_index(rz,rx);
+    if(convertion) {
+      Prog.ajouter(Inst.creation2(Operation.FLOAT,
+                                  Operande.opDirect(rz),
+                                  Operande.opDirect(rz)));
+    }
     coder_store_reg_index(rz,ry);
     Prog.ajouter(Inst.creation2(Operation.ADD,
                                 Operande.creationOpEntier(1),
@@ -465,8 +511,7 @@ public class Generation {
       Type typePlace = coder_PLACE(a.getFils1(),ry);
       coder_EXP(a.getFils2(),rx);
       if(typePlace.getNature() == NatureType.Array) {
-        coder_copy_type(typePlace); //rx et ry doivent être initialisés
-        break;
+        coder_copy_type(typePlace,(a.getFils2().getNoeud() == Noeud.Conversion)); //rx et ry doivent être initialisés
       }
       else {
         if(typePlace.getNature() == NatureType.Interval) {
@@ -517,6 +562,7 @@ public class Generation {
       coder_PLACE(a.getFils1(),rx);
       if(natureExp == NatureType.Interval)
         Prog.ajouter(Inst.creation0(Operation.RINT));
+        coder_verif_borne_interval(a.getFils1().getDecor.getType(),ry);
       else 
         Prog.ajouter(Inst.creation0(Operation.RFLOAT));
       coder_store_reg_index(ry,rx);

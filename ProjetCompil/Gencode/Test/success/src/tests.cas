@@ -14,12 +14,31 @@ program
 	O : array [-42 .. -3] of real;
 	P : array [7..500] of real;
 begin
-	--Test des affectable et des opérateur
+	--init des var:
+	A := 34.65;
+	B := 3.14e+10;
+	C := -34.1;
+	E := false;
+	I := 1;
+	J := 3;
+	for k := 1 to 18 do
+		L[k] := k;
+	end;
+	for k := 1 to 18 do
+		M[k] := k div 4;
+	end;
+	for k := 18 to 25 do
+		N[k] := L;
+	end;
+	for k := -42 to -3 do
+		O[k] := k*3/4;
+	end;
+	for k := 500 downto 7 do
+		P[k] := k;
+	end;
+	--Test des affectable et des opérateurs
 	M[6] := O[-10];
 	D := not(E);
-	
-	B := 3.14e+10;
-
 	E := D and E;
 	F := E or not(D);
 	
@@ -35,7 +54,7 @@ begin
 		
 	A := B + C;
 	B := (I - A);
-	C := A * J;
+	C := A * 2;
 	I := I + J;
 	
 	K := I div J;
@@ -53,23 +72,19 @@ begin
 	A := L[18];
 	L := N[18];
 	B := N[20][8];
-	K := N[J][8];
+	K := N[J+18][8];
 	
 	
 	-- Test des instructions
 	
 	while ((B <= I) and not F) or (L[5] > K) do
-		NULL;
+		B := B +1;
+		L[5] := L[5] + 2;
 	end;
 	
 	if (A < B) and (L[5] = K) then
 		null;
 	end;
-	
-	read(J) ;
-	read(C) ; 
-	read(L[5]) ; 
-	write("Valeur ", I, " non trouvee", A) ;
 	
 	for J := I to 20 do 
       		K := J ; 
