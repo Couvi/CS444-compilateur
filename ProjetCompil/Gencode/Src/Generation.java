@@ -560,9 +560,10 @@ public class Generation {
       Prog.ajouterComment("Lecture"+" Ligne :"+a.getNumLigne());
       NatureType natureExp = a.getFils1().getDecor().getType().getNature();
       coder_PLACE(a.getFils1(),rx);
-      if(natureExp == NatureType.Interval)
+      if(natureExp == NatureType.Interval) {
         Prog.ajouter(Inst.creation0(Operation.RINT));
-        coder_verif_borne_interval(a.getFils1().getDecor.getType(),ry);
+        coder_verif_borne_interval(a.getFils1().getDecor().getType(),ry);
+      }
       else 
         Prog.ajouter(Inst.creation0(Operation.RFLOAT));
       coder_store_reg_index(ry,rx);
