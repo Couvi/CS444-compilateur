@@ -1,0 +1,244 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+   TSTO #26 
+   BOV stackoverflow 
+   ADDSP #26 
+; ----------------------------Pour Ligne :5-----------------------------
+   TSTO #1 
+   BOV stackoverflow 
+   ADDSP #1 
+   LOAD #1, R0 
+   STORE R0, 25(LB) 
+   LOAD #4, R0 
+   STORE R0, 27(LB) 
+boucle.1: 
+; ----------------------------Pour Ligne :6-----------------------------
+   TSTO #1 
+   BOV stackoverflow 
+   ADDSP #1 
+   LOAD #1, R0 
+   STORE R0, 26(LB) 
+   LOAD #3, R0 
+   STORE R0, 28(LB) 
+boucle.2: 
+; --------------------------Ecriture Ligne :7---------------------------
+   LOAD #1, R1 
+   LOAD #25, R4 
+   LOAD 0(GB, R4), R4 
+   MUL R4, R1 
+   LOAD #26, R3 
+   LOAD 0(GB, R3), R3 
+   MUL R3, R1 
+   WINT 
+   WSTR " " 
+   LOAD #2, R1 
+   LOAD #25, R4 
+   LOAD 0(GB, R4), R4 
+   MUL R4, R1 
+   LOAD #26, R3 
+   LOAD 0(GB, R3), R3 
+   MUL R3, R1 
+   WINT 
+   WSTR ", " 
+; ------------------------Fin Ecriture Ligne :7-------------------------
+; ---------------------------newline Ligne :8---------------------------
+   WNL 
+; -------------------------Fin newline Ligne :8-------------------------
+; ---------------------------Affect Ligne :9----------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #25, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #4, R3 
+   BGT indexoutofbound 
+   MUL #6, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #26, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #3, R3 
+   BGT indexoutofbound 
+   MUL #2, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #1, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #2, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #25, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #26, R4 
+   LOAD 0(GB, R4), R4 
+   MUL R4, R0 
+   LOAD #1, R3 
+   MUL R3, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :9--------------------------
+; ---------------------------Affect Ligne :10---------------------------
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #25, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #4, R3 
+   BGT indexoutofbound 
+   MUL #6, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #26, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #3, R3 
+   BGT indexoutofbound 
+   MUL #2, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #2, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #2, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD #25, R0 
+   LOAD 0(GB, R0), R0 
+   LOAD #26, R4 
+   LOAD 0(GB, R4), R4 
+   MUL R4, R0 
+   LOAD #2, R3 
+   MUL R3, R0 
+   CMP #-2147483647, R0 
+   BLT indexoutofbound 
+   CMP #2147483647, R0 
+   BGT indexoutofbound 
+   STORE R0, 0(GB, R1) 
+; -------------------------Fin Affect Ligne :10-------------------------
+   LOAD 26(LB), R0 
+   ADD #1, R0 
+   STORE R0, 26(LB) 
+   CMP 28(GB), R0 
+   BLE boucle.2 
+   SUBSP #1 
+; --------------------------Fin Pour Ligne :6---------------------------
+   LOAD 25(LB), R0 
+   ADD #1, R0 
+   STORE R0, 25(LB) 
+   CMP 27(GB), R0 
+   BLE boucle.1 
+   SUBSP #1 
+; --------------------------Fin Pour Ligne :5---------------------------
+; ----------------------------Pour Ligne :13----------------------------
+   TSTO #1 
+   BOV stackoverflow 
+   ADDSP #1 
+   LOAD #1, R0 
+   STORE R0, 25(LB) 
+   LOAD #4, R0 
+   STORE R0, 27(LB) 
+boucle.3: 
+; ----------------------------Pour Ligne :14----------------------------
+   TSTO #1 
+   BOV stackoverflow 
+   ADDSP #1 
+   LOAD #1, R0 
+   STORE R0, 26(LB) 
+   LOAD #3, R0 
+   STORE R0, 28(LB) 
+boucle.4: 
+; --------------------------Ecriture Ligne :15--------------------------
+   WSTR "(" 
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #25, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #4, R3 
+   BGT indexoutofbound 
+   MUL #6, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #26, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #3, R3 
+   BGT indexoutofbound 
+   MUL #2, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #1, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #2, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD 0(GB, R1), R1 
+   WINT 
+   WSTR ", " 
+   LOAD #1, R1 
+   SUB #1, R1 
+   LOAD #25, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #4, R3 
+   BGT indexoutofbound 
+   MUL #6, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #26, R3 
+   LOAD 0(GB, R3), R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #3, R3 
+   BGT indexoutofbound 
+   MUL #2, R3 
+   ADD R3, R1 
+   SUB #1, R1 
+   LOAD #2, R3 
+   CMP #1, R3 
+   BLT indexoutofbound 
+   CMP #2, R3 
+   BGT indexoutofbound 
+   ADD R3, R1 
+   LOAD 0(GB, R1), R1 
+   WINT 
+   WSTR ") " 
+; ------------------------Fin Ecriture Ligne :15------------------------
+   LOAD 26(LB), R0 
+   ADD #1, R0 
+   STORE R0, 26(LB) 
+   CMP 28(GB), R0 
+   BLE boucle.4 
+   SUBSP #1 
+; --------------------------Fin Pour Ligne :14--------------------------
+; --------------------------newline Ligne :17---------------------------
+   WNL 
+; ------------------------Fin newline Ligne :17-------------------------
+   LOAD 25(LB), R0 
+   ADD #1, R0 
+   STORE R0, 25(LB) 
+   CMP 27(GB), R0 
+   BLE boucle.3 
+   SUBSP #1 
+; --------------------------Fin Pour Ligne :13--------------------------
+   HALT 
+intervaloutofbound: 
+   WSTR "ERREUR Interval Out Of Bound" 
+   HALT 
+stackoverflow: 
+   WSTR "ERREUR Stack Overflow" 
+   HALT 
