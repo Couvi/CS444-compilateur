@@ -6,8 +6,29 @@ import ProjetCompil.Global.Src.*;
 import ProjetCompil.Global.Src3.*;
 /**
  * Génération de code pour un programme JCas à partir d'un arbre décoré.
+ * Cette classe fonctionne en parcourant l'arbre de manière décendante
+ * comme lors de la verification. Cependant, aucune verification n'est réalisé sur l'arbe.
+ * Les verifications lors de l'execution sont réalisés: 
+ * - verification des bornes lors de l'affectation
+ * - verification d'overflow lors des opérations arithmétiques
+ * - verification de stack overflow lors de l'allocation de variables sur la pile
+ *
+ * Utilisation des registres:
+ * les 3 premiers registres R0, R1 et R2 sont libres d'accès à toutes les fonctions à tout moment
+ * Aucune garanti n'est faite sur la durée de vie de ces derniers, il servent donc principalement de manière 
+ * local à une fonction pour la manipulation de valeurs.
+ * Les autres registres servent de variables locales lors de l'évaluation des expressions.
+ * Ces derniers sont alloués et leur durrée de vie est donc garanti par la fonction de grénération qui l'utilise.
+ * Quand il n'y a plus de registres libres, on utilise la pile (cela arrive donc rarement pour une evaluation d'expression)
+ *
+ * Utilisation de la pile:
+ * Certaines instructions complexes (boucle for) necessitent plusieurs variables temporaires, les 3 registres libres ne suffisent pas,
+ * dans ce cas il aurait été necessaire de recoder plusieurs fois la même instruction avec des allocations de registres/pile 
+ * ou de créer plus de registres libres, ce qui est censé être une exception...
+ * pour simplifier le code, nous avons seulement utilisé la pile et les 3 registres libres dans ce cas.
+ * Enfin la pile peux servir à allouer des variables locales pour l'evaluation des expressions quand il n'y a plus de registres de libre
+ * 
  */
-
 
 public class Generation {
   
@@ -467,11 +488,21 @@ public class Generation {
       return 1;
     }
   }
+
+  private Type finalTypeArray(Type t) {
+    if(t.getNature() == NatureType.Array) {
+      return finalTypeArray(t.getElement());
+    }
+    else {
+      return t;
+    }
+  }
   public void coder_copy_type(Type type, boolean convertion) {
     int totalLen = totalLenCounter(type);
     Etiq boucleCopy = Etiq.nouvelle("boucleCopy");
     Etiq finBoucleCopy = Etiq.nouvelle("finBoucleCopy");
     int fin = Pile.allouer();
+    Type finaltype = finalTypeArray(type);
     Prog.ajouter(Inst.creation2(Operation.LOAD,
                                 Operande.creationOpEntier(totalLen-1),
                                 Operande.opDirect(rz)));
@@ -486,6 +517,9 @@ public class Generation {
     Prog.ajouter(Inst.creation1(Operation.BGT, 
                                 Operande.creationOpEtiq(finBoucleCopy)));
     coder_load_reg_index(rz,rx);
+    if(finaltype.getNature() == NatureType.Interval) {
+      coder_verif_borne_interval(finaltype,rz);
+    }
     if(convertion) {
       Prog.ajouter(Inst.creation2(Operation.FLOAT,
                                   Operande.opDirect(rz),

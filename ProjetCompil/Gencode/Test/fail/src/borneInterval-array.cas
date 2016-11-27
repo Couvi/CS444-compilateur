@@ -1,0 +1,8 @@
+program
+	K : array [0 .. 1] of integer;
+	T : array [0 .. 1] of 2..5;
+begin
+    K[0] := 10;
+    K[1] := -6;
+	T := K;
+end.

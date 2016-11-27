@@ -12,7 +12,7 @@ test-success-%:
 	@cd success && make $(subst success-,,$@)
 
 test-fail-%:
-	@cd fail && make $(subst success-,,$@)
+	@cd fail && make $(subst fail-,,$@)
 	
 clean:
 	@cd success && make clean

@@ -11,18 +11,20 @@ Cette librairie permet de centraliser les messages d'erreurs. Durant la généra
 Lorsque la génération de code est terminée, elle place à la fin les code à exécuter concernant les différentes erreurs qui peuvent se produire avec ce programme (avec les labels)
 **/
 public class Library {
-	static Library lib=new Library();
+	static Library lib=new Library(); //singleton
+	//interface des fonctions de codage des erreurs, permet de manipuler ces fonction comme des objets
+	//et des les stocker dans la hashmap
 	public interface Codeur {
 	  public void code();
 	}
 	
-	HashMap<String, Codeur> mapfunc = new HashMap<String, Codeur>(); /**Contient la liste des erreurs utiles à se programme**/
+	HashMap<String, Codeur> mapfunc = new HashMap<String, Codeur>(); /**Contient la liste des erreurs utiles à ce programme**/
 
-	public static Library get_instance() {
+	public static Library get_instance() { //pour opbtenir l'instance de la librairie
 		return lib;
 	}
-	private void register_error(String nom, String message) {
-		Codeur code = new Codeur() {
+	private void register_error(String nom, String message) { //fonction d'ordre superieur qui génère des fonctions de codage d'erreur
+		Codeur code = new Codeur() { //on utilise une classe annonyme qui contient la fonction de codage
 			public void code() { 
 				Prog.ajouter(Etiq.lEtiq(nom));
 				Prog.ajouter(Inst.creation1(Operation.WSTR, 
@@ -30,9 +32,13 @@ public class Library {
 				Prog.ajouter(Inst.creation0(Operation.HALT));
 			}
 		};
-		mapfunc.put(nom, code);
+		mapfunc.put(nom, code); //on ajoute cette fonction de codage à notre map des fonctions utilisés
 	}
 	
+	//ici on code les erreurs necessaires
+	//remarque: on aurait aussi pu crééer des procédures plus complexes pour factiriser le code généré (but premier de cette classe) 
+	//mais nous en avons pas eu l'utilité
+
 	/**Erreur qui intervient lorsque un nombre n'est plus pas compris dans l'intervalle défini à la délaration de la variable**/
 	public Etiq get_IntervalOutOfBound() {
 		register_error("IntervalOutOfBound", "ERREUR Interval Out Of Bound");
