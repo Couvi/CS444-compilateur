@@ -2,11 +2,16 @@ program
 	A: array [1..10]  of integer;
 	i,max : integer;
 begin
+	i := 1;
+	while (i < 11) do
+		A[i] := (i+2) mod 6;
+		i := i+1;
+	end;
 	max:=A[1];
 	for i:=2 to 10 do 
 		if (max<A[i]) then 
 			max:=A[i];
 		end;
 	end;
-write(max);
+	write(max);
 end.

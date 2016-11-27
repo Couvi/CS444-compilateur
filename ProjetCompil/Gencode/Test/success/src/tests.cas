@@ -86,7 +86,7 @@ begin
 		null;
 	end;
 	
-	for J := I to 20 do 
+	for J := I to 5 do 
       		K := J ; 
   	end ; 
 	

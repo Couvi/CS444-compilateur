@@ -4,17 +4,23 @@ program
 	C: array[1..4] of array[1..4] of integer;
 	i,j,k,p,q: integer;
 begin
-	C[i][j]:=0;
+	for p:=1 to 4 do
+		for q:=1 to 4 do
+			A[p][q] := p;
+			B[p][q] := q;
+		end;
+	end;
 	for i:=1 to 4 do
 		for j:=1 to 4 do
+			C[i][j] := 0;
 			for k:=1 to 4 do
 				C[i][j]:= C[i][j] + A[i][k]*B[k][j] ;
 			end;
 		end;
 	end;
-	for p:=1 to 10 do
+	for p:=1 to 4 do
 		write("[");
-		for q:=1 to 10 do
+		for q:=1 to 4 do
 			write(C[p][q]);
 			write(" ");
 		end;

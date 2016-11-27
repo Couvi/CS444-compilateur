@@ -38,8 +38,11 @@ public class Generation {
   private Registre rz = Registre.R2;
   private boolean noVerif = false;
    /**
-    * Méthode principale de génération de code.
-    * Génère du code pour l'arbre décoré a.
+    * Génère du code pour calculer l'expresion représenté par a et stock le résultat dans le registre rc
+    * Ne modifie pas les registres libres R0,R1 et R2
+    * la génération de code est récursive
+    * Utilise l'allocation de registre quand c'est possible, ou la pile sinon
+    * 
     */
   public void coder_EXP(Arbre a, Registre rc) {
     Operation op = null;
@@ -308,11 +311,14 @@ public class Generation {
     default: break;
     }
   }
+  /**fonction de codage de la verification d'overflow*/
   private void coder_verif_overflow() {
     Prog.ajouter(Inst.creation1(Operation.BOV, 
                                 Operande.creationOpEtiq(lib.get_ArithmeticOverflow())));
   }
-
+  /**fonction de codage de la verification des bornes d'interval
+   * Compare le registre rc aux bornes de l'interval passé en paramètre,
+   * déroute l'execution du programme vers l'erreur IntervalOutOfBound de la librairie en cas de valeur non valide*/
   private void coder_verif_borne_interval(Type interv, Registre rc) {
     if(noVerif) {
       return;
@@ -331,7 +337,14 @@ public class Generation {
                                 Operande.creationOpEtiq(lib.get_IntervalOutOfBound())));
   }
 
-
+  /**
+   * Codage de l'évaluation d'une place (identificateur T, T[i], T[i][j]...)
+   * cette fonction génère un code qui stock dans rc l'offset de l'emplacement mémoire désigné par la place
+   * une place peut être un simple identificateur ou une indexation de tableau (avec une ou plusieurs dimensions)
+   * Remarque: dans le cas d'un identificateur, l'offset est constant et aurait pu être utilisé sans registre, 
+   * mais dans un souci de généralisation, on utilise toujours un registre (de la même manière que coder_EXP())
+   * La vérification des bornes lors de l'indexation est réalisé
+   */
   private Type coder_PLACE(Arbre a, Registre rc) {
     Type t=null;
     switch (a.getNoeud()) {
@@ -388,40 +401,52 @@ public class Generation {
     }
     return t;
   }
+  /**fonction de sauvegarde d'un registre dans un emplacement de la pile (simplifie la lecture du code)*/
   private void coder_store_reg(Registre reg, int pile) {
     Prog.ajouter(Inst.creation2(Operation.STORE,
                                 Operande.opDirect(reg),
                                 Operande.creationOpIndirect(pile,Registre.LB)));
   }
+  /**fonction de chargement d'un registre dans un emplacement de la pile (simplifie la lecture du code)*/
   private void coder_load_reg(Registre reg, int pile) {
     Prog.ajouter(Inst.creation2(Operation.LOAD,
                                 Operande.creationOpIndirect(pile,Registre.LB),
                                 Operande.opDirect(reg)));
   }
+  /**fonction de sauvegarde d'un registre dans un emplacement de la pile avec l'offset contenu dans un registre (simplifie la lecture du code)*/
   private void coder_store_reg_index(Registre reg, Registre index) {
     Prog.ajouter(Inst.creation2(Operation.STORE,
                                 Operande.opDirect(reg),
                                 Operande.creationOpIndexe(0,Registre.GB,index)));
   }
+  /**fonction de chargement d'un registre dans un emplacement de la pile avec l'offset contenu dans un registre (simplifie la lecture du code)*/
   private void coder_load_reg_index(Registre reg, Registre index) {
     Prog.ajouter(Inst.creation2(Operation.LOAD,
                                 Operande.creationOpIndexe(0,Registre.GB,index),
                                 Operande.opDirect(reg)));
   }
 
-
+  /**Codage d'une boucle for
+   * Utilise R0 et deux variables de la pile.
+   * L'utilisation des 2 autres registres libres à la places de la pile n'est pas possible car leur valeur n'est pas garantie
+   * et les instructions dans le for risquent de les modifier
+   * cependant, on aurait pu faire une version avec allocation de registres mais on aurait du recoder 3 fois cette instruction
+   * (avec 2 registres alloués, avec 1 registre alloué et un emplacement sur la pile, avec 2 emplacemente sur la pile)
+   * Seul la dernière solution à été choisi car elle fonctionne tout le temps bien que ce soit la plus lente
+   */ 
   public void coder_boucle_for(Arbre a) {
     boolean incrementer = (a.getFils1().getNoeud() == Noeud.Increment);
     Etiq boucle = Etiq.nouvelle("boucle");
     int valFin = Pile.allouer();
-    int compteur = Pile.getGlobale(a.getFils1().getFils1().getChaine());
+    int compteur = Pile.getGlobale(a.getFils1().getFils1().getChaine()); //ici le compteur ne peux pas être une indexation, l'offset est donc constant
     coder_EXP(a.getFils1().getFils2(), rx);
+    coder_verif_borne_interval(a.getFils1().getFils1().getDecor().getType(),rx);
     coder_store_reg(rx,compteur);
     coder_EXP(a.getFils1().getFils3(), rx);
+    coder_verif_borne_interval(a.getFils1().getFils1().getDecor().getType(),rx);
     coder_store_reg(rx,valFin);
     Prog.ajouter(boucle);
     coder_LISTE_INST(a.getFils2());
-    //incrément/décrément
     coder_load_reg(rx,compteur);
     if(incrementer) {
       Prog.ajouter(Inst.creation2(Operation.ADD,
@@ -470,10 +495,16 @@ public class Generation {
         break;
       case Interval:
         coder_EXP(temp.getFils2(),ry);
+        if(temp.getFils2().getDecor().getType().getNature() == NatureType.Array) {
+          coder_load_reg_index(ry,ry);
+        }
         Prog.ajouter(Inst.creation0(Operation.WINT));
         break;
       case Real:
         coder_EXP(temp.getFils2(),ry);
+        if(temp.getFils2().getDecor().getType().getNature() == NatureType.Array) {
+          coder_load_reg_index(ry,ry);
+        }
         Prog.ajouter(Inst.creation0(Operation.WFLOAT));
         break;
       }
