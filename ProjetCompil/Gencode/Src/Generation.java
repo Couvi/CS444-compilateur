@@ -42,7 +42,7 @@ public class Generation {
     * Ne modifie pas les registres libres R0,R1 et R2
     * la génération de code est récursive
     * Utilise l'allocation de registre quand c'est possible, ou la pile sinon
-    * 
+    * Remarque, quand l'expression retourné est un tableau, rc contient l'offset de ce tableau
     */
   public void coder_EXP(Arbre a, Registre rc) {
     Operation op = null;
@@ -473,7 +473,9 @@ public class Generation {
     }
     Pile.liberer(valFin);
   }
-  public void coder_if(Arbre a, Etiq faux) {
+
+  /**simple fonction d'e factorisation de code, voir coder_INST pour le "si" complet*/
+  private void coder_if(Arbre a, Etiq faux) {
     coder_EXP(a,rx);
     Prog.ajouter(Inst.creation2(Operation.CMP, 
                                 Operande.creationOpEntier(1), 
@@ -481,8 +483,8 @@ public class Generation {
     Prog.ajouter(Inst.creation1(Operation.BNE, 
                                 Operande.creationOpEtiq(faux)));
   }
-
-  public void coder_liste_ecriture(Arbre a) {
+  /**parcours la liste d'expression d'un write pour les afficher*/
+  private void coder_liste_ecriture(Arbre a) {
     Arbre temp = a;
     
     if (temp.getNoeud() != Noeud.Vide) {
@@ -495,21 +497,18 @@ public class Generation {
         break;
       case Interval:
         coder_EXP(temp.getFils2(),ry);
-        if(temp.getFils2().getDecor().getType().getNature() == NatureType.Array) {
-          coder_load_reg_index(ry,ry);
-        }
         Prog.ajouter(Inst.creation0(Operation.WINT));
         break;
       case Real:
         coder_EXP(temp.getFils2(),ry);
-        if(temp.getFils2().getDecor().getType().getNature() == NatureType.Array) {
-          coder_load_reg_index(ry,ry);
-        }
         Prog.ajouter(Inst.creation0(Operation.WFLOAT));
         break;
       }
     }
   }
+  /**Permet de calculer la longeur total d'un élément indexé dans un tableau,
+   * si cet élément est un interval ou un reel, renvoi 1
+   * si c'est un sous tableau, renvoi la taille de ce dernier en templacement mémoire */
   private int totalLenCounter(Type t) {
     if(t.getNature() == NatureType.Array) {
       int len = t.getIndice().getBorneSup() - t.getIndice().getBorneInf()+1;
@@ -519,7 +518,7 @@ public class Generation {
       return 1;
     }
   }
-
+  /**Permet de ronvoyer le type final d'un tableau (interval ou réel)*/
   private Type finalTypeArray(Type t) {
     if(t.getNature() == NatureType.Array) {
       return finalTypeArray(t.getElement());
@@ -528,7 +527,9 @@ public class Generation {
       return t;
     }
   }
-  public void coder_copy_type(Type type, boolean convertion) {
+  /**Dans le cas d'une affectation tableau-tableau, permet de copier tous les éléments du premier tableau vers le deuxième,
+   * et réalise les conversions et les vérifications necessaires sur chaque élément */
+  private void coder_copy_type(Type type, boolean convertion) {
     int totalLen = totalLenCounter(type);
     Etiq boucleCopy = Etiq.nouvelle("boucleCopy");
     Etiq finBoucleCopy = Etiq.nouvelle("finBoucleCopy");
@@ -567,7 +568,9 @@ public class Generation {
                                   Operande.creationOpEtiq(boucleCopy)));
     Prog.ajouter(finBoucleCopy);
   }
-
+  /**Fonction de codage des instructions.
+   * afficher pour chaque instruction un commentaire avec le numéro de ligne correspondant dans le fichier source
+   */
   public void coder_INST(Arbre a) {
     switch (a.getNoeud()) {
     case Nop: Prog.ajouterComment("NOOP"+" Ligne :"+a.getNumLigne()); break;//TODO mettre un commentaire?
@@ -641,7 +644,7 @@ public class Generation {
     default: break;
     }
   }
-
+  /**Codage d'une liste d'instructions*/
   private void coder_LISTE_INST(Arbre a) {
 		switch (a.getNoeud()) {
 		case Vide: 
@@ -653,7 +656,7 @@ public class Generation {
 		default: 
 		}
 	}
-
+  /**codage d'une liste de déclarations*/
   public void coder_LISTE_DECL(Arbre a) {
     switch (a.getNoeud()) {
     case Vide: 
@@ -665,9 +668,12 @@ public class Generation {
     default: 
     }
   }
+  /**Codage d'une déclaration*/
   public void coder_DECL(Arbre a) {
     coder_LISTE_IDF(a.getFils1());
   }
+  /**Codage d'une liste d'identificateur
+   * alloue un emplacement sur la pile pour chaque variable déclaré*/
   public void coder_LISTE_IDF(Arbre a) {
     switch (a.getNoeud()) {
     case Vide: 
@@ -681,23 +687,21 @@ public class Generation {
   }
   
   
-
+  /**fonction qui permet de coder un arbre représentant un programme jcas valide*/
   static Prog coder(Arbre a) {
     Prog.ajouterGrosComment("Programme généré par JCasc");
-    Reg.init();
-    Generation gen = new Generation();
-    gen.coder_LISTE_DECL(a.getFils1());
-    Pile.finDeclaration();
-    gen.coder_LISTE_INST(a.getFils2());
+    Reg.init();//initialisation de la pool de registres
+    Generation gen = new Generation(); //instanciation de cette classe
+    gen.coder_LISTE_DECL(a.getFils1()); //analyse des déclarations
+    Pile.finDeclaration(); //écriture des déclarations (réservation de place dans la pile)
+    gen.coder_LISTE_INST(a.getFils2()); //codage des instructions du programme
     
     // Fin du programme
     // L'instruction "HALT"
     Inst inst = Inst.creation0(Operation.HALT);
     // On ajoute l'instruction à la fin du programme
     Prog.ajouter(inst);
-    lib.writeLib();
-
-
+    lib.writeLib();// écriture des librairies utilisés
     // On retourne le programme assembleur généré
     return Prog.instance(); 
   }
