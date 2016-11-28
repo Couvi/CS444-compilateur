@@ -261,7 +261,6 @@ public class Generation {
 		default:
 			break;
 		}
-    //expressions feuilles TODO
     switch (a.getNoeud()) {
     //remplir les cas (ne pas oublier le break)
     case Chaine: return;
@@ -573,7 +572,7 @@ public class Generation {
    */
   public void coder_INST(Arbre a) {
     switch (a.getNoeud()) {
-    case Nop: Prog.ajouterComment("NOOP"+" Ligne :"+a.getNumLigne()); break;//TODO mettre un commentaire?
+    case Nop: Prog.ajouterComment("NOOP"+" Ligne :"+a.getNumLigne()); break;
     case Affect: 
       Prog.ajouterComment("Affect"+" Ligne :"+a.getNumLigne());
       Type typePlace = coder_PLACE(a.getFils1(),ry);
