@@ -1,0 +1,8 @@
+program
+	i : real;
+	j : 1..5;
+begin
+	read(j);
+	i := j;
+	write(i);
+end.
