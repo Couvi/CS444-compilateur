@@ -9,6 +9,7 @@ ProjetCompil/Syntaxe/Src/sym.java~
 .project
 ProjetCompil/sublime.*
 ProjetCompil/Html/*/
+ProjetCompil/Html/*.zip
 ProjetCompil/Html/*.html
 ProjetCompil/Html/*.css
 ProjetCompil/Html/*.js
